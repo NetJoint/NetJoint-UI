@@ -6,7 +6,7 @@ Three quick start options are available:
 
 - Clone the repo: `git clone https://github.com/NetJoint/NetJoint-UI.git`.
 
-Run `bower install` to install dependencies.
+Run `npm install` to install dependencies.
 
 Examples: 
 
