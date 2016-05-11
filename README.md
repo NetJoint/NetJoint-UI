@@ -29,9 +29,6 @@ NetJoint-UI/
 |   └── index.html
 ├── docs/
 |   ├── examples/
-|   ├── components.html
-|   ├── getting-started.html
-|   └── template.html
 ├── img/
 ├── js/
 └── sass/
@@ -39,6 +36,8 @@ NetJoint-UI/
 ```
 
 We provide compiled CSS and JS (`netjoint-ui.*`), as well as compiled and minified CSS and JS (`netjoint-ui.min.*`).
+
+Examples forked [Bootstrap TLDR](https://github.com/anvoz/bootstrap-tldr)
 
 ## License
 

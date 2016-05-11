@@ -2,6 +2,7 @@
   "name": "netjoint-ui",
   "version": "0.1.0",
   "title": "NetJoint UI",
+  "author": "NetJoint, Inc.", 
   "description": "NetJoint UI is based on Bootstrap 3, a comfortable, responsive, and functional framework that simplifies the development of websites. ",
   "keywords": [
     "netjoint",
@@ -15,8 +16,7 @@
     "web"
   ],
   "license": "MIT",
-  "homepage": "",
-  "author": "NetJoint, Inc.", 
+  "homepage": "",  
   "repository": {
     "type": "git",
     "url": "https://github.com/NetJoint/NetJoint-UI.git"
@@ -25,14 +25,21 @@
     "url": "https://github.com/NetJoint/NetJoint-UI/issues"
   },  
   "scripts": {
-    "install": "npm install"
+      
   },
   "dependencies": {
-    "jquery": "^1.12.3"    
+    "jquery": "^1.12.3",
+    "font-awesome" : "^4.6.1"
   },
-  "devDependencies": {    
+  "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-sass": "*",
+    "gulp-sourcemaps":"*",
+    "gulp-clean-css": "*",
+    "gulp-uglify": "*",
+    "gulp-rename": "*",
+    "gulp-autoprefixer": "*",
+    
     "bootstrap-sass": "^3.3.6"
   }
 }
