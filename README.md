@@ -25,13 +25,11 @@ NetJoint-UI/
 │   |   └── netjoint-ui.min.js
 |   ├── fonts/
 |   ├── img/
-|   ├── vendors/
-|   └── index.html
-├── docs/
-|   ├── examples/
-├── img/
-├── js/
-└── sass/
+|   └── vendors/
+├── examples/
+└── src/
+    ├── components/
+    └── sass/
 
 ```
 
