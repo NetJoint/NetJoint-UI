@@ -25,11 +25,10 @@
     "url": "https://github.com/NetJoint/NetJoint-UI/issues"
   },  
   "scripts": {
-      
+      "install":"gulp install"
   },
   "dependencies": {
-    "jquery": "^1.12.3",
-    "font-awesome" : "^4.6.1"
+    "jquery": "^1.12.3"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
@@ -39,7 +38,9 @@
     "gulp-uglify": "*",
     "gulp-rename": "*",
     "gulp-autoprefixer": "*",
+    "gulp-requirejs" :  "*",
     
-    "bootstrap-sass": "^3.3.6"
+    "bootstrap-sass": "^3.3.6",
+    "font-awesome" : "^4.6.1"
   }
 }
