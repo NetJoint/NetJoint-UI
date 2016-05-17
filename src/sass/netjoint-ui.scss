@@ -5,20 +5,17 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
-
-
-// Core CSS
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "../components/table/table";
-@import "../components/form/form";
-@import "../components/button/button";
+
 
 // Components
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
-/*@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";*/
+@import "../components/code/code";
+@import "../components/form/form";
+@import "../components/table/table";
+@import "../components/button/button";
+@import "../components/animation/animation";
 @import "../components/dropdown/dropdown";
 @import "../components/button-group/button-group";
 @import "../components/input-group/input-group";
@@ -39,16 +36,13 @@
 @import "../components/responsive-embed/responsive-embed";
 @import "../components/well/well";
 @import "../components/close/close";
-
-// Components w/ JavaScript
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+@import "../components/modal/modal";
+@import "../components/tooltip/tooltip";
+@import "../components/popover/popover";
+@import "../components/carousel/carousel";
 
 // Utility classes
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
 
-//Font
-
+// Font awesome

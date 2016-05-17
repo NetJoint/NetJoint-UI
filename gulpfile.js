@@ -6,19 +6,92 @@ var gulp = require('gulp'),
         cleanCSS = require('gulp-clean-css'),
         rename = require('gulp-rename'),
         autoprefixer = require('gulp-autoprefixer'),
-        requirejs = require('gulp-requirejs');
+        uglify = require('gulp-uglify'),
+        concat = require('gulp-concat'),
+        amdOptimize = require("amd-optimize");
 
 gulp.task('sass', function () {
-    return gulp.src('./src/sass/netjoint-ui.scss')
+    gulp.src('./src/sass/netjoint-ui.scss')
             .pipe(sourcemaps.init())
             .pipe(sass().on('error', sass.logError))
             .pipe(autoprefixer({browsers: ['last 2 version', 'ie 8', 'ie 9', 'ios 6', 'android 4']}))
             .pipe(sourcemaps.write('./maps'))
-            .pipe(gulp.dest('./dist/css'))
-//            .pipe(rename({suffix: '.min'}))
-//            .pipe(cleanCSS())
-//            .pipe(gulp.dest('./dist/css'));
+            .pipe(gulp.dest('./dist/css'));
+    gulp.src('./src/sass/netjoint-ui.scss')
+            .pipe(sourcemaps.init())
+            .pipe(sass().on('error', sass.logError))
+            .pipe(autoprefixer({browsers: ['last 2 version', 'ie 8', 'ie 9', 'ios 6', 'android 4']}))
+            .pipe(rename({suffix: '.min'}))
+            .pipe(cleanCSS())
+            .pipe(sourcemaps.write('./maps'))
+            .pipe(gulp.dest('./dist/css'));
 });
+
+gulp.task('jsbuild', function () {
+    gulp.src('./src/js/*.js')
+            .pipe(amdOptimize("netjoint-ui", {
+                baseUrl: "./src/js",
+                paths: {
+                    "jquery": "../../node_modules/jquery/dist/jquery",
+                },
+                shim: {
+                    'affix': {
+                        deps: ['jquery'],
+                        exports: '$.fn.affix'
+                    },
+                    'alert': {
+                        deps: ['jquery'],
+                        exports: '$.fn.alert'
+                    },
+                    'button': {
+                        deps: ['jquery'],
+                        exports: '$.fn.button'
+                    },
+                    'carousel': {
+                        deps: ['jquery'],
+                        exports: '$.fn.carousel'
+                    },
+                    'collapse': {
+                        deps: ['jquery'],
+                        exports: '$.fn.collapse'
+                    },
+                    'dropdown': {
+                        deps: ['jquery'],
+                        exports: '$.fn.dropdown'
+                    },
+                    'modal': {
+                        deps: ['jquery'],
+                        exports: '$.fn.modal'
+                    },                    
+                    'scrollspy': {
+                        deps: ['jquery'],
+                        exports: '$.fn.scrollspy'
+                    },
+                    'tab': {
+                        deps: ['jquery'],
+                        exports: '$.fn.tab'
+                    },
+                    'tooltip': {
+                        deps: ['jquery'],
+                        exports: '$.fn.tooltip'
+                    },
+                    'popover': {
+                        deps: ['jquery','tooltip'],
+                        exports: '$.fn.popover'
+                    },
+                    'transition': {
+                        deps: ['jquery'],
+                        exports: '$.fn.transition'
+                    }
+                }
+            }))
+            .pipe(concat('netjoint-ui.js'))
+            .pipe(gulp.dest('./dist/js'))
+            .pipe(rename('netjoint-ui.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('./dist/js'));
+});
+
 gulp.task('install', function () {
     gulp.src('./node_modules/font-awesome/fonts/*.{otf,ttf,woff,woff2,eot,svg}')
             .pipe(gulp.dest('./dist/fonts'));
@@ -27,4 +100,5 @@ gulp.task('install', function () {
 });
 gulp.task('watch', function () {
     gulp.watch('./src/**/*.scss', ['sass']);
+    gulp.watch('./src/js/*.js', ['jsbuild']);
 });
