@@ -41,6 +41,7 @@
     
     "jquery": "^1.12.3",
     "bootstrap-sass": "^3.3.6",
-    "font-awesome" : "^4.6.1"
+    "font-awesome" : "^4.6.1",
+    "select2" : "^4.0.2"
   }
 }

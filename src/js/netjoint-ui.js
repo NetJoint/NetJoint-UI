@@ -10,7 +10,8 @@ define(['jquery',
     'scrollspy',
     'tab',
     'tooltip',
-    'transition'
+    'transition',
+    'select2'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();
