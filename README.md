@@ -24,11 +24,12 @@ NetJoint-UI/
 │   |   ├── netjoint-ui.js
 │   |   └── netjoint-ui.min.js
 |   ├── fonts/
-|   ├── img/
-|   └── vendors/
+|   └── img/
 ├── examples/
 └── src/
     ├── components/
+    ├── plugins/
+    ├── js/
     └── sass/
 
 ```
