@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../dist/css/netjoint-ui.css" />
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
   </head>
   <body data-spy="scroll" data-target="#sidebar">
     <!--[if lt IE 8]>
@@ -2498,6 +2500,7 @@
                     <li><a href="#js-buttons">Buttons</a></li>
                     <li><a href="#js-collapse">Collapse</a></li>
                     <li><a href="#js-carousel">Carousel</a></li>
+                    <li><a href="#js-select">Select</a></li>
                   </ul>
                 </li>
               </ul>
@@ -2521,7 +2524,17 @@
         </div>
       </div>
     </div>
+    
+    
+    <!--    select部分-->
+    <div class="cselect" id="js-select">
+        <select class="js-example-data-array"></select>
 
+        <select class="js-example-data-array-selected">
+          <option value="2" selected="selected">duplicate</option>
+        </select>
+    </div>
+    
     <div id="footer">
       <div class="container">
         <p class="footer-content">Place sticky footer content here</p>
