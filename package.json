@@ -43,6 +43,8 @@
     "jquery": "^1.12.3",
     "bootstrap-sass": "^3.3.6",
     "font-awesome" : "^4.6.1",
-    "select2" : "^4.0.2"
+    "select2" : "^4.0.2",
+    "angular" : "~1.2.29",
+    "angular-ui-router" : "~0.3.0"
   }
 }
