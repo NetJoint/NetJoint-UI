@@ -24,23 +24,22 @@
   "bugs": {
     "url": "https://github.com/NetJoint/NetJoint-UI/issues"
   },
-  "dependencies": {    
-    "requirejs" : "^2.2.0"
+  "dependencies": {
+    "requirejs": "^2.2.0"
   },
   "devDependencies": {
+    "amd-optimize": "*",
+    "bootstrap-sass": "^3.3.6",
+    "font-awesome": "^4.6.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "*",
     "gulp-clean-css": "*",
+    "gulp-concat": "*",
     "gulp-rename": "*",
-    "gulp-autoprefixer": "*",
-    "amd-optimize" :  "*",
-    "gulp-concat" :  "*",
     "gulp-sass": "*",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
-    
-    "jquery": "^1.12.3",
-    "bootstrap-sass": "^3.3.6",
-    "font-awesome" : "^4.6.1"
+    "icheck": "^1.0.2",
+    "jquery": "^1.12.3"
   }
 }

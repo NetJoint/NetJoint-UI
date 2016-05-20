@@ -158,3 +158,8 @@ body {
   word-wrap: normal;
   white-space: pre;
 }
+
+/*Checkboxs组件的文字样式(与默认表单的label样式冲突)*/
+#checkboxs label{
+    font-weight: normal;
+}
