@@ -83,6 +83,10 @@ gulp.task('jsbuild', function () {
                     'transition': {
                         deps: ['jquery'],
                         exports: '$.fn.transition'
+                    },
+                     'checkbox': {
+                        deps: ['jquery'],
+                        exports: '$.fn.checkbox'
                     }
                 }
             }))
