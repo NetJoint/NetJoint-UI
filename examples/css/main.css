@@ -158,6 +158,8 @@ body {
   word-wrap: normal;
   white-space: pre;
 }
-.cselect{
-    margin-left: 10px;
+
+.js-example-data-array-selected{
+    width: 100px;
+    height: 100px;
 }
