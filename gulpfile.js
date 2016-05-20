@@ -33,6 +33,7 @@ gulp.task('jsbuild', function () {
                 baseUrl: "./src/js",
                 paths: {
                     "jquery": "../../node_modules/jquery/dist/jquery",
+                    "select2":"../../node_modules/select2/dist/js/select2.full",
                 },
                 shim: {
                     'affix': {
@@ -82,6 +83,10 @@ gulp.task('jsbuild', function () {
                     'transition': {
                         deps: ['jquery'],
                         exports: '$.fn.transition'
+                    },
+                     'checkbox': {
+                        deps: ['jquery'],
+                        exports: '$.fn.checkbox'
                     }
                 }
             }))

@@ -41,8 +41,15 @@
 @import "../components/popover/popover";
 @import "../components/carousel/carousel";
 
+@import "../components/select/select";
+@import "../components/checkbox/checkbox";
+@import "../components/icon-pc/icon-pc";
+
+
 // Utility classes
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
 
 // Font awesome
+@import "../../node_modules/font-awesome/scss/font-awesome";
+

@@ -96,6 +96,15 @@ require(['netjoint-ui'], function () {
 
             // Show inspector button on hover
             inspector();
+
+            // select2
+            var data = [{id: 0, text: 'enhancement'}, {id: 1, text: 'bug'}, {id: 2, text: 'duplicate'}, {id: 3, text: 'invalid'}, {id: 4, text: 'wontfix'}];
+            $(".js-example-data-array").select2({
+                data: data
+            })
+            $(".js-example-data-array-selected").select2({
+                data: data
+            })
         });
     })(window);
 });
