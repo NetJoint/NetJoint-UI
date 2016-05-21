@@ -83,6 +83,10 @@ gulp.task('jsbuild', function () {
                     'transition': {
                         deps: ['jquery'],
                         exports: '$.fn.transition'
+                    },
+                     'checkbox': {
+                        deps: ['jquery'],
+                        exports: '$.fn.checkbox'
                     }
                 }
             }))
@@ -98,6 +102,7 @@ gulp.task('install', function () {
             .pipe(gulp.dest('./dist/fonts'));
     gulp.src('./node_modules/bootstrap-sass/assets/fonts/bootstrap/*.{otf,ttf,woff,woff2,eot,svg}')
             .pipe(gulp.dest('./dist/fonts/bootstrap'));
+    
 });
 gulp.task('watch', function () {
     gulp.watch('./src/**/*.scss', ['sass']);
