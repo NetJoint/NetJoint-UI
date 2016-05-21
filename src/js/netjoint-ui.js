@@ -17,5 +17,6 @@ define(['jquery',
     $(function () {
         $('[data-spy="scroll"]').scrollspy();
         $('[data-spy="affix"]').affix();
+        $('[data-toggle="select"]').select2();
     });
 });

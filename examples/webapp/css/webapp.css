@@ -37,11 +37,11 @@
   font-size: 10px;
   padding: 10px 5px;
 }
-.layout-sm .nav.child_menu li.active,
+.layout-sm .nav.nav-child li.active,
 .layout-sm .layout-aside-nav li.active-sm {
   border-right: 5px solid #1ABB9C;
 }
-.layout-sm ul.nav.child_menu ul,
+.layout-sm ul.nav.nav-child ul,
 .layout-sm .layout-aside-nav li.active-sm ul ul {
     position: static;
     width: 200px;
@@ -59,7 +59,7 @@
   width: 100% !important;
   margin-bottom: 5px;
 }
-.layout-sm ul.nav.child_menu {
+.layout-sm ul.nav.nav-child {
   left: 100%;
   position: absolute;
   top: 0;
@@ -68,10 +68,10 @@
   background: #3E5367;
   display: none;
 }
-.layout-sm ul.nav.child_menu li {
+.layout-sm ul.nav.nav-child li {
   padding: 0 10px;
 }
-.layout-sm ul.nav.child_menu li a {
+.layout-sm ul.nav.nav-child li a {
   text-align: left !important;
 }
 .menu_section {
@@ -481,17 +481,17 @@ a:hover, a:focus {
   text-decoration: none;
   background: transparent;
 }
-.nav.child_menu {
+.nav.nav-child {
   display: none;
 }
-.nav.child_menu li:hover,
-.nav.child_menu li.active {
+.nav.nav-child li:hover,
+.nav.nav-child li.active {
   background-color: rgba(255, 255, 255, 0.06);
 }
-.nav.child_menu li {
+.nav.nav-child li {
   padding-left: 36px;
 }
-.layout-md ul.nav.child_menu li:before {
+.layout-md ul.nav.nav-child li:before {
   background: #425668;
   bottom: auto;
   content: "";
@@ -506,7 +506,7 @@ a:hover, a:focus {
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
-.layout-md ul.nav.child_menu li:after {
+.layout-md ul.nav.nav-child li:after {
   border-left: 1px solid #425668;
   bottom: 0;
   content: "";
@@ -514,16 +514,16 @@ a:hover, a:focus {
   position: absolute;
   top: 0;
 }
-.layout-aside-nav>li>a, .nav.child_menu>li>a {
+.layout-aside-nav>li>a, .nav.nav-child>li>a {
   color: #E7E7E7;
   font-weight: 500;
 }
-.nav.child_menu li li:hover, 
-.nav.child_menu li li.active {
+.nav.nav-child li li:hover, 
+.nav.nav-child li li.active {
   background: none;
 }
-.nav.child_menu li li a:hover, 
-.nav.child_menu li li a.active {
+.nav.nav-child li li a:hover, 
+.nav.nav-child li li a.active {
   color: #fff;
 }
 .nav>li>a {
@@ -637,7 +637,7 @@ a:hover, a:focus {
 .toggle a i {
   font-size: 26px;
 }
-.nav.child_menu > li > a {
+.nav.nav-child > li > a {
   color: rgba(255, 255, 255, 0.75);
   font-size: 12px;
   padding: 9px;
@@ -660,9 +660,6 @@ a:hover, a:focus {
 }
 .line_30 {
   line-height: 30px;
-}
-.main_menu_side {
-  padding: 0;
 }
 .bs-docs-sidebar .nav>li>a {
   display: block;
