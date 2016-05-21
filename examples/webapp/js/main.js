@@ -1,8 +1,8 @@
 require.config({
     paths: {
-        'angular': '../../node_modules/angular/angular.min',
-        'uiRouter': '../../node_modules/angular-ui-router/release/angular-ui-router',        
-        "netjoint-ui": "../../dist/js/netjoint-ui",
+        'angular': '../lib/angular/angular.min',
+        'uiRouter': '../lib/angular-ui-router/angular-ui-router.min',        
+        "netjoint-ui": "../../../dist/js/netjoint-ui",
     },
     shim: {
         'uiRouter': {

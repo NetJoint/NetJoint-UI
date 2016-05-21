@@ -15,14 +15,14 @@ define(function () {
                     views: {
                         "content": {
                             controller: 'dashboardCtrl',
-                            templateUrl: 'app/views/dashboard/dashboard.html'
+                            templateUrl: 'views/dashboard/dashboard.html'
                         }
                     },
                     resolve: {
                         loadCtrl: ["$q", function ($q) {
                                 var delay = $q.defer();
                                 require([
-                                    '../app/views/dashboard/dashboard'
+                                    '../views/dashboard/dashboard'
                                 ], function () {
                                     delay.resolve();
                                 });
@@ -35,14 +35,14 @@ define(function () {
                     views: {
                         "content": {
                             controller: 'formCtrl',
-                            templateUrl: 'app/views/form/form.html'
+                            templateUrl: 'views/form/form.html'
                         }
                     },
                     resolve: {
                         loadCtrl: ["$q", function ($q) {
                                 var delay = $q.defer();
                                 require([
-                                    '../app/views/form/form'
+                                    '../views/form/form'
                                 ], function () {
                                     delay.resolve();
                                 });
@@ -139,10 +139,10 @@ define(function () {
                                 });
                         return delay.promise;
                     },
-                    // 删除
-                    delete: function (url) {
+                    // 删除,delete方法会被ie8认为是保留字报错
+                    destroy: function (url) {
                         var delay = $q.defer();
-                        $http.delete(url)
+                        $http["delete"](url)
                                 .then(function (result) {
                                     delay.resolve();
                                 }, function (errinfo) {
