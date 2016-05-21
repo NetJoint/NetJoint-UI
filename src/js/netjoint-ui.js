@@ -11,7 +11,9 @@ define(['jquery',
     'tab',
     'tooltip',
     'transition',
-    'checkbox'
+    'checkbox',
+    'datepicker',
+    'timepicker'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

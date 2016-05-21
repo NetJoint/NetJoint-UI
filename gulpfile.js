@@ -86,6 +86,14 @@ gulp.task('jsbuild', function () {
                      'checkbox': {
                         deps: ['jquery'],
                         exports: '$.fn.checkbox'
+                    },
+                    'datepicker': {
+                        deps: ['jquery'],
+                        exports: '$.fn.datepicker'
+                    },
+                    'timepicker': {
+                        deps: ['jquery'],
+                        exports: '$.fn.timepicker'
                     }
                 }
             }))
