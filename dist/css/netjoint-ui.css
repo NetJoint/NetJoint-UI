@@ -2513,6 +2513,21 @@ select[multiple].input-lg,
     padding-top: 3px;
     font-size: 12px; } }
 
+.mini {
+  width: 60px; }
+
+.small {
+  width: 94px; }
+
+.medium {
+  width: 148px; }
+
+.large {
+  width: 360px; }
+
+.xlarge {
+  width: 500px; }
+
 table {
   background-color: transparent; }
 
