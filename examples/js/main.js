@@ -106,6 +106,19 @@ require(['netjoint-ui'], function () {
             $(".js-example-data-array-selected").select2({
                 data: data
             })
+            
+            //x-editable
+            $("#username").editable();
+            $('#status').editable({
+                value: 2,    
+                source: [
+                      {value: 1, text: 'Active'},
+                      {value: 2, text: 'Blocked'},
+                      {value: 3, text: 'Deleted'}
+                   ]
+             });
+            
+            
         });
     })(window);
 });
