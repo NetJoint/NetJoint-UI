@@ -2099,6 +2099,174 @@
     <div class="well well-sm">.well.well-sm</div>
   </div>
 </div>
+<!--步骤条开始-->
+<h2 id="steps">Steps</h2>
+<h4>Fixed Width Steps</h4>
+<div class="sui-steps">
+  <div class="wrap">
+    <div class="finished">
+      <label><span class="round"><i class="sui-icon icon-pc-right"></i></span><span>first step #4AA4D5</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="current">
+      <label><span class="round">2 </span><span>second step #333333</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="todo">
+      <label><span class="round">3</span><span>third step #999999</span></label>
+    </div>
+  </div>
+</div>
+<div class="sui-steps steps-large">
+  <div class="wrap">
+    <div class="finished">
+      <label><span class="round"><i class="sui-icon icon-pc-right"></i></span><span>first step #4AA4D5</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="current">
+      <label><span class="round">2</span><span>second step #333333</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="todo">
+      <label><span class="round">3</span><span>third step #999999</span></label>
+    </div>
+  </div>
+</div>
+<h4>Adaptive Steps</h4><span>Adaptive steps according to page size,Need browser support "display:table,display:table-cell" attribute</span>
+<div class="sui-steps steps-auto">
+  <div class="wrap">
+    <div class="finished">
+      <label><span class="round"><i class="sui-icon icon-pc-right"></i></span><span>first step #4AA4D5</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="current">
+      <label><span class="round">2</span><span>second step #333333</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="todo">
+      <label><span class="round">3</span><span>third step #999999</span></label>
+    </div>
+  </div>
+</div>
+<div class="sui-steps steps-large steps-auto">
+  <div class="wrap">
+    <div class="finished">
+      <label><span class="round"><i class="sui-icon icon-pc-right"></i></span><span>first step #4AA4D5</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="current">
+      <label><span class="round">2</span><span>second step #333333</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="todo">
+      <label><span class="round">3</span><span>third step #999999</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="todo">
+      <label><span class="round">3</span><span>fourth step #999999</span></label><i class="triangle-right-bg"></i><i class="triangle-right"></i>
+    </div>
+  </div>
+</div>
+<h4>Foreground Fixed Width Steps</h4>
+<div class="sui-steps-round">
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="current">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo last">
+    <div class="wrap">
+      <div class="round">3</div>
+    </div>
+    <label>Text description</label>
+  </div>
+</div>
+<h4>Foreground Adaptive Steps</h4><span>Adaptive steps according to page size,If only specified
+"steps-round-auto",steps will automatically adapted，if you want the overall adaptation of the steps，at the same time a single step to maintain a certain proportion of the width，refer to the following example</span>
+<div class="sui-steps-round steps-round-auto">
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description Text description Text description Text description</label>
+  </div>
+  <div class="current">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo last">
+    <div class="wrap">
+      <div class="round">3</div>
+    </div>
+    <label>Text description</label>
+  </div>
+</div><span>At the same time specifies the steps-round-auto and steps steps, the step bar will be the overall adaptation, while a single step to maintain a certain percentage of the width, currently available to steps-7 to steps-3, using a method similar to the bootstrap of the partition layout</span>
+<div class="sui-steps-round steps-round-auto steps-3">
+  <div class="finished">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description Text description Text description Text description</label>
+  </div>
+  <div class="current">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo">
+    <div class="wrap">
+      <div class="round">1</div>
+      <div class="bar"></div>
+    </div>
+    <label>Text description</label>
+  </div>
+  <div class="todo last">
+    <div class="wrap">
+      <div class="round">3</div>
+    </div>
+    <label>Text description</label>
+  </div>
+</div>
+<!--步骤条结束-->
 
 
 <h1 class="page-header" id="javascript">Javascript</h1>
@@ -2565,6 +2733,7 @@
                     <li><a href="#list-group">List group</a></li>
                     <li><a href="#panels">Panels</a></li>
                     <li><a href="#wells">Wells</a></li>
+                    <li><a href="#steps">Steps</a></li>
                   </ul>
                 </li>
                 <li>

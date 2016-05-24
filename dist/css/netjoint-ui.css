@@ -7866,6 +7866,276 @@ button.close {
     left: 27px;
     position: absolute;
     top: 0; }
+/*sui-steps步骤条的引进*/
+.sui-steps {
+  font-size: 0px;
+  overflow: hidden;
+  line-height: 0px;
+  margin: 18px 0px;
+}
+.sui-steps .wrap {
+  display: inline-block;
+}
+.sui-steps .wrap > div {
+  width: 195px;
+  height: 32px;
+  display: inline-block;
+  line-height: 32px;
+  vertical-align: top;
+  font-size: 12px;
+  position: relative;
+}
+.sui-steps .wrap > div > label {
+  margin-left: 26px;
+  cursor: default;
+}
+.sui-steps .triangle-right {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 16px;
+  position: absolute;
+  right: -31px;
+  z-index: 1;
+}
+.sui-steps .triangle-right-bg {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 16px;
+  position: absolute;
+  right: -31px;
+  z-index: 1;
+  border-width: 20px;
+  right: -40px;
+  border-color: transparent transparent transparent #FFF;
+  top: -4px;
+}
+.sui-steps .round {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 16px;
+}
+.sui-steps .round .sui-icon {
+  vertical-align: -1px;
+}
+.sui-steps .round + span:before {
+  content: '\00a0';
+}
+.sui-steps .finished {
+  background-color: #28a3ef;
+  color: #ffffff;
+}
+.sui-steps .finished .triangle-right {
+  border-color: transparent transparent transparent #28a3ef;
+}
+.sui-steps .finished .round {
+  background-color: #ffffff;
+  background-color: transparent\9;
+  color: #28a3ef;
+}
+.sui-steps .finished .round > i {
+  color: #28a3ef;
+  font-size: 12px;
+}
+.sui-steps .current {
+  background-color: #4cb9fc;
+  color: #ffffff;
+}
+.sui-steps .current .triangle-right {
+  border-color: transparent transparent transparent #4cb9fc;
+}
+.sui-steps .current .round {
+  background-color: #ffffff;
+  color: #4cb9fc;
+  color: #FFF\9;
+  background-color: transparent\9;
+}
+.sui-steps .todo {
+  background-color: #eeeeee;
+  color: #999999;
+}
+.sui-steps .todo .triangle-right {
+  border-color: transparent transparent transparent #eeeeee;
+}
+.sui-steps .todo .round {
+  background-color: #ffffff;
+  background-color: transparent\9;
+}
+.steps-large .wrap > div {
+  font-size: 14px;
+  width: 243.75px;
+  height: 40px;
+  line-height: 40px;
+}
+.steps-large .wrap > div > label {
+  font-size: 14px;
+  margin-left: 30px;
+}
+.steps-large .triangle-right {
+  border-width: 20px;
+  right: -39px;
+}
+.steps-large .triangle-right-bg {
+  border-width: 24px;
+  right: -48px;
+}
+.steps-large .round {
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+.steps-auto {
+  display: table;
+  width: 100%;
+}
+.steps-auto .wrap {
+  display: table-cell;
+}
+.steps-auto .wrap > div {
+  width: 100%;
+}
+.sui-steps-round {
+  font-size: 0px;
+  overflow: hidden;
+  line-height: 0px;
+  margin: 18px 0px;
+  padding: 0px 6px;
+}
+.sui-steps-round > div {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+.sui-steps-round > div .wrap:before,
+.sui-steps-round > div .wrap:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.sui-steps-round > div .wrap:after {
+  clear: both;
+}
+.sui-steps-round > div > label {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 12px;
+  height: 12px;
+  margin-top: 6px;
+  color: #28a3ef;
+  cursor: default;
+  text-align: center;
+  width: 50%;
+  margin-left: -25%;
+  position: relative;
+  left: 15px;
+}
+.sui-steps-round > div:first-child > label {
+  width: auto;
+  max-width: 50%;
+  margin-left: 0;
+  left: 0;
+}
+.sui-steps-round > div:last-child,
+.sui-steps-round > div.last {
+  width: 30px !important;
+}
+.sui-steps-round > div:last-child > label,
+.sui-steps-round > div.last > label {
+  position: absolute;
+  width: auto;
+  margin-left: 0;
+  left: auto;
+  right: 0;
+}
+.sui-steps-round > div .round {
+  width: 22px;
+  height: 22px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  color: #FFF;
+  line-height: 22px;
+  text-align: center;
+  float: left;
+}
+.sui-steps-round > div .bar {
+  margin: 10px 10px 0px 40px;
+  width: 200px;
+  height: 6px;
+  vertical-align: middle;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.sui-steps-round > .finished .round {
+  border: 4px #28a3ef solid;
+  background-color: #28a3ef;
+  color: #ffffff;
+}
+.sui-steps-round > .finished .bar {
+  background-color: #28a3ef;
+}
+.sui-steps-round > .current .round {
+  border: 4px #4cb9fc solid;
+  background-color: #4cb9fc;
+}
+.sui-steps-round > .current .bar {
+  background-color: #4cb9fc;
+}
+.sui-steps-round > .todo > label {
+  color: #999999;
+}
+.sui-steps-round > .todo .round {
+  border: 4px #d3d3d3 solid;
+  background-color: #FFF;
+  color: #999999;
+}
+.sui-steps-round > .todo .bar {
+  background-color: #eeeeee;
+}
+.steps-round-auto {
+  display: table;
+  width: 100%;
+}
+.steps-round-auto > div {
+  display: table-cell;
+}
+.steps-round-auto > div .bar {
+  width: auto;
+}
+.steps-3 > div {
+  width: 50%;
+}
+.steps-4 > div {
+  width: 33%;
+}
+.steps-5 > div {
+  width: 25%;
+}
+.steps-6 > div {
+  width: 20%;
+}
+.steps-7 > div {
+  width: 16%;
+}
+/*sui-steps步骤条的引进*/
 
 @media (max-width: 991px) {
   .layout-md .layout-content, .layout-md .layout-nav {
