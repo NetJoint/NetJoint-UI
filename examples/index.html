@@ -30,6 +30,7 @@
             <li><a href="#css">CSS</a></li>
             <li><a href="#components">Components</a></li>
             <li><a href="#javascript">Javascript</a></li>
+            <li><a href="admin.html">AdminTemplate</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -44,7 +45,7 @@
   <p>NetJoint UI</p>
   <footer>
     <span class="glyphicon glyphicon-heart"></span>
-    <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> v3.3.0
+    <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> v3.3.6
   </footer>
   <footer>
     <span class="glyphicon glyphicon-star"></span>
@@ -1394,9 +1395,35 @@
 
 <h2 id="datepicker">Datepicker</h2>
 <div class="js-html-inspector" data-remove-target="p:first">
-    <input type="text" data-toggle="datepicker" value="2016-05-20">
-    <input type="text" data-toggle="timepicker" value="16:12">
-    
+    <div class="row">
+        <div class="col-sm-6">
+            <strong>datepicker : </strong><input type="text" data-toggle="datepicker" value="2016-05-20">
+        </div>
+        <div class="col-sm-6">
+            <strong>timepicker : </strong><input type="text" data-toggle="timepicker" value="16:12">  
+        </div>
+    </div>
+</div>
+
+<h2 id="X-editable">X-editable</h2>
+<div class="js-html-inspector" data-remove-target="p:first">
+    <table class="table table-bordered  table-striped">
+        <tbody>
+            <tr>
+                <td width="35%">Simple text field</td>
+                <td width="65%">
+                    <a href="#" id="username" data-type="text" data-pk="1" data-title="Enter username" class="editable editable-click" style="display: inline;">superuser</a>
+                </td>
+            </tr>
+         
+            <tr>
+                <td width="35%">Select, local array, custom display</td>
+                <td width="65%">
+                    <a href="#" id="status" data-type="select" data-pk="1" data-value="" data-title="Select status" class="editable editable-click" style="color: gray; display: inline;">not selected</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <h2 id="input-groups">Input groups</h2>
@@ -2495,6 +2522,24 @@
 <p>Methods: <code>.carousel('cycle')</code> <code>.carousel('pause')</code> <code>.carousel(number)</code> <code>.carousel('prev')</code> <code>.carousel('next')</code></p>
 <p>Events: <code>slide.bs.carousel</code> <code>slid.bs.carousel</code></p>
 
+
+    <!--    select部分-->
+    <h2 id="js-select">Select</h2>
+    <p>Via data attributes: <code>data-toggle="dropdown"</code></p>
+    <p>Via Javascript: <code>$('select').select2();</code></p><br />
+    <div class="cselect" >
+        <select class="js-example-data-array"></select>
+
+        <select class="js-example-data-array-selected">
+          <option value="2" selected="selected">duplicate</option>
+        </select>
+    </div><br />
+    <p>Options: <code>focus:click</code></p>
+    <p>Methods: <code>.select2('close')</code></p>
+    <p>Events: <code>show.bs.select2</code> <code>hide.bs.select2</code></p>
+
+
+
         </div>
         <div class="col-md-3">
           <div data-spy="affix">
@@ -2519,6 +2564,7 @@
                     <li><a href="#button-groups">Button groups</a></li>
                     <li><a href="#checkboxs">Checkboxs</a></li>
                     <li><a href="#datepicker">Datepicker</a></li>
+                    <li><a href="#X-editable">X-editable</a></li>
                     <li><a href="#input-groups">Input groups</a></li>
                     <li><a href="#navs">Navs</a></li>
                     <li><a href="#navbar">Navbar</a></li>
@@ -2548,6 +2594,7 @@
                     <li><a href="#js-buttons">Buttons</a></li>
                     <li><a href="#js-collapse">Collapse</a></li>
                     <li><a href="#js-carousel">Carousel</a></li>
+                    <li><a href="#js-select">Select</a></li>
                   </ul>
                 </li>
               </ul>
@@ -2570,8 +2617,7 @@
           </div>
         </div>
       </div>
-    </div>
-
+    </div>    
     <div id="footer">
       <div class="container">
         <p class="footer-content">Place sticky footer content here</p>

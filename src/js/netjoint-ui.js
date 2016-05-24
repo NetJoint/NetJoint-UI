@@ -13,7 +13,9 @@ define(['jquery',
     'transition',
     'checkbox',
     'datepicker',
-    'timepicker'
+    'timepicker',
+    'select2',
+    'editable'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

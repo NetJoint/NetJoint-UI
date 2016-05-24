@@ -158,8 +158,12 @@ body {
   word-wrap: normal;
   white-space: pre;
 }
-
+.js-example-data-array-selected{
+    width: 100px;
+    height: 100px;
+}
 /*Checkboxs组件的文字样式(与默认表单的label样式冲突)*/
 #checkboxs label{
     font-weight: normal;
 }
+

@@ -10130,6 +10130,8274 @@ define('timepicker', ['jquery'], function () {
     }(window.jQuery);
     return $.fn.timepicker;
 });
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        define('select2', ['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        factory(require('jquery'));
+    } else {
+        factory(jQuery);
+    }
+}(function (jQuery) {
+    var S2 = function () {
+        if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) {
+            var S2 = jQuery.fn.select2.amd;
+        }
+        var S2;
+        (function () {
+            if (!S2 || !S2.requirejs) {
+                if (!S2) {
+                    S2 = {};
+                } else {
+                    require = S2;
+                }
+                var requirejs, require, define;
+                (function (undef) {
+                    var main, req, makeMap, handlers, defined = {}, waiting = {}, config = {}, defining = {}, hasOwn = Object.prototype.hasOwnProperty, aps = [].slice, jsSuffixRegExp = /\.js$/;
+                    function hasProp(obj, prop) {
+                        return hasOwn.call(obj, prop);
+                    }
+                    function normalize(name, baseName) {
+                        var nameParts, nameSegment, mapValue, foundMap, lastIndex, foundI, foundStarMap, starI, i, j, part, baseParts = baseName && baseName.split('/'), map = config.map, starMap = map && map['*'] || {};
+                        if (name && name.charAt(0) === '.') {
+                            if (baseName) {
+                                name = name.split('/');
+                                lastIndex = name.length - 1;
+                                if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
+                                    name[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
+                                }
+                                name = baseParts.slice(0, baseParts.length - 1).concat(name);
+                                for (i = 0; i < name.length; i += 1) {
+                                    part = name[i];
+                                    if (part === '.') {
+                                        name.splice(i, 1);
+                                        i -= 1;
+                                    } else if (part === '..') {
+                                        if (i === 1 && (name[2] === '..' || name[0] === '..')) {
+                                            break;
+                                        } else if (i > 0) {
+                                            name.splice(i - 1, 2);
+                                            i -= 2;
+                                        }
+                                    }
+                                }
+                                name = name.join('/');
+                            } else if (name.indexOf('./') === 0) {
+                                name = name.substring(2);
+                            }
+                        }
+                        if ((baseParts || starMap) && map) {
+                            nameParts = name.split('/');
+                            for (i = nameParts.length; i > 0; i -= 1) {
+                                nameSegment = nameParts.slice(0, i).join('/');
+                                if (baseParts) {
+                                    for (j = baseParts.length; j > 0; j -= 1) {
+                                        mapValue = map[baseParts.slice(0, j).join('/')];
+                                        if (mapValue) {
+                                            mapValue = mapValue[nameSegment];
+                                            if (mapValue) {
+                                                foundMap = mapValue;
+                                                foundI = i;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (foundMap) {
+                                    break;
+                                }
+                                if (!foundStarMap && starMap && starMap[nameSegment]) {
+                                    foundStarMap = starMap[nameSegment];
+                                    starI = i;
+                                }
+                            }
+                            if (!foundMap && foundStarMap) {
+                                foundMap = foundStarMap;
+                                foundI = starI;
+                            }
+                            if (foundMap) {
+                                nameParts.splice(0, foundI, foundMap);
+                                name = nameParts.join('/');
+                            }
+                        }
+                        return name;
+                    }
+                    function makeRequire(relName, forceSync) {
+                        return function () {
+                            var args = aps.call(arguments, 0);
+                            if (typeof args[0] !== 'string' && args.length === 1) {
+                                args.push(null);
+                            }
+                            return req.apply(undef, args.concat([
+                                relName,
+                                forceSync
+                            ]));
+                        };
+                    }
+                    function makeNormalize(relName) {
+                        return function (name) {
+                            return normalize(name, relName);
+                        };
+                    }
+                    function makeLoad(depName) {
+                        return function (value) {
+                            defined[depName] = value;
+                        };
+                    }
+                    function callDep(name) {
+                        if (hasProp(waiting, name)) {
+                            var args = waiting[name];
+                            delete waiting[name];
+                            defining[name] = true;
+                            main.apply(undef, args);
+                        }
+                        if (!hasProp(defined, name) && !hasProp(defining, name)) {
+                            throw new Error('No ' + name);
+                        }
+                        return defined[name];
+                    }
+                    function splitPrefix(name) {
+                        var prefix, index = name ? name.indexOf('!') : -1;
+                        if (index > -1) {
+                            prefix = name.substring(0, index);
+                            name = name.substring(index + 1, name.length);
+                        }
+                        return [
+                            prefix,
+                            name
+                        ];
+                    }
+                    makeMap = function (name, relName) {
+                        var plugin, parts = splitPrefix(name), prefix = parts[0];
+                        name = parts[1];
+                        if (prefix) {
+                            prefix = normalize(prefix, relName);
+                            plugin = callDep(prefix);
+                        }
+                        if (prefix) {
+                            if (plugin && plugin.normalize) {
+                                name = plugin.normalize(name, makeNormalize(relName));
+                            } else {
+                                name = normalize(name, relName);
+                            }
+                        } else {
+                            name = normalize(name, relName);
+                            parts = splitPrefix(name);
+                            prefix = parts[0];
+                            name = parts[1];
+                            if (prefix) {
+                                plugin = callDep(prefix);
+                            }
+                        }
+                        return {
+                            f: prefix ? prefix + '!' + name : name,
+                            n: name,
+                            pr: prefix,
+                            p: plugin
+                        };
+                    };
+                    function makeConfig(name) {
+                        return function () {
+                            return config && config.config && config.config[name] || {};
+                        };
+                    }
+                    handlers = {
+                        require: function (name) {
+                            return makeRequire(name);
+                        },
+                        exports: function (name) {
+                            var e = defined[name];
+                            if (typeof e !== 'undefined') {
+                                return e;
+                            } else {
+                                return defined[name] = {};
+                            }
+                        },
+                        module: function (name) {
+                            return {
+                                id: name,
+                                uri: '',
+                                exports: defined[name],
+                                config: makeConfig(name)
+                            };
+                        }
+                    };
+                    main = function (name, deps, callback, relName) {
+                        var cjsModule, depName, ret, map, i, args = [], callbackType = typeof callback, usingExports;
+                        relName = relName || name;
+                        if (callbackType === 'undefined' || callbackType === 'function') {
+                            deps = !deps.length && callback.length ? [
+                                'require',
+                                'exports',
+                                'module'
+                            ] : deps;
+                            for (i = 0; i < deps.length; i += 1) {
+                                map = makeMap(deps[i], relName);
+                                depName = map.f;
+                                if (depName === 'require') {
+                                    args[i] = handlers.require(name);
+                                } else if (depName === 'exports') {
+                                    args[i] = handlers.exports(name);
+                                    usingExports = true;
+                                } else if (depName === 'module') {
+                                    cjsModule = args[i] = handlers.module(name);
+                                } else if (hasProp(defined, depName) || hasProp(waiting, depName) || hasProp(defining, depName)) {
+                                    args[i] = callDep(depName);
+                                } else if (map.p) {
+                                    map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
+                                    args[i] = defined[depName];
+                                } else {
+                                    throw new Error(name + ' missing ' + depName);
+                                }
+                            }
+                            ret = callback ? callback.apply(defined[name], args) : undefined;
+                            if (name) {
+                                if (cjsModule && cjsModule.exports !== undef && cjsModule.exports !== defined[name]) {
+                                    defined[name] = cjsModule.exports;
+                                } else if (ret !== undef || !usingExports) {
+                                    defined[name] = ret;
+                                }
+                            }
+                        } else if (name) {
+                            defined[name] = callback;
+                        }
+                    };
+                    requirejs = require = req = function (deps, callback, relName, forceSync, alt) {
+                        if (typeof deps === 'string') {
+                            if (handlers[deps]) {
+                                return handlers[deps](callback);
+                            }
+                            return callDep(makeMap(deps, callback).f);
+                        } else if (!deps.splice) {
+                            config = deps;
+                            if (config.deps) {
+                                req(config.deps, config.callback);
+                            }
+                            if (!callback) {
+                                return;
+                            }
+                            if (callback.splice) {
+                                deps = callback;
+                                callback = relName;
+                                relName = null;
+                            } else {
+                                deps = undef;
+                            }
+                        }
+                        callback = callback || function () {
+                        };
+                        if (typeof relName === 'function') {
+                            relName = forceSync;
+                            forceSync = alt;
+                        }
+                        if (forceSync) {
+                            main(undef, deps, callback, relName);
+                        } else {
+                            setTimeout(function () {
+                                main(undef, deps, callback, relName);
+                            }, 4);
+                        }
+                        return req;
+                    };
+                    req.config = function (cfg) {
+                        return req(cfg);
+                    };
+                    requirejs._defined = defined;
+                    define = function (name, deps, callback) {
+                        if (typeof name !== 'string') {
+                            throw new Error('See almond README: incorrect module build, no module name');
+                        }
+                        if (!deps.splice) {
+                            callback = deps;
+                            deps = [];
+                        }
+                        if (!hasProp(defined, name) && !hasProp(waiting, name)) {
+                            waiting[name] = [
+                                name,
+                                deps,
+                                callback
+                            ];
+                        }
+                    };
+                    define.amd = { jQuery: true };
+                }());
+                S2.requirejs = requirejs;
+                S2.require = require;
+                S2.define = define;
+            }
+        }());
+        S2.define('almond', function () {
+        });
+        S2.define('jquery', [], function () {
+            var _$ = jQuery || $;
+            if (_$ == null && console && console.error) {
+                console.error('Select2: An instance of jQuery or a jQuery-compatible library was not ' + 'found. Make sure that you are including jQuery before Select2 on your ' + 'web page.');
+            }
+            return _$;
+        });
+        S2.define('select2/utils', ['jquery'], function ($) {
+            var Utils = {};
+            Utils.Extend = function (ChildClass, SuperClass) {
+                var __hasProp = {}.hasOwnProperty;
+                function BaseConstructor() {
+                    this.constructor = ChildClass;
+                }
+                for (var key in SuperClass) {
+                    if (__hasProp.call(SuperClass, key)) {
+                        ChildClass[key] = SuperClass[key];
+                    }
+                }
+                BaseConstructor.prototype = SuperClass.prototype;
+                ChildClass.prototype = new BaseConstructor();
+                ChildClass.__super__ = SuperClass.prototype;
+                return ChildClass;
+            };
+            function getMethods(theClass) {
+                var proto = theClass.prototype;
+                var methods = [];
+                for (var methodName in proto) {
+                    var m = proto[methodName];
+                    if (typeof m !== 'function') {
+                        continue;
+                    }
+                    if (methodName === 'constructor') {
+                        continue;
+                    }
+                    methods.push(methodName);
+                }
+                return methods;
+            }
+            Utils.Decorate = function (SuperClass, DecoratorClass) {
+                var decoratedMethods = getMethods(DecoratorClass);
+                var superMethods = getMethods(SuperClass);
+                function DecoratedClass() {
+                    var unshift = Array.prototype.unshift;
+                    var argCount = DecoratorClass.prototype.constructor.length;
+                    var calledConstructor = SuperClass.prototype.constructor;
+                    if (argCount > 0) {
+                        unshift.call(arguments, SuperClass.prototype.constructor);
+                        calledConstructor = DecoratorClass.prototype.constructor;
+                    }
+                    calledConstructor.apply(this, arguments);
+                }
+                DecoratorClass.displayName = SuperClass.displayName;
+                function ctr() {
+                    this.constructor = DecoratedClass;
+                }
+                DecoratedClass.prototype = new ctr();
+                for (var m = 0; m < superMethods.length; m++) {
+                    var superMethod = superMethods[m];
+                    DecoratedClass.prototype[superMethod] = SuperClass.prototype[superMethod];
+                }
+                var calledMethod = function (methodName) {
+                    var originalMethod = function () {
+                    };
+                    if (methodName in DecoratedClass.prototype) {
+                        originalMethod = DecoratedClass.prototype[methodName];
+                    }
+                    var decoratedMethod = DecoratorClass.prototype[methodName];
+                    return function () {
+                        var unshift = Array.prototype.unshift;
+                        unshift.call(arguments, originalMethod);
+                        return decoratedMethod.apply(this, arguments);
+                    };
+                };
+                for (var d = 0; d < decoratedMethods.length; d++) {
+                    var decoratedMethod = decoratedMethods[d];
+                    DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
+                }
+                return DecoratedClass;
+            };
+            var Observable = function () {
+                this.listeners = {};
+            };
+            Observable.prototype.on = function (event, callback) {
+                this.listeners = this.listeners || {};
+                if (event in this.listeners) {
+                    this.listeners[event].push(callback);
+                } else {
+                    this.listeners[event] = [callback];
+                }
+            };
+            Observable.prototype.trigger = function (event) {
+                var slice = Array.prototype.slice;
+                this.listeners = this.listeners || {};
+                if (event in this.listeners) {
+                    this.invoke(this.listeners[event], slice.call(arguments, 1));
+                }
+                if ('*' in this.listeners) {
+                    this.invoke(this.listeners['*'], arguments);
+                }
+            };
+            Observable.prototype.invoke = function (listeners, params) {
+                for (var i = 0, len = listeners.length; i < len; i++) {
+                    listeners[i].apply(this, params);
+                }
+            };
+            Utils.Observable = Observable;
+            Utils.generateChars = function (length) {
+                var chars = '';
+                for (var i = 0; i < length; i++) {
+                    var randomChar = Math.floor(Math.random() * 36);
+                    chars += randomChar.toString(36);
+                }
+                return chars;
+            };
+            Utils.bind = function (func, context) {
+                return function () {
+                    func.apply(context, arguments);
+                };
+            };
+            Utils._convertData = function (data) {
+                for (var originalKey in data) {
+                    var keys = originalKey.split('-');
+                    var dataLevel = data;
+                    if (keys.length === 1) {
+                        continue;
+                    }
+                    for (var k = 0; k < keys.length; k++) {
+                        var key = keys[k];
+                        key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                        if (!(key in dataLevel)) {
+                            dataLevel[key] = {};
+                        }
+                        if (k == keys.length - 1) {
+                            dataLevel[key] = data[originalKey];
+                        }
+                        dataLevel = dataLevel[key];
+                    }
+                    delete data[originalKey];
+                }
+                return data;
+            };
+            Utils.hasScroll = function (index, el) {
+                var $el = $(el);
+                var overflowX = el.style.overflowX;
+                var overflowY = el.style.overflowY;
+                if (overflowX === overflowY && (overflowY === 'hidden' || overflowY === 'visible')) {
+                    return false;
+                }
+                if (overflowX === 'scroll' || overflowY === 'scroll') {
+                    return true;
+                }
+                return $el.innerHeight() < el.scrollHeight || $el.innerWidth() < el.scrollWidth;
+            };
+            Utils.escapeMarkup = function (markup) {
+                var replaceMap = {
+                    '\\': '&#92;',
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    '\'': '&#39;',
+                    '/': '&#47;'
+                };
+                if (typeof markup !== 'string') {
+                    return markup;
+                }
+                return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
+                    return replaceMap[match];
+                });
+            };
+            Utils.appendMany = function ($element, $nodes) {
+                if ($.fn.jquery.substr(0, 3) === '1.7') {
+                    var $jqNodes = $();
+                    $.map($nodes, function (node) {
+                        $jqNodes = $jqNodes.add(node);
+                    });
+                    $nodes = $jqNodes;
+                }
+                $element.append($nodes);
+            };
+            return Utils;
+        });
+        S2.define('select2/results', [
+            'jquery',
+            './utils'
+        ], function ($, Utils) {
+            function Results($element, options, dataAdapter) {
+                this.$element = $element;
+                this.data = dataAdapter;
+                this.options = options;
+                Results.__super__.constructor.call(this);
+            }
+            Utils.Extend(Results, Utils.Observable);
+            Results.prototype.render = function () {
+                var $results = $('<ul class="select2-results__options" role="tree"></ul>');
+                if (this.options.get('multiple')) {
+                    $results.attr('aria-multiselectable', 'true');
+                }
+                this.$results = $results;
+                return $results;
+            };
+            Results.prototype.clear = function () {
+                this.$results.empty();
+            };
+            Results.prototype.displayMessage = function (params) {
+                var escapeMarkup = this.options.get('escapeMarkup');
+                this.clear();
+                this.hideLoading();
+                var $message = $('<li role="treeitem" aria-live="assertive"' + ' class="select2-results__option"></li>');
+                var message = this.options.get('translations').get(params.message);
+                $message.append(escapeMarkup(message(params.args)));
+                $message[0].className += ' select2-results__message';
+                this.$results.append($message);
+            };
+            Results.prototype.hideMessages = function () {
+                this.$results.find('.select2-results__message').remove();
+            };
+            Results.prototype.append = function (data) {
+                this.hideLoading();
+                var $options = [];
+                if (data.results == null || data.results.length === 0) {
+                    if (this.$results.children().length === 0) {
+                        this.trigger('results:message', { message: 'noResults' });
+                    }
+                    return;
+                }
+                data.results = this.sort(data.results);
+                for (var d = 0; d < data.results.length; d++) {
+                    var item = data.results[d];
+                    var $option = this.option(item);
+                    $options.push($option);
+                }
+                this.$results.append($options);
+            };
+            Results.prototype.position = function ($results, $dropdown) {
+                var $resultsContainer = $dropdown.find('.select2-results');
+                $resultsContainer.append($results);
+            };
+            Results.prototype.sort = function (data) {
+                var sorter = this.options.get('sorter');
+                return sorter(data);
+            };
+            Results.prototype.setClasses = function () {
+                var self = this;
+                this.data.current(function (selected) {
+                    var selectedIds = $.map(selected, function (s) {
+                        return s.id.toString();
+                    });
+                    var $options = self.$results.find('.select2-results__option[aria-selected]');
+                    $options.each(function () {
+                        var $option = $(this);
+                        var item = $.data(this, 'data');
+                        var id = '' + item.id;
+                        if (item.element != null && item.element.selected || item.element == null && $.inArray(id, selectedIds) > -1) {
+                            $option.attr('aria-selected', 'true');
+                        } else {
+                            $option.attr('aria-selected', 'false');
+                        }
+                    });
+                    var $selected = $options.filter('[aria-selected=true]');
+                    if ($selected.length > 0) {
+                        $selected.first().trigger('mouseenter');
+                    } else {
+                        $options.first().trigger('mouseenter');
+                    }
+                });
+            };
+            Results.prototype.showLoading = function (params) {
+                this.hideLoading();
+                var loadingMore = this.options.get('translations').get('searching');
+                var loading = {
+                    disabled: true,
+                    loading: true,
+                    text: loadingMore(params)
+                };
+                var $loading = this.option(loading);
+                $loading.className += ' loading-results';
+                this.$results.prepend($loading);
+            };
+            Results.prototype.hideLoading = function () {
+                this.$results.find('.loading-results').remove();
+            };
+            Results.prototype.option = function (data) {
+                var option = document.createElement('li');
+                option.className = 'select2-results__option';
+                var attrs = {
+                    'role': 'treeitem',
+                    'aria-selected': 'false'
+                };
+                if (data.disabled) {
+                    delete attrs['aria-selected'];
+                    attrs['aria-disabled'] = 'true';
+                }
+                if (data.id == null) {
+                    delete attrs['aria-selected'];
+                }
+                if (data._resultId != null) {
+                    option.id = data._resultId;
+                }
+                if (data.title) {
+                    option.title = data.title;
+                }
+                if (data.children) {
+                    attrs.role = 'group';
+                    attrs['aria-label'] = data.text;
+                    delete attrs['aria-selected'];
+                }
+                for (var attr in attrs) {
+                    var val = attrs[attr];
+                    option.setAttribute(attr, val);
+                }
+                if (data.children) {
+                    var $option = $(option);
+                    var label = document.createElement('strong');
+                    label.className = 'select2-results__group';
+                    var $label = $(label);
+                    this.template(data, label);
+                    var $children = [];
+                    for (var c = 0; c < data.children.length; c++) {
+                        var child = data.children[c];
+                        var $child = this.option(child);
+                        $children.push($child);
+                    }
+                    var $childrenContainer = $('<ul></ul>', { 'class': 'select2-results__options select2-results__options--nested' });
+                    $childrenContainer.append($children);
+                    $option.append(label);
+                    $option.append($childrenContainer);
+                } else {
+                    this.template(data, option);
+                }
+                $.data(option, 'data', data);
+                return option;
+            };
+            Results.prototype.bind = function (container, $container) {
+                var self = this;
+                var id = container.id + '-results';
+                this.$results.attr('id', id);
+                container.on('results:all', function (params) {
+                    self.clear();
+                    self.append(params.data);
+                    if (container.isOpen()) {
+                        self.setClasses();
+                    }
+                });
+                container.on('results:append', function (params) {
+                    self.append(params.data);
+                    if (container.isOpen()) {
+                        self.setClasses();
+                    }
+                });
+                container.on('query', function (params) {
+                    self.hideMessages();
+                    self.showLoading(params);
+                });
+                container.on('select', function () {
+                    if (!container.isOpen()) {
+                        return;
+                    }
+                    self.setClasses();
+                });
+                container.on('unselect', function () {
+                    if (!container.isOpen()) {
+                        return;
+                    }
+                    self.setClasses();
+                });
+                container.on('open', function () {
+                    self.$results.attr('aria-expanded', 'true');
+                    self.$results.attr('aria-hidden', 'false');
+                    self.setClasses();
+                    self.ensureHighlightVisible();
+                });
+                container.on('close', function () {
+                    self.$results.attr('aria-expanded', 'false');
+                    self.$results.attr('aria-hidden', 'true');
+                    self.$results.removeAttr('aria-activedescendant');
+                });
+                container.on('results:toggle', function () {
+                    var $highlighted = self.getHighlightedResults();
+                    if ($highlighted.length === 0) {
+                        return;
+                    }
+                    $highlighted.trigger('mouseup');
+                });
+                container.on('results:select', function () {
+                    var $highlighted = self.getHighlightedResults();
+                    if ($highlighted.length === 0) {
+                        return;
+                    }
+                    var data = $highlighted.data('data');
+                    if ($highlighted.attr('aria-selected') == 'true') {
+                        self.trigger('close', {});
+                    } else {
+                        self.trigger('select', { data: data });
+                    }
+                });
+                container.on('results:previous', function () {
+                    var $highlighted = self.getHighlightedResults();
+                    var $options = self.$results.find('[aria-selected]');
+                    var currentIndex = $options.index($highlighted);
+                    if (currentIndex === 0) {
+                        return;
+                    }
+                    var nextIndex = currentIndex - 1;
+                    if ($highlighted.length === 0) {
+                        nextIndex = 0;
+                    }
+                    var $next = $options.eq(nextIndex);
+                    $next.trigger('mouseenter');
+                    var currentOffset = self.$results.offset().top;
+                    var nextTop = $next.offset().top;
+                    var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
+                    if (nextIndex === 0) {
+                        self.$results.scrollTop(0);
+                    } else if (nextTop - currentOffset < 0) {
+                        self.$results.scrollTop(nextOffset);
+                    }
+                });
+                container.on('results:next', function () {
+                    var $highlighted = self.getHighlightedResults();
+                    var $options = self.$results.find('[aria-selected]');
+                    var currentIndex = $options.index($highlighted);
+                    var nextIndex = currentIndex + 1;
+                    if (nextIndex >= $options.length) {
+                        return;
+                    }
+                    var $next = $options.eq(nextIndex);
+                    $next.trigger('mouseenter');
+                    var currentOffset = self.$results.offset().top + self.$results.outerHeight(false);
+                    var nextBottom = $next.offset().top + $next.outerHeight(false);
+                    var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
+                    if (nextIndex === 0) {
+                        self.$results.scrollTop(0);
+                    } else if (nextBottom > currentOffset) {
+                        self.$results.scrollTop(nextOffset);
+                    }
+                });
+                container.on('results:focus', function (params) {
+                    params.element.addClass('select2-results__option--highlighted');
+                });
+                container.on('results:message', function (params) {
+                    self.displayMessage(params);
+                });
+                if ($.fn.mousewheel) {
+                    this.$results.on('mousewheel', function (e) {
+                        var top = self.$results.scrollTop();
+                        var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
+                        var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
+                        var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
+                        if (isAtTop) {
+                            self.$results.scrollTop(0);
+                            e.preventDefault();
+                            e.stopPropagation();
+                        } else if (isAtBottom) {
+                            self.$results.scrollTop(self.$results.get(0).scrollHeight - self.$results.height());
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                    });
+                }
+                this.$results.on('mouseup', '.select2-results__option[aria-selected]', function (evt) {
+                    var $this = $(this);
+                    var data = $this.data('data');
+                    if ($this.attr('aria-selected') === 'true') {
+                        if (self.options.get('multiple')) {
+                            self.trigger('unselect', {
+                                originalEvent: evt,
+                                data: data
+                            });
+                        } else {
+                            self.trigger('close', {});
+                        }
+                        return;
+                    }
+                    self.trigger('select', {
+                        originalEvent: evt,
+                        data: data
+                    });
+                });
+                this.$results.on('mouseenter', '.select2-results__option[aria-selected]', function (evt) {
+                    var data = $(this).data('data');
+                    self.getHighlightedResults().removeClass('select2-results__option--highlighted');
+                    self.trigger('results:focus', {
+                        data: data,
+                        element: $(this)
+                    });
+                });
+            };
+            Results.prototype.getHighlightedResults = function () {
+                var $highlighted = this.$results.find('.select2-results__option--highlighted');
+                return $highlighted;
+            };
+            Results.prototype.destroy = function () {
+                this.$results.remove();
+            };
+            Results.prototype.ensureHighlightVisible = function () {
+                var $highlighted = this.getHighlightedResults();
+                if ($highlighted.length === 0) {
+                    return;
+                }
+                var $options = this.$results.find('[aria-selected]');
+                var currentIndex = $options.index($highlighted);
+                var currentOffset = this.$results.offset().top;
+                var nextTop = $highlighted.offset().top;
+                var nextOffset = this.$results.scrollTop() + (nextTop - currentOffset);
+                var offsetDelta = nextTop - currentOffset;
+                nextOffset -= $highlighted.outerHeight(false) * 2;
+                if (currentIndex <= 2) {
+                    this.$results.scrollTop(0);
+                } else if (offsetDelta > this.$results.outerHeight() || offsetDelta < 0) {
+                    this.$results.scrollTop(nextOffset);
+                }
+            };
+            Results.prototype.template = function (result, container) {
+                var template = this.options.get('templateResult');
+                var escapeMarkup = this.options.get('escapeMarkup');
+                var content = template(result, container);
+                if (content == null) {
+                    container.style.display = 'none';
+                } else if (typeof content === 'string') {
+                    container.innerHTML = escapeMarkup(content);
+                } else {
+                    $(container).append(content);
+                }
+            };
+            return Results;
+        });
+        S2.define('select2/keys', [], function () {
+            var KEYS = {
+                BACKSPACE: 8,
+                TAB: 9,
+                ENTER: 13,
+                SHIFT: 16,
+                CTRL: 17,
+                ALT: 18,
+                ESC: 27,
+                SPACE: 32,
+                PAGE_UP: 33,
+                PAGE_DOWN: 34,
+                END: 35,
+                HOME: 36,
+                LEFT: 37,
+                UP: 38,
+                RIGHT: 39,
+                DOWN: 40,
+                DELETE: 46
+            };
+            return KEYS;
+        });
+        S2.define('select2/selection/base', [
+            'jquery',
+            '../utils',
+            '../keys'
+        ], function ($, Utils, KEYS) {
+            function BaseSelection($element, options) {
+                this.$element = $element;
+                this.options = options;
+                BaseSelection.__super__.constructor.call(this);
+            }
+            Utils.Extend(BaseSelection, Utils.Observable);
+            BaseSelection.prototype.render = function () {
+                var $selection = $('<span class="select2-selection" role="combobox" ' + ' aria-haspopup="true" aria-expanded="false">' + '</span>');
+                this._tabindex = 0;
+                if (this.$element.data('old-tabindex') != null) {
+                    this._tabindex = this.$element.data('old-tabindex');
+                } else if (this.$element.attr('tabindex') != null) {
+                    this._tabindex = this.$element.attr('tabindex');
+                }
+                $selection.attr('title', this.$element.attr('title'));
+                $selection.attr('tabindex', this._tabindex);
+                this.$selection = $selection;
+                return $selection;
+            };
+            BaseSelection.prototype.bind = function (container, $container) {
+                var self = this;
+                var id = container.id + '-container';
+                var resultsId = container.id + '-results';
+                this.container = container;
+                this.$selection.on('focus', function (evt) {
+                    self.trigger('focus', evt);
+                });
+                this.$selection.on('blur', function (evt) {
+                    self._handleBlur(evt);
+                });
+                this.$selection.on('keydown', function (evt) {
+                    self.trigger('keypress', evt);
+                    if (evt.which === KEYS.SPACE) {
+                        evt.preventDefault();
+                    }
+                });
+                container.on('results:focus', function (params) {
+                    self.$selection.attr('aria-activedescendant', params.data._resultId);
+                });
+                container.on('selection:update', function (params) {
+                    self.update(params.data);
+                });
+                container.on('open', function () {
+                    self.$selection.attr('aria-expanded', 'true');
+                    self.$selection.attr('aria-owns', resultsId);
+                    self._attachCloseHandler(container);
+                });
+                container.on('close', function () {
+                    self.$selection.attr('aria-expanded', 'false');
+                    self.$selection.removeAttr('aria-activedescendant');
+                    self.$selection.removeAttr('aria-owns');
+                    self.$selection.focus();
+                    self._detachCloseHandler(container);
+                });
+                container.on('enable', function () {
+                    self.$selection.attr('tabindex', self._tabindex);
+                });
+                container.on('disable', function () {
+                    self.$selection.attr('tabindex', '-1');
+                });
+            };
+            BaseSelection.prototype._handleBlur = function (evt) {
+                var self = this;
+                window.setTimeout(function () {
+                    if (document.activeElement == self.$selection[0] || $.contains(self.$selection[0], document.activeElement)) {
+                        return;
+                    }
+                    self.trigger('blur', evt);
+                }, 1);
+            };
+            BaseSelection.prototype._attachCloseHandler = function (container) {
+                var self = this;
+                $(document.body).on('mousedown.select2.' + container.id, function (e) {
+                    var $target = $(e.target);
+                    var $select = $target.closest('.select2');
+                    var $all = $('.select2.select2-container--open');
+                    $all.each(function () {
+                        var $this = $(this);
+                        if (this == $select[0]) {
+                            return;
+                        }
+                        var $element = $this.data('element');
+                        $element.select2('close');
+                    });
+                });
+            };
+            BaseSelection.prototype._detachCloseHandler = function (container) {
+                $(document.body).off('mousedown.select2.' + container.id);
+            };
+            BaseSelection.prototype.position = function ($selection, $container) {
+                var $selectionContainer = $container.find('.selection');
+                $selectionContainer.append($selection);
+            };
+            BaseSelection.prototype.destroy = function () {
+                this._detachCloseHandler(this.container);
+            };
+            BaseSelection.prototype.update = function (data) {
+                throw new Error('The `update` method must be defined in child classes.');
+            };
+            return BaseSelection;
+        });
+        S2.define('select2/selection/single', [
+            'jquery',
+            './base',
+            '../utils',
+            '../keys'
+        ], function ($, BaseSelection, Utils, KEYS) {
+            function SingleSelection() {
+                SingleSelection.__super__.constructor.apply(this, arguments);
+            }
+            Utils.Extend(SingleSelection, BaseSelection);
+            SingleSelection.prototype.render = function () {
+                var $selection = SingleSelection.__super__.render.call(this);
+                $selection.addClass('select2-selection--single');
+                $selection.html('<span class="select2-selection__rendered"></span>' + '<span class="select2-selection__arrow" role="presentation">' + '<b role="presentation"></b>' + '</span>');
+                return $selection;
+            };
+            SingleSelection.prototype.bind = function (container, $container) {
+                var self = this;
+                SingleSelection.__super__.bind.apply(this, arguments);
+                var id = container.id + '-container';
+                this.$selection.find('.select2-selection__rendered').attr('id', id);
+                this.$selection.attr('aria-labelledby', id);
+                this.$selection.on('mousedown', function (evt) {
+                    if (evt.which !== 1) {
+                        return;
+                    }
+                    self.trigger('toggle', { originalEvent: evt });
+                });
+                this.$selection.on('focus', function (evt) {
+                });
+                this.$selection.on('blur', function (evt) {
+                });
+                container.on('selection:update', function (params) {
+                    self.update(params.data);
+                });
+            };
+            SingleSelection.prototype.clear = function () {
+                this.$selection.find('.select2-selection__rendered').empty();
+            };
+            SingleSelection.prototype.display = function (data, container) {
+                var template = this.options.get('templateSelection');
+                var escapeMarkup = this.options.get('escapeMarkup');
+                return escapeMarkup(template(data, container));
+            };
+            SingleSelection.prototype.selectionContainer = function () {
+                return $('<span></span>');
+            };
+            SingleSelection.prototype.update = function (data) {
+                if (data.length === 0) {
+                    this.clear();
+                    return;
+                }
+                var selection = data[0];
+                var $rendered = this.$selection.find('.select2-selection__rendered');
+                var formatted = this.display(selection, $rendered);
+                $rendered.empty().append(formatted);
+                $rendered.prop('title', selection.title || selection.text);
+            };
+            return SingleSelection;
+        });
+        S2.define('select2/selection/multiple', [
+            'jquery',
+            './base',
+            '../utils'
+        ], function ($, BaseSelection, Utils) {
+            function MultipleSelection($element, options) {
+                MultipleSelection.__super__.constructor.apply(this, arguments);
+            }
+            Utils.Extend(MultipleSelection, BaseSelection);
+            MultipleSelection.prototype.render = function () {
+                var $selection = MultipleSelection.__super__.render.call(this);
+                $selection.addClass('select2-selection--multiple');
+                $selection.html('<ul class="select2-selection__rendered"></ul>');
+                return $selection;
+            };
+            MultipleSelection.prototype.bind = function (container, $container) {
+                var self = this;
+                MultipleSelection.__super__.bind.apply(this, arguments);
+                this.$selection.on('click', function (evt) {
+                    self.trigger('toggle', { originalEvent: evt });
+                });
+                this.$selection.on('click', '.select2-selection__choice__remove', function (evt) {
+                    if (self.options.get('disabled')) {
+                        return;
+                    }
+                    var $remove = $(this);
+                    var $selection = $remove.parent();
+                    var data = $selection.data('data');
+                    self.trigger('unselect', {
+                        originalEvent: evt,
+                        data: data
+                    });
+                });
+            };
+            MultipleSelection.prototype.clear = function () {
+                this.$selection.find('.select2-selection__rendered').empty();
+            };
+            MultipleSelection.prototype.display = function (data, container) {
+                var template = this.options.get('templateSelection');
+                var escapeMarkup = this.options.get('escapeMarkup');
+                return escapeMarkup(template(data, container));
+            };
+            MultipleSelection.prototype.selectionContainer = function () {
+                var $container = $('<li class="select2-selection__choice">' + '<span class="select2-selection__choice__remove" role="presentation">' + '&times;' + '</span>' + '</li>');
+                return $container;
+            };
+            MultipleSelection.prototype.update = function (data) {
+                this.clear();
+                if (data.length === 0) {
+                    return;
+                }
+                var $selections = [];
+                for (var d = 0; d < data.length; d++) {
+                    var selection = data[d];
+                    var $selection = this.selectionContainer();
+                    var formatted = this.display(selection, $selection);
+                    $selection.append(formatted);
+                    $selection.prop('title', selection.title || selection.text);
+                    $selection.data('data', selection);
+                    $selections.push($selection);
+                }
+                var $rendered = this.$selection.find('.select2-selection__rendered');
+                Utils.appendMany($rendered, $selections);
+            };
+            return MultipleSelection;
+        });
+        S2.define('select2/selection/placeholder', ['../utils'], function (Utils) {
+            function Placeholder(decorated, $element, options) {
+                this.placeholder = this.normalizePlaceholder(options.get('placeholder'));
+                decorated.call(this, $element, options);
+            }
+            Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
+                if (typeof placeholder === 'string') {
+                    placeholder = {
+                        id: '',
+                        text: placeholder
+                    };
+                }
+                return placeholder;
+            };
+            Placeholder.prototype.createPlaceholder = function (decorated, placeholder) {
+                var $placeholder = this.selectionContainer();
+                $placeholder.html(this.display(placeholder));
+                $placeholder.addClass('select2-selection__placeholder').removeClass('select2-selection__choice');
+                return $placeholder;
+            };
+            Placeholder.prototype.update = function (decorated, data) {
+                var singlePlaceholder = data.length == 1 && data[0].id != this.placeholder.id;
+                var multipleSelections = data.length > 1;
+                if (multipleSelections || singlePlaceholder) {
+                    return decorated.call(this, data);
+                }
+                this.clear();
+                var $placeholder = this.createPlaceholder(this.placeholder);
+                this.$selection.find('.select2-selection__rendered').append($placeholder);
+            };
+            return Placeholder;
+        });
+        S2.define('select2/selection/allowClear', [
+            'jquery',
+            '../keys'
+        ], function ($, KEYS) {
+            function AllowClear() {
+            }
+            AllowClear.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                if (this.placeholder == null) {
+                    if (this.options.get('debug') && window.console && console.error) {
+                        console.error('Select2: The `allowClear` option should be used in combination ' + 'with the `placeholder` option.');
+                    }
+                }
+                this.$selection.on('mousedown', '.select2-selection__clear', function (evt) {
+                    self._handleClear(evt);
+                });
+                container.on('keypress', function (evt) {
+                    self._handleKeyboardClear(evt, container);
+                });
+            };
+            AllowClear.prototype._handleClear = function (_, evt) {
+                if (this.options.get('disabled')) {
+                    return;
+                }
+                var $clear = this.$selection.find('.select2-selection__clear');
+                if ($clear.length === 0) {
+                    return;
+                }
+                evt.stopPropagation();
+                var data = $clear.data('data');
+                for (var d = 0; d < data.length; d++) {
+                    var unselectData = { data: data[d] };
+                    this.trigger('unselect', unselectData);
+                    if (unselectData.prevented) {
+                        return;
+                    }
+                }
+                this.$element.val(this.placeholder.id).trigger('change');
+                this.trigger('toggle', {});
+            };
+            AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
+                if (container.isOpen()) {
+                    return;
+                }
+                if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
+                    this._handleClear(evt);
+                }
+            };
+            AllowClear.prototype.update = function (decorated, data) {
+                decorated.call(this, data);
+                if (this.$selection.find('.select2-selection__placeholder').length > 0 || data.length === 0) {
+                    return;
+                }
+                var $remove = $('<span class="select2-selection__clear">' + '&times;' + '</span>');
+                $remove.data('data', data);
+                this.$selection.find('.select2-selection__rendered').prepend($remove);
+            };
+            return AllowClear;
+        });
+        S2.define('select2/selection/search', [
+            'jquery',
+            '../utils',
+            '../keys'
+        ], function ($, Utils, KEYS) {
+            function Search(decorated, $element, options) {
+                decorated.call(this, $element, options);
+            }
+            Search.prototype.render = function (decorated) {
+                var $search = $('<li class="select2-search select2-search--inline">' + '<input class="select2-search__field" type="search" tabindex="-1"' + ' autocomplete="off" autocorrect="off" autocapitalize="off"' + ' spellcheck="false" role="textbox" aria-autocomplete="list" />' + '</li>');
+                this.$searchContainer = $search;
+                this.$search = $search.find('input');
+                var $rendered = decorated.call(this);
+                this._transferTabIndex();
+                return $rendered;
+            };
+            Search.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                container.on('open', function () {
+                    self.$search.trigger('focus');
+                });
+                container.on('close', function () {
+                    self.$search.val('');
+                    self.$search.removeAttr('aria-activedescendant');
+                    self.$search.trigger('focus');
+                });
+                container.on('enable', function () {
+                    self.$search.prop('disabled', false);
+                    self._transferTabIndex();
+                });
+                container.on('disable', function () {
+                    self.$search.prop('disabled', true);
+                });
+                container.on('focus', function (evt) {
+                    self.$search.trigger('focus');
+                });
+                container.on('results:focus', function (params) {
+                    self.$search.attr('aria-activedescendant', params.id);
+                });
+                this.$selection.on('focusin', '.select2-search--inline', function (evt) {
+                    self.trigger('focus', evt);
+                });
+                this.$selection.on('focusout', '.select2-search--inline', function (evt) {
+                    self._handleBlur(evt);
+                });
+                this.$selection.on('keydown', '.select2-search--inline', function (evt) {
+                    evt.stopPropagation();
+                    self.trigger('keypress', evt);
+                    self._keyUpPrevented = evt.isDefaultPrevented();
+                    var key = evt.which;
+                    if (key === KEYS.BACKSPACE && self.$search.val() === '') {
+                        var $previousChoice = self.$searchContainer.prev('.select2-selection__choice');
+                        if ($previousChoice.length > 0) {
+                            var item = $previousChoice.data('data');
+                            self.searchRemoveChoice(item);
+                            evt.preventDefault();
+                        }
+                    }
+                });
+                var msie = document.documentMode;
+                var disableInputEvents = msie && msie <= 11;
+                this.$selection.on('input.searchcheck', '.select2-search--inline', function (evt) {
+                    if (disableInputEvents) {
+                        self.$selection.off('input.search input.searchcheck');
+                        return;
+                    }
+                    self.$selection.off('keyup.search');
+                });
+                this.$selection.on('keyup.search input.search', '.select2-search--inline', function (evt) {
+                    if (disableInputEvents && evt.type === 'input') {
+                        self.$selection.off('input.search input.searchcheck');
+                        return;
+                    }
+                    var key = evt.which;
+                    if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
+                        return;
+                    }
+                    if (key == KEYS.TAB) {
+                        return;
+                    }
+                    self.handleSearch(evt);
+                });
+            };
+            Search.prototype._transferTabIndex = function (decorated) {
+                this.$search.attr('tabindex', this.$selection.attr('tabindex'));
+                this.$selection.attr('tabindex', '-1');
+            };
+            Search.prototype.createPlaceholder = function (decorated, placeholder) {
+                this.$search.attr('placeholder', placeholder.text);
+            };
+            Search.prototype.update = function (decorated, data) {
+                var searchHadFocus = this.$search[0] == document.activeElement;
+                this.$search.attr('placeholder', '');
+                decorated.call(this, data);
+                this.$selection.find('.select2-selection__rendered').append(this.$searchContainer);
+                this.resizeSearch();
+                if (searchHadFocus) {
+                    this.$search.focus();
+                }
+            };
+            Search.prototype.handleSearch = function () {
+                this.resizeSearch();
+                if (!this._keyUpPrevented) {
+                    var input = this.$search.val();
+                    this.trigger('query', { term: input });
+                }
+                this._keyUpPrevented = false;
+            };
+            Search.prototype.searchRemoveChoice = function (decorated, item) {
+                this.trigger('unselect', { data: item });
+                this.$search.val(item.text);
+                this.handleSearch();
+            };
+            Search.prototype.resizeSearch = function () {
+                this.$search.css('width', '25px');
+                var width = '';
+                if (this.$search.attr('placeholder') !== '') {
+                    width = this.$selection.find('.select2-selection__rendered').innerWidth();
+                } else {
+                    var minimumWidth = this.$search.val().length + 1;
+                    width = minimumWidth * 0.75 + 'em';
+                }
+                this.$search.css('width', width);
+            };
+            return Search;
+        });
+        S2.define('select2/selection/eventRelay', ['jquery'], function ($) {
+            function EventRelay() {
+            }
+            EventRelay.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                var relayEvents = [
+                    'open',
+                    'opening',
+                    'close',
+                    'closing',
+                    'select',
+                    'selecting',
+                    'unselect',
+                    'unselecting'
+                ];
+                var preventableEvents = [
+                    'opening',
+                    'closing',
+                    'selecting',
+                    'unselecting'
+                ];
+                decorated.call(this, container, $container);
+                container.on('*', function (name, params) {
+                    if ($.inArray(name, relayEvents) === -1) {
+                        return;
+                    }
+                    params = params || {};
+                    var evt = $.Event('select2:' + name, { params: params });
+                    self.$element.trigger(evt);
+                    if ($.inArray(name, preventableEvents) === -1) {
+                        return;
+                    }
+                    params.prevented = evt.isDefaultPrevented();
+                });
+            };
+            return EventRelay;
+        });
+        S2.define('select2/translation', [
+            'jquery',
+            'require'
+        ], function ($, require) {
+            function Translation(dict) {
+                this.dict = dict || {};
+            }
+            Translation.prototype.all = function () {
+                return this.dict;
+            };
+            Translation.prototype.get = function (key) {
+                return this.dict[key];
+            };
+            Translation.prototype.extend = function (translation) {
+                this.dict = $.extend({}, translation.all(), this.dict);
+            };
+            Translation._cache = {};
+            Translation.loadPath = function (path) {
+                if (!(path in Translation._cache)) {
+                    var translations = require(path);
+                    Translation._cache[path] = translations;
+                }
+                return new Translation(Translation._cache[path]);
+            };
+            return Translation;
+        });
+        S2.define('select2/diacritics', [], function () {
+            var diacritics = {
+                '\u24B6': 'A',
+                'Ａ': 'A',
+                'À': 'A',
+                'Á': 'A',
+                'Â': 'A',
+                'Ầ': 'A',
+                'Ấ': 'A',
+                'Ẫ': 'A',
+                'Ẩ': 'A',
+                'Ã': 'A',
+                'Ā': 'A',
+                'Ă': 'A',
+                'Ằ': 'A',
+                'Ắ': 'A',
+                'Ẵ': 'A',
+                'Ẳ': 'A',
+                'Ȧ': 'A',
+                'Ǡ': 'A',
+                'Ä': 'A',
+                'Ǟ': 'A',
+                'Ả': 'A',
+                'Å': 'A',
+                'Ǻ': 'A',
+                'Ǎ': 'A',
+                'Ȁ': 'A',
+                'Ȃ': 'A',
+                'Ạ': 'A',
+                'Ậ': 'A',
+                'Ặ': 'A',
+                'Ḁ': 'A',
+                'Ą': 'A',
+                'Ⱥ': 'A',
+                'Ɐ': 'A',
+                'Ꜳ': 'AA',
+                'Æ': 'AE',
+                'Ǽ': 'AE',
+                'Ǣ': 'AE',
+                'Ꜵ': 'AO',
+                'Ꜷ': 'AU',
+                'Ꜹ': 'AV',
+                'Ꜻ': 'AV',
+                'Ꜽ': 'AY',
+                '\u24B7': 'B',
+                'Ｂ': 'B',
+                'Ḃ': 'B',
+                'Ḅ': 'B',
+                'Ḇ': 'B',
+                'Ƀ': 'B',
+                'Ƃ': 'B',
+                'Ɓ': 'B',
+                '\u24B8': 'C',
+                'Ｃ': 'C',
+                'Ć': 'C',
+                'Ĉ': 'C',
+                'Ċ': 'C',
+                'Č': 'C',
+                'Ç': 'C',
+                'Ḉ': 'C',
+                'Ƈ': 'C',
+                'Ȼ': 'C',
+                'Ꜿ': 'C',
+                '\u24B9': 'D',
+                'Ｄ': 'D',
+                'Ḋ': 'D',
+                'Ď': 'D',
+                'Ḍ': 'D',
+                'Ḑ': 'D',
+                'Ḓ': 'D',
+                'Ḏ': 'D',
+                'Đ': 'D',
+                'Ƌ': 'D',
+                'Ɗ': 'D',
+                'Ɖ': 'D',
+                'Ꝺ': 'D',
+                'Ǳ': 'DZ',
+                'Ǆ': 'DZ',
+                'ǲ': 'Dz',
+                'ǅ': 'Dz',
+                '\u24BA': 'E',
+                'Ｅ': 'E',
+                'È': 'E',
+                'É': 'E',
+                'Ê': 'E',
+                'Ề': 'E',
+                'Ế': 'E',
+                'Ễ': 'E',
+                'Ể': 'E',
+                'Ẽ': 'E',
+                'Ē': 'E',
+                'Ḕ': 'E',
+                'Ḗ': 'E',
+                'Ĕ': 'E',
+                'Ė': 'E',
+                'Ë': 'E',
+                'Ẻ': 'E',
+                'Ě': 'E',
+                'Ȅ': 'E',
+                'Ȇ': 'E',
+                'Ẹ': 'E',
+                'Ệ': 'E',
+                'Ȩ': 'E',
+                'Ḝ': 'E',
+                'Ę': 'E',
+                'Ḙ': 'E',
+                'Ḛ': 'E',
+                'Ɛ': 'E',
+                'Ǝ': 'E',
+                '\u24BB': 'F',
+                'Ｆ': 'F',
+                'Ḟ': 'F',
+                'Ƒ': 'F',
+                'Ꝼ': 'F',
+                '\u24BC': 'G',
+                'Ｇ': 'G',
+                'Ǵ': 'G',
+                'Ĝ': 'G',
+                'Ḡ': 'G',
+                'Ğ': 'G',
+                'Ġ': 'G',
+                'Ǧ': 'G',
+                'Ģ': 'G',
+                'Ǥ': 'G',
+                'Ɠ': 'G',
+                'Ꞡ': 'G',
+                'Ᵹ': 'G',
+                'Ꝿ': 'G',
+                '\u24BD': 'H',
+                'Ｈ': 'H',
+                'Ĥ': 'H',
+                'Ḣ': 'H',
+                'Ḧ': 'H',
+                'Ȟ': 'H',
+                'Ḥ': 'H',
+                'Ḩ': 'H',
+                'Ḫ': 'H',
+                'Ħ': 'H',
+                'Ⱨ': 'H',
+                'Ⱶ': 'H',
+                'Ɥ': 'H',
+                '\u24BE': 'I',
+                'Ｉ': 'I',
+                'Ì': 'I',
+                'Í': 'I',
+                'Î': 'I',
+                'Ĩ': 'I',
+                'Ī': 'I',
+                'Ĭ': 'I',
+                'İ': 'I',
+                'Ï': 'I',
+                'Ḯ': 'I',
+                'Ỉ': 'I',
+                'Ǐ': 'I',
+                'Ȉ': 'I',
+                'Ȋ': 'I',
+                'Ị': 'I',
+                'Į': 'I',
+                'Ḭ': 'I',
+                'Ɨ': 'I',
+                '\u24BF': 'J',
+                'Ｊ': 'J',
+                'Ĵ': 'J',
+                'Ɉ': 'J',
+                '\u24C0': 'K',
+                'Ｋ': 'K',
+                'Ḱ': 'K',
+                'Ǩ': 'K',
+                'Ḳ': 'K',
+                'Ķ': 'K',
+                'Ḵ': 'K',
+                'Ƙ': 'K',
+                'Ⱪ': 'K',
+                'Ꝁ': 'K',
+                'Ꝃ': 'K',
+                'Ꝅ': 'K',
+                'Ꞣ': 'K',
+                '\u24C1': 'L',
+                'Ｌ': 'L',
+                'Ŀ': 'L',
+                'Ĺ': 'L',
+                'Ľ': 'L',
+                'Ḷ': 'L',
+                'Ḹ': 'L',
+                'Ļ': 'L',
+                'Ḽ': 'L',
+                'Ḻ': 'L',
+                'Ł': 'L',
+                'Ƚ': 'L',
+                'Ɫ': 'L',
+                'Ⱡ': 'L',
+                'Ꝉ': 'L',
+                'Ꝇ': 'L',
+                'Ꞁ': 'L',
+                'Ǉ': 'LJ',
+                'ǈ': 'Lj',
+                '\u24C2': 'M',
+                'Ｍ': 'M',
+                'Ḿ': 'M',
+                'Ṁ': 'M',
+                'Ṃ': 'M',
+                'Ɱ': 'M',
+                'Ɯ': 'M',
+                '\u24C3': 'N',
+                'Ｎ': 'N',
+                'Ǹ': 'N',
+                'Ń': 'N',
+                'Ñ': 'N',
+                'Ṅ': 'N',
+                'Ň': 'N',
+                'Ṇ': 'N',
+                'Ņ': 'N',
+                'Ṋ': 'N',
+                'Ṉ': 'N',
+                'Ƞ': 'N',
+                'Ɲ': 'N',
+                'Ꞑ': 'N',
+                'Ꞥ': 'N',
+                'Ǌ': 'NJ',
+                'ǋ': 'Nj',
+                '\u24C4': 'O',
+                'Ｏ': 'O',
+                'Ò': 'O',
+                'Ó': 'O',
+                'Ô': 'O',
+                'Ồ': 'O',
+                'Ố': 'O',
+                'Ỗ': 'O',
+                'Ổ': 'O',
+                'Õ': 'O',
+                'Ṍ': 'O',
+                'Ȭ': 'O',
+                'Ṏ': 'O',
+                'Ō': 'O',
+                'Ṑ': 'O',
+                'Ṓ': 'O',
+                'Ŏ': 'O',
+                'Ȯ': 'O',
+                'Ȱ': 'O',
+                'Ö': 'O',
+                'Ȫ': 'O',
+                'Ỏ': 'O',
+                'Ő': 'O',
+                'Ǒ': 'O',
+                'Ȍ': 'O',
+                'Ȏ': 'O',
+                'Ơ': 'O',
+                'Ờ': 'O',
+                'Ớ': 'O',
+                'Ỡ': 'O',
+                'Ở': 'O',
+                'Ợ': 'O',
+                'Ọ': 'O',
+                'Ộ': 'O',
+                'Ǫ': 'O',
+                'Ǭ': 'O',
+                'Ø': 'O',
+                'Ǿ': 'O',
+                'Ɔ': 'O',
+                'Ɵ': 'O',
+                'Ꝋ': 'O',
+                'Ꝍ': 'O',
+                'Ƣ': 'OI',
+                'Ꝏ': 'OO',
+                'Ȣ': 'OU',
+                '\u24C5': 'P',
+                'Ｐ': 'P',
+                'Ṕ': 'P',
+                'Ṗ': 'P',
+                'Ƥ': 'P',
+                'Ᵽ': 'P',
+                'Ꝑ': 'P',
+                'Ꝓ': 'P',
+                'Ꝕ': 'P',
+                '\u24C6': 'Q',
+                'Ｑ': 'Q',
+                'Ꝗ': 'Q',
+                'Ꝙ': 'Q',
+                'Ɋ': 'Q',
+                '\u24C7': 'R',
+                'Ｒ': 'R',
+                'Ŕ': 'R',
+                'Ṙ': 'R',
+                'Ř': 'R',
+                'Ȑ': 'R',
+                'Ȓ': 'R',
+                'Ṛ': 'R',
+                'Ṝ': 'R',
+                'Ŗ': 'R',
+                'Ṟ': 'R',
+                'Ɍ': 'R',
+                'Ɽ': 'R',
+                'Ꝛ': 'R',
+                'Ꞧ': 'R',
+                'Ꞃ': 'R',
+                '\u24C8': 'S',
+                'Ｓ': 'S',
+                'ẞ': 'S',
+                'Ś': 'S',
+                'Ṥ': 'S',
+                'Ŝ': 'S',
+                'Ṡ': 'S',
+                'Š': 'S',
+                'Ṧ': 'S',
+                'Ṣ': 'S',
+                'Ṩ': 'S',
+                'Ș': 'S',
+                'Ş': 'S',
+                'Ȿ': 'S',
+                'Ꞩ': 'S',
+                'Ꞅ': 'S',
+                '\u24C9': 'T',
+                'Ｔ': 'T',
+                'Ṫ': 'T',
+                'Ť': 'T',
+                'Ṭ': 'T',
+                'Ț': 'T',
+                'Ţ': 'T',
+                'Ṱ': 'T',
+                'Ṯ': 'T',
+                'Ŧ': 'T',
+                'Ƭ': 'T',
+                'Ʈ': 'T',
+                'Ⱦ': 'T',
+                'Ꞇ': 'T',
+                'Ꜩ': 'TZ',
+                '\u24CA': 'U',
+                'Ｕ': 'U',
+                'Ù': 'U',
+                'Ú': 'U',
+                'Û': 'U',
+                'Ũ': 'U',
+                'Ṹ': 'U',
+                'Ū': 'U',
+                'Ṻ': 'U',
+                'Ŭ': 'U',
+                'Ü': 'U',
+                'Ǜ': 'U',
+                'Ǘ': 'U',
+                'Ǖ': 'U',
+                'Ǚ': 'U',
+                'Ủ': 'U',
+                'Ů': 'U',
+                'Ű': 'U',
+                'Ǔ': 'U',
+                'Ȕ': 'U',
+                'Ȗ': 'U',
+                'Ư': 'U',
+                'Ừ': 'U',
+                'Ứ': 'U',
+                'Ữ': 'U',
+                'Ử': 'U',
+                'Ự': 'U',
+                'Ụ': 'U',
+                'Ṳ': 'U',
+                'Ų': 'U',
+                'Ṷ': 'U',
+                'Ṵ': 'U',
+                'Ʉ': 'U',
+                '\u24CB': 'V',
+                'Ｖ': 'V',
+                'Ṽ': 'V',
+                'Ṿ': 'V',
+                'Ʋ': 'V',
+                'Ꝟ': 'V',
+                'Ʌ': 'V',
+                'Ꝡ': 'VY',
+                '\u24CC': 'W',
+                'Ｗ': 'W',
+                'Ẁ': 'W',
+                'Ẃ': 'W',
+                'Ŵ': 'W',
+                'Ẇ': 'W',
+                'Ẅ': 'W',
+                'Ẉ': 'W',
+                'Ⱳ': 'W',
+                '\u24CD': 'X',
+                'Ｘ': 'X',
+                'Ẋ': 'X',
+                'Ẍ': 'X',
+                '\u24CE': 'Y',
+                'Ｙ': 'Y',
+                'Ỳ': 'Y',
+                'Ý': 'Y',
+                'Ŷ': 'Y',
+                'Ỹ': 'Y',
+                'Ȳ': 'Y',
+                'Ẏ': 'Y',
+                'Ÿ': 'Y',
+                'Ỷ': 'Y',
+                'Ỵ': 'Y',
+                'Ƴ': 'Y',
+                'Ɏ': 'Y',
+                'Ỿ': 'Y',
+                '\u24CF': 'Z',
+                'Ｚ': 'Z',
+                'Ź': 'Z',
+                'Ẑ': 'Z',
+                'Ż': 'Z',
+                'Ž': 'Z',
+                'Ẓ': 'Z',
+                'Ẕ': 'Z',
+                'Ƶ': 'Z',
+                'Ȥ': 'Z',
+                'Ɀ': 'Z',
+                'Ⱬ': 'Z',
+                'Ꝣ': 'Z',
+                '\u24D0': 'a',
+                'ａ': 'a',
+                'ẚ': 'a',
+                'à': 'a',
+                'á': 'a',
+                'â': 'a',
+                'ầ': 'a',
+                'ấ': 'a',
+                'ẫ': 'a',
+                'ẩ': 'a',
+                'ã': 'a',
+                'ā': 'a',
+                'ă': 'a',
+                'ằ': 'a',
+                'ắ': 'a',
+                'ẵ': 'a',
+                'ẳ': 'a',
+                'ȧ': 'a',
+                'ǡ': 'a',
+                'ä': 'a',
+                'ǟ': 'a',
+                'ả': 'a',
+                'å': 'a',
+                'ǻ': 'a',
+                'ǎ': 'a',
+                'ȁ': 'a',
+                'ȃ': 'a',
+                'ạ': 'a',
+                'ậ': 'a',
+                'ặ': 'a',
+                'ḁ': 'a',
+                'ą': 'a',
+                'ⱥ': 'a',
+                'ɐ': 'a',
+                'ꜳ': 'aa',
+                'æ': 'ae',
+                'ǽ': 'ae',
+                'ǣ': 'ae',
+                'ꜵ': 'ao',
+                'ꜷ': 'au',
+                'ꜹ': 'av',
+                'ꜻ': 'av',
+                'ꜽ': 'ay',
+                '\u24D1': 'b',
+                'ｂ': 'b',
+                'ḃ': 'b',
+                'ḅ': 'b',
+                'ḇ': 'b',
+                'ƀ': 'b',
+                'ƃ': 'b',
+                'ɓ': 'b',
+                '\u24D2': 'c',
+                'ｃ': 'c',
+                'ć': 'c',
+                'ĉ': 'c',
+                'ċ': 'c',
+                'č': 'c',
+                'ç': 'c',
+                'ḉ': 'c',
+                'ƈ': 'c',
+                'ȼ': 'c',
+                'ꜿ': 'c',
+                'ↄ': 'c',
+                '\u24D3': 'd',
+                'ｄ': 'd',
+                'ḋ': 'd',
+                'ď': 'd',
+                'ḍ': 'd',
+                'ḑ': 'd',
+                'ḓ': 'd',
+                'ḏ': 'd',
+                'đ': 'd',
+                'ƌ': 'd',
+                'ɖ': 'd',
+                'ɗ': 'd',
+                'ꝺ': 'd',
+                'ǳ': 'dz',
+                'ǆ': 'dz',
+                '\u24D4': 'e',
+                'ｅ': 'e',
+                'è': 'e',
+                'é': 'e',
+                'ê': 'e',
+                'ề': 'e',
+                'ế': 'e',
+                'ễ': 'e',
+                'ể': 'e',
+                'ẽ': 'e',
+                'ē': 'e',
+                'ḕ': 'e',
+                'ḗ': 'e',
+                'ĕ': 'e',
+                'ė': 'e',
+                'ë': 'e',
+                'ẻ': 'e',
+                'ě': 'e',
+                'ȅ': 'e',
+                'ȇ': 'e',
+                'ẹ': 'e',
+                'ệ': 'e',
+                'ȩ': 'e',
+                'ḝ': 'e',
+                'ę': 'e',
+                'ḙ': 'e',
+                'ḛ': 'e',
+                'ɇ': 'e',
+                'ɛ': 'e',
+                'ǝ': 'e',
+                '\u24D5': 'f',
+                'ｆ': 'f',
+                'ḟ': 'f',
+                'ƒ': 'f',
+                'ꝼ': 'f',
+                '\u24D6': 'g',
+                'ｇ': 'g',
+                'ǵ': 'g',
+                'ĝ': 'g',
+                'ḡ': 'g',
+                'ğ': 'g',
+                'ġ': 'g',
+                'ǧ': 'g',
+                'ģ': 'g',
+                'ǥ': 'g',
+                'ɠ': 'g',
+                'ꞡ': 'g',
+                'ᵹ': 'g',
+                'ꝿ': 'g',
+                '\u24D7': 'h',
+                'ｈ': 'h',
+                'ĥ': 'h',
+                'ḣ': 'h',
+                'ḧ': 'h',
+                'ȟ': 'h',
+                'ḥ': 'h',
+                'ḩ': 'h',
+                'ḫ': 'h',
+                'ẖ': 'h',
+                'ħ': 'h',
+                'ⱨ': 'h',
+                'ⱶ': 'h',
+                'ɥ': 'h',
+                'ƕ': 'hv',
+                '\u24D8': 'i',
+                'ｉ': 'i',
+                'ì': 'i',
+                'í': 'i',
+                'î': 'i',
+                'ĩ': 'i',
+                'ī': 'i',
+                'ĭ': 'i',
+                'ï': 'i',
+                'ḯ': 'i',
+                'ỉ': 'i',
+                'ǐ': 'i',
+                'ȉ': 'i',
+                'ȋ': 'i',
+                'ị': 'i',
+                'į': 'i',
+                'ḭ': 'i',
+                'ɨ': 'i',
+                'ı': 'i',
+                '\u24D9': 'j',
+                'ｊ': 'j',
+                'ĵ': 'j',
+                'ǰ': 'j',
+                'ɉ': 'j',
+                '\u24DA': 'k',
+                'ｋ': 'k',
+                'ḱ': 'k',
+                'ǩ': 'k',
+                'ḳ': 'k',
+                'ķ': 'k',
+                'ḵ': 'k',
+                'ƙ': 'k',
+                'ⱪ': 'k',
+                'ꝁ': 'k',
+                'ꝃ': 'k',
+                'ꝅ': 'k',
+                'ꞣ': 'k',
+                '\u24DB': 'l',
+                'ｌ': 'l',
+                'ŀ': 'l',
+                'ĺ': 'l',
+                'ľ': 'l',
+                'ḷ': 'l',
+                'ḹ': 'l',
+                'ļ': 'l',
+                'ḽ': 'l',
+                'ḻ': 'l',
+                'ſ': 'l',
+                'ł': 'l',
+                'ƚ': 'l',
+                'ɫ': 'l',
+                'ⱡ': 'l',
+                'ꝉ': 'l',
+                'ꞁ': 'l',
+                'ꝇ': 'l',
+                'ǉ': 'lj',
+                '\u24DC': 'm',
+                'ｍ': 'm',
+                'ḿ': 'm',
+                'ṁ': 'm',
+                'ṃ': 'm',
+                'ɱ': 'm',
+                'ɯ': 'm',
+                '\u24DD': 'n',
+                'ｎ': 'n',
+                'ǹ': 'n',
+                'ń': 'n',
+                'ñ': 'n',
+                'ṅ': 'n',
+                'ň': 'n',
+                'ṇ': 'n',
+                'ņ': 'n',
+                'ṋ': 'n',
+                'ṉ': 'n',
+                'ƞ': 'n',
+                'ɲ': 'n',
+                'ŉ': 'n',
+                'ꞑ': 'n',
+                'ꞥ': 'n',
+                'ǌ': 'nj',
+                '\u24DE': 'o',
+                'ｏ': 'o',
+                'ò': 'o',
+                'ó': 'o',
+                'ô': 'o',
+                'ồ': 'o',
+                'ố': 'o',
+                'ỗ': 'o',
+                'ổ': 'o',
+                'õ': 'o',
+                'ṍ': 'o',
+                'ȭ': 'o',
+                'ṏ': 'o',
+                'ō': 'o',
+                'ṑ': 'o',
+                'ṓ': 'o',
+                'ŏ': 'o',
+                'ȯ': 'o',
+                'ȱ': 'o',
+                'ö': 'o',
+                'ȫ': 'o',
+                'ỏ': 'o',
+                'ő': 'o',
+                'ǒ': 'o',
+                'ȍ': 'o',
+                'ȏ': 'o',
+                'ơ': 'o',
+                'ờ': 'o',
+                'ớ': 'o',
+                'ỡ': 'o',
+                'ở': 'o',
+                'ợ': 'o',
+                'ọ': 'o',
+                'ộ': 'o',
+                'ǫ': 'o',
+                'ǭ': 'o',
+                'ø': 'o',
+                'ǿ': 'o',
+                'ɔ': 'o',
+                'ꝋ': 'o',
+                'ꝍ': 'o',
+                'ɵ': 'o',
+                'ƣ': 'oi',
+                'ȣ': 'ou',
+                'ꝏ': 'oo',
+                '\u24DF': 'p',
+                'ｐ': 'p',
+                'ṕ': 'p',
+                'ṗ': 'p',
+                'ƥ': 'p',
+                'ᵽ': 'p',
+                'ꝑ': 'p',
+                'ꝓ': 'p',
+                'ꝕ': 'p',
+                '\u24E0': 'q',
+                'ｑ': 'q',
+                'ɋ': 'q',
+                'ꝗ': 'q',
+                'ꝙ': 'q',
+                '\u24E1': 'r',
+                'ｒ': 'r',
+                'ŕ': 'r',
+                'ṙ': 'r',
+                'ř': 'r',
+                'ȑ': 'r',
+                'ȓ': 'r',
+                'ṛ': 'r',
+                'ṝ': 'r',
+                'ŗ': 'r',
+                'ṟ': 'r',
+                'ɍ': 'r',
+                'ɽ': 'r',
+                'ꝛ': 'r',
+                'ꞧ': 'r',
+                'ꞃ': 'r',
+                '\u24E2': 's',
+                'ｓ': 's',
+                'ß': 's',
+                'ś': 's',
+                'ṥ': 's',
+                'ŝ': 's',
+                'ṡ': 's',
+                'š': 's',
+                'ṧ': 's',
+                'ṣ': 's',
+                'ṩ': 's',
+                'ș': 's',
+                'ş': 's',
+                'ȿ': 's',
+                'ꞩ': 's',
+                'ꞅ': 's',
+                'ẛ': 's',
+                '\u24E3': 't',
+                'ｔ': 't',
+                'ṫ': 't',
+                'ẗ': 't',
+                'ť': 't',
+                'ṭ': 't',
+                'ț': 't',
+                'ţ': 't',
+                'ṱ': 't',
+                'ṯ': 't',
+                'ŧ': 't',
+                'ƭ': 't',
+                'ʈ': 't',
+                'ⱦ': 't',
+                'ꞇ': 't',
+                'ꜩ': 'tz',
+                '\u24E4': 'u',
+                'ｕ': 'u',
+                'ù': 'u',
+                'ú': 'u',
+                'û': 'u',
+                'ũ': 'u',
+                'ṹ': 'u',
+                'ū': 'u',
+                'ṻ': 'u',
+                'ŭ': 'u',
+                'ü': 'u',
+                'ǜ': 'u',
+                'ǘ': 'u',
+                'ǖ': 'u',
+                'ǚ': 'u',
+                'ủ': 'u',
+                'ů': 'u',
+                'ű': 'u',
+                'ǔ': 'u',
+                'ȕ': 'u',
+                'ȗ': 'u',
+                'ư': 'u',
+                'ừ': 'u',
+                'ứ': 'u',
+                'ữ': 'u',
+                'ử': 'u',
+                'ự': 'u',
+                'ụ': 'u',
+                'ṳ': 'u',
+                'ų': 'u',
+                'ṷ': 'u',
+                'ṵ': 'u',
+                'ʉ': 'u',
+                '\u24E5': 'v',
+                'ｖ': 'v',
+                'ṽ': 'v',
+                'ṿ': 'v',
+                'ʋ': 'v',
+                'ꝟ': 'v',
+                'ʌ': 'v',
+                'ꝡ': 'vy',
+                '\u24E6': 'w',
+                'ｗ': 'w',
+                'ẁ': 'w',
+                'ẃ': 'w',
+                'ŵ': 'w',
+                'ẇ': 'w',
+                'ẅ': 'w',
+                'ẘ': 'w',
+                'ẉ': 'w',
+                'ⱳ': 'w',
+                '\u24E7': 'x',
+                'ｘ': 'x',
+                'ẋ': 'x',
+                'ẍ': 'x',
+                '\u24E8': 'y',
+                'ｙ': 'y',
+                'ỳ': 'y',
+                'ý': 'y',
+                'ŷ': 'y',
+                'ỹ': 'y',
+                'ȳ': 'y',
+                'ẏ': 'y',
+                'ÿ': 'y',
+                'ỷ': 'y',
+                'ẙ': 'y',
+                'ỵ': 'y',
+                'ƴ': 'y',
+                'ɏ': 'y',
+                'ỿ': 'y',
+                '\u24E9': 'z',
+                'ｚ': 'z',
+                'ź': 'z',
+                'ẑ': 'z',
+                'ż': 'z',
+                'ž': 'z',
+                'ẓ': 'z',
+                'ẕ': 'z',
+                'ƶ': 'z',
+                'ȥ': 'z',
+                'ɀ': 'z',
+                'ⱬ': 'z',
+                'ꝣ': 'z',
+                'Ά': 'Α',
+                'Έ': 'Ε',
+                'Ή': 'Η',
+                'Ί': 'Ι',
+                'Ϊ': 'Ι',
+                'Ό': 'Ο',
+                'Ύ': 'Υ',
+                'Ϋ': 'Υ',
+                'Ώ': 'Ω',
+                'ά': 'α',
+                'έ': 'ε',
+                'ή': 'η',
+                'ί': 'ι',
+                'ϊ': 'ι',
+                'ΐ': 'ι',
+                'ό': 'ο',
+                'ύ': 'υ',
+                'ϋ': 'υ',
+                'ΰ': 'υ',
+                'ω': 'ω',
+                'ς': 'σ'
+            };
+            return diacritics;
+        });
+        S2.define('select2/data/base', ['../utils'], function (Utils) {
+            function BaseAdapter($element, options) {
+                BaseAdapter.__super__.constructor.call(this);
+            }
+            Utils.Extend(BaseAdapter, Utils.Observable);
+            BaseAdapter.prototype.current = function (callback) {
+                throw new Error('The `current` method must be defined in child classes.');
+            };
+            BaseAdapter.prototype.query = function (params, callback) {
+                throw new Error('The `query` method must be defined in child classes.');
+            };
+            BaseAdapter.prototype.bind = function (container, $container) {
+            };
+            BaseAdapter.prototype.destroy = function () {
+            };
+            BaseAdapter.prototype.generateResultId = function (container, data) {
+                var id = container.id + '-result-';
+                id += Utils.generateChars(4);
+                if (data.id != null) {
+                    id += '-' + data.id.toString();
+                } else {
+                    id += '-' + Utils.generateChars(4);
+                }
+                return id;
+            };
+            return BaseAdapter;
+        });
+        S2.define('select2/data/select', [
+            './base',
+            '../utils',
+            'jquery'
+        ], function (BaseAdapter, Utils, $) {
+            function SelectAdapter($element, options) {
+                this.$element = $element;
+                this.options = options;
+                SelectAdapter.__super__.constructor.call(this);
+            }
+            Utils.Extend(SelectAdapter, BaseAdapter);
+            SelectAdapter.prototype.current = function (callback) {
+                var data = [];
+                var self = this;
+                this.$element.find(':selected').each(function () {
+                    var $option = $(this);
+                    var option = self.item($option);
+                    data.push(option);
+                });
+                callback(data);
+            };
+            SelectAdapter.prototype.select = function (data) {
+                var self = this;
+                data.selected = true;
+                if ($(data.element).is('option')) {
+                    data.element.selected = true;
+                    this.$element.trigger('change');
+                    return;
+                }
+                if (this.$element.prop('multiple')) {
+                    this.current(function (currentData) {
+                        var val = [];
+                        data = [data];
+                        data.push.apply(data, currentData);
+                        for (var d = 0; d < data.length; d++) {
+                            var id = data[d].id;
+                            if ($.inArray(id, val) === -1) {
+                                val.push(id);
+                            }
+                        }
+                        self.$element.val(val);
+                        self.$element.trigger('change');
+                    });
+                } else {
+                    var val = data.id;
+                    this.$element.val(val);
+                    this.$element.trigger('change');
+                }
+            };
+            SelectAdapter.prototype.unselect = function (data) {
+                var self = this;
+                if (!this.$element.prop('multiple')) {
+                    return;
+                }
+                data.selected = false;
+                if ($(data.element).is('option')) {
+                    data.element.selected = false;
+                    this.$element.trigger('change');
+                    return;
+                }
+                this.current(function (currentData) {
+                    var val = [];
+                    for (var d = 0; d < currentData.length; d++) {
+                        var id = currentData[d].id;
+                        if (id !== data.id && $.inArray(id, val) === -1) {
+                            val.push(id);
+                        }
+                    }
+                    self.$element.val(val);
+                    self.$element.trigger('change');
+                });
+            };
+            SelectAdapter.prototype.bind = function (container, $container) {
+                var self = this;
+                this.container = container;
+                container.on('select', function (params) {
+                    self.select(params.data);
+                });
+                container.on('unselect', function (params) {
+                    self.unselect(params.data);
+                });
+            };
+            SelectAdapter.prototype.destroy = function () {
+                this.$element.find('*').each(function () {
+                    $.removeData(this, 'data');
+                });
+            };
+            SelectAdapter.prototype.query = function (params, callback) {
+                var data = [];
+                var self = this;
+                var $options = this.$element.children();
+                $options.each(function () {
+                    var $option = $(this);
+                    if (!$option.is('option') && !$option.is('optgroup')) {
+                        return;
+                    }
+                    var option = self.item($option);
+                    var matches = self.matches(params, option);
+                    if (matches !== null) {
+                        data.push(matches);
+                    }
+                });
+                callback({ results: data });
+            };
+            SelectAdapter.prototype.addOptions = function ($options) {
+                Utils.appendMany(this.$element, $options);
+            };
+            SelectAdapter.prototype.option = function (data) {
+                var option;
+                if (data.children) {
+                    option = document.createElement('optgroup');
+                    option.label = data.text;
+                } else {
+                    option = document.createElement('option');
+                    if (option.textContent !== undefined) {
+                        option.textContent = data.text;
+                    } else {
+                        option.innerText = data.text;
+                    }
+                }
+                if (data.id) {
+                    option.value = data.id;
+                }
+                if (data.disabled) {
+                    option.disabled = true;
+                }
+                if (data.selected) {
+                    option.selected = true;
+                }
+                if (data.title) {
+                    option.title = data.title;
+                }
+                var $option = $(option);
+                var normalizedData = this._normalizeItem(data);
+                normalizedData.element = option;
+                $.data(option, 'data', normalizedData);
+                return $option;
+            };
+            SelectAdapter.prototype.item = function ($option) {
+                var data = {};
+                data = $.data($option[0], 'data');
+                if (data != null) {
+                    return data;
+                }
+                if ($option.is('option')) {
+                    data = {
+                        id: $option.val(),
+                        text: $option.text(),
+                        disabled: $option.prop('disabled'),
+                        selected: $option.prop('selected'),
+                        title: $option.prop('title')
+                    };
+                } else if ($option.is('optgroup')) {
+                    data = {
+                        text: $option.prop('label'),
+                        children: [],
+                        title: $option.prop('title')
+                    };
+                    var $children = $option.children('option');
+                    var children = [];
+                    for (var c = 0; c < $children.length; c++) {
+                        var $child = $($children[c]);
+                        var child = this.item($child);
+                        children.push(child);
+                    }
+                    data.children = children;
+                }
+                data = this._normalizeItem(data);
+                data.element = $option[0];
+                $.data($option[0], 'data', data);
+                return data;
+            };
+            SelectAdapter.prototype._normalizeItem = function (item) {
+                if (!$.isPlainObject(item)) {
+                    item = {
+                        id: item,
+                        text: item
+                    };
+                }
+                item = $.extend({}, { text: '' }, item);
+                var defaults = {
+                    selected: false,
+                    disabled: false
+                };
+                if (item.id != null) {
+                    item.id = item.id.toString();
+                }
+                if (item.text != null) {
+                    item.text = item.text.toString();
+                }
+                if (item._resultId == null && item.id && this.container != null) {
+                    item._resultId = this.generateResultId(this.container, item);
+                }
+                return $.extend({}, defaults, item);
+            };
+            SelectAdapter.prototype.matches = function (params, data) {
+                var matcher = this.options.get('matcher');
+                return matcher(params, data);
+            };
+            return SelectAdapter;
+        });
+        S2.define('select2/data/array', [
+            './select',
+            '../utils',
+            'jquery'
+        ], function (SelectAdapter, Utils, $) {
+            function ArrayAdapter($element, options) {
+                var data = options.get('data') || [];
+                ArrayAdapter.__super__.constructor.call(this, $element, options);
+                this.addOptions(this.convertToOptions(data));
+            }
+            Utils.Extend(ArrayAdapter, SelectAdapter);
+            ArrayAdapter.prototype.select = function (data) {
+                var $option = this.$element.find('option').filter(function (i, elm) {
+                    return elm.value == data.id.toString();
+                });
+                if ($option.length === 0) {
+                    $option = this.option(data);
+                    this.addOptions($option);
+                }
+                ArrayAdapter.__super__.select.call(this, data);
+            };
+            ArrayAdapter.prototype.convertToOptions = function (data) {
+                var self = this;
+                var $existing = this.$element.find('option');
+                var existingIds = $existing.map(function () {
+                    return self.item($(this)).id;
+                }).get();
+                var $options = [];
+                function onlyItem(item) {
+                    return function () {
+                        return $(this).val() == item.id;
+                    };
+                }
+                for (var d = 0; d < data.length; d++) {
+                    var item = this._normalizeItem(data[d]);
+                    if ($.inArray(item.id, existingIds) >= 0) {
+                        var $existingOption = $existing.filter(onlyItem(item));
+                        var existingData = this.item($existingOption);
+                        var newData = $.extend(true, {}, item, existingData);
+                        var $newOption = this.option(newData);
+                        $existingOption.replaceWith($newOption);
+                        continue;
+                    }
+                    var $option = this.option(item);
+                    if (item.children) {
+                        var $children = this.convertToOptions(item.children);
+                        Utils.appendMany($option, $children);
+                    }
+                    $options.push($option);
+                }
+                return $options;
+            };
+            return ArrayAdapter;
+        });
+        S2.define('select2/data/ajax', [
+            './array',
+            '../utils',
+            'jquery'
+        ], function (ArrayAdapter, Utils, $) {
+            function AjaxAdapter($element, options) {
+                this.ajaxOptions = this._applyDefaults(options.get('ajax'));
+                if (this.ajaxOptions.processResults != null) {
+                    this.processResults = this.ajaxOptions.processResults;
+                }
+                AjaxAdapter.__super__.constructor.call(this, $element, options);
+            }
+            Utils.Extend(AjaxAdapter, ArrayAdapter);
+            AjaxAdapter.prototype._applyDefaults = function (options) {
+                var defaults = {
+                    data: function (params) {
+                        return $.extend({}, params, { q: params.term });
+                    },
+                    transport: function (params, success, failure) {
+                        var $request = $.ajax(params);
+                        $request.then(success);
+                        $request.fail(failure);
+                        return $request;
+                    }
+                };
+                return $.extend({}, defaults, options, true);
+            };
+            AjaxAdapter.prototype.processResults = function (results) {
+                return results;
+            };
+            AjaxAdapter.prototype.query = function (params, callback) {
+                var matches = [];
+                var self = this;
+                if (this._request != null) {
+                    if ($.isFunction(this._request.abort)) {
+                        this._request.abort();
+                    }
+                    this._request = null;
+                }
+                var options = $.extend({ type: 'GET' }, this.ajaxOptions);
+                if (typeof options.url === 'function') {
+                    options.url = options.url.call(this.$element, params);
+                }
+                if (typeof options.data === 'function') {
+                    options.data = options.data.call(this.$element, params);
+                }
+                function request() {
+                    var $request = options.transport(options, function (data) {
+                        var results = self.processResults(data, params);
+                        if (self.options.get('debug') && window.console && console.error) {
+                            if (!results || !results.results || !$.isArray(results.results)) {
+                                console.error('Select2: The AJAX results did not return an array in the ' + '`results` key of the response.');
+                            }
+                        }
+                        callback(results);
+                    }, function () {
+                        self.trigger('results:message', { message: 'errorLoading' });
+                    });
+                    self._request = $request;
+                }
+                if (this.ajaxOptions.delay && params.term !== '') {
+                    if (this._queryTimeout) {
+                        window.clearTimeout(this._queryTimeout);
+                    }
+                    this._queryTimeout = window.setTimeout(request, this.ajaxOptions.delay);
+                } else {
+                    request();
+                }
+            };
+            return AjaxAdapter;
+        });
+        S2.define('select2/data/tags', ['jquery'], function ($) {
+            function Tags(decorated, $element, options) {
+                var tags = options.get('tags');
+                var createTag = options.get('createTag');
+                if (createTag !== undefined) {
+                    this.createTag = createTag;
+                }
+                var insertTag = options.get('insertTag');
+                if (insertTag !== undefined) {
+                    this.insertTag = insertTag;
+                }
+                decorated.call(this, $element, options);
+                if ($.isArray(tags)) {
+                    for (var t = 0; t < tags.length; t++) {
+                        var tag = tags[t];
+                        var item = this._normalizeItem(tag);
+                        var $option = this.option(item);
+                        this.$element.append($option);
+                    }
+                }
+            }
+            Tags.prototype.query = function (decorated, params, callback) {
+                var self = this;
+                this._removeOldTags();
+                if (params.term == null || params.page != null) {
+                    decorated.call(this, params, callback);
+                    return;
+                }
+                function wrapper(obj, child) {
+                    var data = obj.results;
+                    for (var i = 0; i < data.length; i++) {
+                        var option = data[i];
+                        var checkChildren = option.children != null && !wrapper({ results: option.children }, true);
+                        var checkText = option.text === params.term;
+                        if (checkText || checkChildren) {
+                            if (child) {
+                                return false;
+                            }
+                            obj.data = data;
+                            callback(obj);
+                            return;
+                        }
+                    }
+                    if (child) {
+                        return true;
+                    }
+                    var tag = self.createTag(params);
+                    if (tag != null) {
+                        var $option = self.option(tag);
+                        $option.attr('data-select2-tag', true);
+                        self.addOptions([$option]);
+                        self.insertTag(data, tag);
+                    }
+                    obj.results = data;
+                    callback(obj);
+                }
+                decorated.call(this, params, wrapper);
+            };
+            Tags.prototype.createTag = function (decorated, params) {
+                var term = $.trim(params.term);
+                if (term === '') {
+                    return null;
+                }
+                return {
+                    id: term,
+                    text: term
+                };
+            };
+            Tags.prototype.insertTag = function (_, data, tag) {
+                data.unshift(tag);
+            };
+            Tags.prototype._removeOldTags = function (_) {
+                var tag = this._lastTag;
+                var $options = this.$element.find('option[data-select2-tag]');
+                $options.each(function () {
+                    if (this.selected) {
+                        return;
+                    }
+                    $(this).remove();
+                });
+            };
+            return Tags;
+        });
+        S2.define('select2/data/tokenizer', ['jquery'], function ($) {
+            function Tokenizer(decorated, $element, options) {
+                var tokenizer = options.get('tokenizer');
+                if (tokenizer !== undefined) {
+                    this.tokenizer = tokenizer;
+                }
+                decorated.call(this, $element, options);
+            }
+            Tokenizer.prototype.bind = function (decorated, container, $container) {
+                decorated.call(this, container, $container);
+                this.$search = container.dropdown.$search || container.selection.$search || $container.find('.select2-search__field');
+            };
+            Tokenizer.prototype.query = function (decorated, params, callback) {
+                var self = this;
+                function select(data) {
+                    self.trigger('select', { data: data });
+                }
+                params.term = params.term || '';
+                var tokenData = this.tokenizer(params, this.options, select);
+                if (tokenData.term !== params.term) {
+                    if (this.$search.length) {
+                        this.$search.val(tokenData.term);
+                        this.$search.focus();
+                    }
+                    params.term = tokenData.term;
+                }
+                decorated.call(this, params, callback);
+            };
+            Tokenizer.prototype.tokenizer = function (_, params, options, callback) {
+                var separators = options.get('tokenSeparators') || [];
+                var term = params.term;
+                var i = 0;
+                var createTag = this.createTag || function (params) {
+                    return {
+                        id: params.term,
+                        text: params.term
+                    };
+                };
+                while (i < term.length) {
+                    var termChar = term[i];
+                    if ($.inArray(termChar, separators) === -1) {
+                        i++;
+                        continue;
+                    }
+                    var part = term.substr(0, i);
+                    var partParams = $.extend({}, params, { term: part });
+                    var data = createTag(partParams);
+                    if (data == null) {
+                        i++;
+                        continue;
+                    }
+                    callback(data);
+                    term = term.substr(i + 1) || '';
+                    i = 0;
+                }
+                return { term: term };
+            };
+            return Tokenizer;
+        });
+        S2.define('select2/data/minimumInputLength', [], function () {
+            function MinimumInputLength(decorated, $e, options) {
+                this.minimumInputLength = options.get('minimumInputLength');
+                decorated.call(this, $e, options);
+            }
+            MinimumInputLength.prototype.query = function (decorated, params, callback) {
+                params.term = params.term || '';
+                if (params.term.length < this.minimumInputLength) {
+                    this.trigger('results:message', {
+                        message: 'inputTooShort',
+                        args: {
+                            minimum: this.minimumInputLength,
+                            input: params.term,
+                            params: params
+                        }
+                    });
+                    return;
+                }
+                decorated.call(this, params, callback);
+            };
+            return MinimumInputLength;
+        });
+        S2.define('select2/data/maximumInputLength', [], function () {
+            function MaximumInputLength(decorated, $e, options) {
+                this.maximumInputLength = options.get('maximumInputLength');
+                decorated.call(this, $e, options);
+            }
+            MaximumInputLength.prototype.query = function (decorated, params, callback) {
+                params.term = params.term || '';
+                if (this.maximumInputLength > 0 && params.term.length > this.maximumInputLength) {
+                    this.trigger('results:message', {
+                        message: 'inputTooLong',
+                        args: {
+                            maximum: this.maximumInputLength,
+                            input: params.term,
+                            params: params
+                        }
+                    });
+                    return;
+                }
+                decorated.call(this, params, callback);
+            };
+            return MaximumInputLength;
+        });
+        S2.define('select2/data/maximumSelectionLength', [], function () {
+            function MaximumSelectionLength(decorated, $e, options) {
+                this.maximumSelectionLength = options.get('maximumSelectionLength');
+                decorated.call(this, $e, options);
+            }
+            MaximumSelectionLength.prototype.query = function (decorated, params, callback) {
+                var self = this;
+                this.current(function (currentData) {
+                    var count = currentData != null ? currentData.length : 0;
+                    if (self.maximumSelectionLength > 0 && count >= self.maximumSelectionLength) {
+                        self.trigger('results:message', {
+                            message: 'maximumSelected',
+                            args: { maximum: self.maximumSelectionLength }
+                        });
+                        return;
+                    }
+                    decorated.call(self, params, callback);
+                });
+            };
+            return MaximumSelectionLength;
+        });
+        S2.define('select2/dropdown', [
+            'jquery',
+            './utils'
+        ], function ($, Utils) {
+            function Dropdown($element, options) {
+                this.$element = $element;
+                this.options = options;
+                Dropdown.__super__.constructor.call(this);
+            }
+            Utils.Extend(Dropdown, Utils.Observable);
+            Dropdown.prototype.render = function () {
+                var $dropdown = $('<span class="select2-dropdown">' + '<span class="select2-results"></span>' + '</span>');
+                $dropdown.attr('dir', this.options.get('dir'));
+                this.$dropdown = $dropdown;
+                return $dropdown;
+            };
+            Dropdown.prototype.bind = function () {
+            };
+            Dropdown.prototype.position = function ($dropdown, $container) {
+            };
+            Dropdown.prototype.destroy = function () {
+                this.$dropdown.remove();
+            };
+            return Dropdown;
+        });
+        S2.define('select2/dropdown/search', [
+            'jquery',
+            '../utils'
+        ], function ($, Utils) {
+            function Search() {
+            }
+            Search.prototype.render = function (decorated) {
+                var $rendered = decorated.call(this);
+                var $search = $('<span class="select2-search select2-search--dropdown">' + '<input class="select2-search__field" type="search" tabindex="-1"' + ' autocomplete="off" autocorrect="off" autocapitalize="off"' + ' spellcheck="false" role="textbox" />' + '</span>');
+                this.$searchContainer = $search;
+                this.$search = $search.find('input');
+                $rendered.prepend($search);
+                return $rendered;
+            };
+            Search.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                this.$search.on('keydown', function (evt) {
+                    self.trigger('keypress', evt);
+                    self._keyUpPrevented = evt.isDefaultPrevented();
+                });
+                this.$search.on('input', function (evt) {
+                    $(this).off('keyup');
+                });
+                this.$search.on('keyup input', function (evt) {
+                    self.handleSearch(evt);
+                });
+                container.on('open', function () {
+                    self.$search.attr('tabindex', 0);
+                    self.$search.focus();
+                    window.setTimeout(function () {
+                        self.$search.focus();
+                    }, 0);
+                });
+                container.on('close', function () {
+                    self.$search.attr('tabindex', -1);
+                    self.$search.val('');
+                });
+                container.on('results:all', function (params) {
+                    if (params.query.term == null || params.query.term === '') {
+                        var showSearch = self.showSearch(params);
+                        if (showSearch) {
+                            self.$searchContainer.removeClass('select2-search--hide');
+                        } else {
+                            self.$searchContainer.addClass('select2-search--hide');
+                        }
+                    }
+                });
+            };
+            Search.prototype.handleSearch = function (evt) {
+                if (!this._keyUpPrevented) {
+                    var input = this.$search.val();
+                    this.trigger('query', { term: input });
+                }
+                this._keyUpPrevented = false;
+            };
+            Search.prototype.showSearch = function (_, params) {
+                return true;
+            };
+            return Search;
+        });
+        S2.define('select2/dropdown/hidePlaceholder', [], function () {
+            function HidePlaceholder(decorated, $element, options, dataAdapter) {
+                this.placeholder = this.normalizePlaceholder(options.get('placeholder'));
+                decorated.call(this, $element, options, dataAdapter);
+            }
+            HidePlaceholder.prototype.append = function (decorated, data) {
+                data.results = this.removePlaceholder(data.results);
+                decorated.call(this, data);
+            };
+            HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
+                if (typeof placeholder === 'string') {
+                    placeholder = {
+                        id: '',
+                        text: placeholder
+                    };
+                }
+                return placeholder;
+            };
+            HidePlaceholder.prototype.removePlaceholder = function (_, data) {
+                var modifiedData = data.slice(0);
+                for (var d = data.length - 1; d >= 0; d--) {
+                    var item = data[d];
+                    if (this.placeholder.id === item.id) {
+                        modifiedData.splice(d, 1);
+                    }
+                }
+                return modifiedData;
+            };
+            return HidePlaceholder;
+        });
+        S2.define('select2/dropdown/infiniteScroll', ['jquery'], function ($) {
+            function InfiniteScroll(decorated, $element, options, dataAdapter) {
+                this.lastParams = {};
+                decorated.call(this, $element, options, dataAdapter);
+                this.$loadingMore = this.createLoadingMore();
+                this.loading = false;
+            }
+            InfiniteScroll.prototype.append = function (decorated, data) {
+                this.$loadingMore.remove();
+                this.loading = false;
+                decorated.call(this, data);
+                if (this.showLoadingMore(data)) {
+                    this.$results.append(this.$loadingMore);
+                }
+            };
+            InfiniteScroll.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                container.on('query', function (params) {
+                    self.lastParams = params;
+                    self.loading = true;
+                });
+                container.on('query:append', function (params) {
+                    self.lastParams = params;
+                    self.loading = true;
+                });
+                this.$results.on('scroll', function () {
+                    var isLoadMoreVisible = $.contains(document.documentElement, self.$loadingMore[0]);
+                    if (self.loading || !isLoadMoreVisible) {
+                        return;
+                    }
+                    var currentOffset = self.$results.offset().top + self.$results.outerHeight(false);
+                    var loadingMoreOffset = self.$loadingMore.offset().top + self.$loadingMore.outerHeight(false);
+                    if (currentOffset + 50 >= loadingMoreOffset) {
+                        self.loadMore();
+                    }
+                });
+            };
+            InfiniteScroll.prototype.loadMore = function () {
+                this.loading = true;
+                var params = $.extend({}, { page: 1 }, this.lastParams);
+                params.page++;
+                this.trigger('query:append', params);
+            };
+            InfiniteScroll.prototype.showLoadingMore = function (_, data) {
+                return data.pagination && data.pagination.more;
+            };
+            InfiniteScroll.prototype.createLoadingMore = function () {
+                var $option = $('<li ' + 'class="select2-results__option select2-results__option--load-more"' + 'role="treeitem" aria-disabled="true"></li>');
+                var message = this.options.get('translations').get('loadingMore');
+                $option.html(message(this.lastParams));
+                return $option;
+            };
+            return InfiniteScroll;
+        });
+        S2.define('select2/dropdown/attachBody', [
+            'jquery',
+            '../utils'
+        ], function ($, Utils) {
+            function AttachBody(decorated, $element, options) {
+                this.$dropdownParent = options.get('dropdownParent') || $(document.body);
+                decorated.call(this, $element, options);
+            }
+            AttachBody.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                var setupResultsEvents = false;
+                decorated.call(this, container, $container);
+                container.on('open', function () {
+                    self._showDropdown();
+                    self._attachPositioningHandler(container);
+                    if (!setupResultsEvents) {
+                        setupResultsEvents = true;
+                        container.on('results:all', function () {
+                            self._positionDropdown();
+                            self._resizeDropdown();
+                        });
+                        container.on('results:append', function () {
+                            self._positionDropdown();
+                            self._resizeDropdown();
+                        });
+                    }
+                });
+                container.on('close', function () {
+                    self._hideDropdown();
+                    self._detachPositioningHandler(container);
+                });
+                this.$dropdownContainer.on('mousedown', function (evt) {
+                    evt.stopPropagation();
+                });
+            };
+            AttachBody.prototype.destroy = function (decorated) {
+                decorated.call(this);
+                this.$dropdownContainer.remove();
+            };
+            AttachBody.prototype.position = function (decorated, $dropdown, $container) {
+                $dropdown.attr('class', $container.attr('class'));
+                $dropdown.removeClass('select2');
+                $dropdown.addClass('select2-container--open');
+                $dropdown.css({
+                    position: 'absolute',
+                    top: -999999
+                });
+                this.$container = $container;
+            };
+            AttachBody.prototype.render = function (decorated) {
+                var $container = $('<span></span>');
+                var $dropdown = decorated.call(this);
+                $container.append($dropdown);
+                this.$dropdownContainer = $container;
+                return $container;
+            };
+            AttachBody.prototype._hideDropdown = function (decorated) {
+                this.$dropdownContainer.detach();
+            };
+            AttachBody.prototype._attachPositioningHandler = function (decorated, container) {
+                var self = this;
+                var scrollEvent = 'scroll.select2.' + container.id;
+                var resizeEvent = 'resize.select2.' + container.id;
+                var orientationEvent = 'orientationchange.select2.' + container.id;
+                var $watchers = this.$container.parents().filter(Utils.hasScroll);
+                $watchers.each(function () {
+                    $(this).data('select2-scroll-position', {
+                        x: $(this).scrollLeft(),
+                        y: $(this).scrollTop()
+                    });
+                });
+                $watchers.on(scrollEvent, function (ev) {
+                    var position = $(this).data('select2-scroll-position');
+                    $(this).scrollTop(position.y);
+                });
+                $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent, function (e) {
+                    self._positionDropdown();
+                    self._resizeDropdown();
+                });
+            };
+            AttachBody.prototype._detachPositioningHandler = function (decorated, container) {
+                var scrollEvent = 'scroll.select2.' + container.id;
+                var resizeEvent = 'resize.select2.' + container.id;
+                var orientationEvent = 'orientationchange.select2.' + container.id;
+                var $watchers = this.$container.parents().filter(Utils.hasScroll);
+                $watchers.off(scrollEvent);
+                $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
+            };
+            AttachBody.prototype._positionDropdown = function () {
+                var $window = $(window);
+                var isCurrentlyAbove = this.$dropdown.hasClass('select2-dropdown--above');
+                var isCurrentlyBelow = this.$dropdown.hasClass('select2-dropdown--below');
+                var newDirection = null;
+                var offset = this.$container.offset();
+                offset.bottom = offset.top + this.$container.outerHeight(false);
+                var container = { height: this.$container.outerHeight(false) };
+                container.top = offset.top;
+                container.bottom = offset.top + container.height;
+                var dropdown = { height: this.$dropdown.outerHeight(false) };
+                var viewport = {
+                    top: $window.scrollTop(),
+                    bottom: $window.scrollTop() + $window.height()
+                };
+                var enoughRoomAbove = viewport.top < offset.top - dropdown.height;
+                var enoughRoomBelow = viewport.bottom > offset.bottom + dropdown.height;
+                var css = {
+                    left: offset.left,
+                    top: container.bottom
+                };
+                var $offsetParent = this.$dropdownParent;
+                if ($offsetParent.css('position') === 'static') {
+                    $offsetParent = $offsetParent.offsetParent();
+                }
+                var parentOffset = $offsetParent.offset();
+                css.top -= parentOffset.top;
+                css.left -= parentOffset.left;
+                if (!isCurrentlyAbove && !isCurrentlyBelow) {
+                    newDirection = 'below';
+                }
+                if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
+                    newDirection = 'above';
+                } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
+                    newDirection = 'below';
+                }
+                if (newDirection == 'above' || isCurrentlyAbove && newDirection !== 'below') {
+                    css.top = container.top - dropdown.height;
+                }
+                if (newDirection != null) {
+                    this.$dropdown.removeClass('select2-dropdown--below select2-dropdown--above').addClass('select2-dropdown--' + newDirection);
+                    this.$container.removeClass('select2-container--below select2-container--above').addClass('select2-container--' + newDirection);
+                }
+                this.$dropdownContainer.css(css);
+            };
+            AttachBody.prototype._resizeDropdown = function () {
+                var css = { width: this.$container.outerWidth(false) + 'px' };
+                if (this.options.get('dropdownAutoWidth')) {
+                    css.minWidth = css.width;
+                    css.width = 'auto';
+                }
+                this.$dropdown.css(css);
+            };
+            AttachBody.prototype._showDropdown = function (decorated) {
+                this.$dropdownContainer.appendTo(this.$dropdownParent);
+                this._positionDropdown();
+                this._resizeDropdown();
+            };
+            return AttachBody;
+        });
+        S2.define('select2/dropdown/minimumResultsForSearch', [], function () {
+            function countResults(data) {
+                var count = 0;
+                for (var d = 0; d < data.length; d++) {
+                    var item = data[d];
+                    if (item.children) {
+                        count += countResults(item.children);
+                    } else {
+                        count++;
+                    }
+                }
+                return count;
+            }
+            function MinimumResultsForSearch(decorated, $element, options, dataAdapter) {
+                this.minimumResultsForSearch = options.get('minimumResultsForSearch');
+                if (this.minimumResultsForSearch < 0) {
+                    this.minimumResultsForSearch = Infinity;
+                }
+                decorated.call(this, $element, options, dataAdapter);
+            }
+            MinimumResultsForSearch.prototype.showSearch = function (decorated, params) {
+                if (countResults(params.data.results) < this.minimumResultsForSearch) {
+                    return false;
+                }
+                return decorated.call(this, params);
+            };
+            return MinimumResultsForSearch;
+        });
+        S2.define('select2/dropdown/selectOnClose', [], function () {
+            function SelectOnClose() {
+            }
+            SelectOnClose.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                container.on('close', function () {
+                    self._handleSelectOnClose();
+                });
+            };
+            SelectOnClose.prototype._handleSelectOnClose = function () {
+                var $highlightedResults = this.getHighlightedResults();
+                if ($highlightedResults.length < 1) {
+                    return;
+                }
+                var data = $highlightedResults.data('data');
+                if (data.element != null && data.element.selected || data.element == null && data.selected) {
+                    return;
+                }
+                this.trigger('select', { data: data });
+            };
+            return SelectOnClose;
+        });
+        S2.define('select2/dropdown/closeOnSelect', [], function () {
+            function CloseOnSelect() {
+            }
+            CloseOnSelect.prototype.bind = function (decorated, container, $container) {
+                var self = this;
+                decorated.call(this, container, $container);
+                container.on('select', function (evt) {
+                    self._selectTriggered(evt);
+                });
+                container.on('unselect', function (evt) {
+                    self._selectTriggered(evt);
+                });
+            };
+            CloseOnSelect.prototype._selectTriggered = function (_, evt) {
+                var originalEvent = evt.originalEvent;
+                if (originalEvent && originalEvent.ctrlKey) {
+                    return;
+                }
+                this.trigger('close', {});
+            };
+            return CloseOnSelect;
+        });
+        S2.define('select2/i18n/en', [], function () {
+            return {
+                errorLoading: function () {
+                    return 'The results could not be loaded.';
+                },
+                inputTooLong: function (args) {
+                    var overChars = args.input.length - args.maximum;
+                    var message = 'Please delete ' + overChars + ' character';
+                    if (overChars != 1) {
+                        message += 's';
+                    }
+                    return message;
+                },
+                inputTooShort: function (args) {
+                    var remainingChars = args.minimum - args.input.length;
+                    var message = 'Please enter ' + remainingChars + ' or more characters';
+                    return message;
+                },
+                loadingMore: function () {
+                    return 'Loading more results\u2026';
+                },
+                maximumSelected: function (args) {
+                    var message = 'You can only select ' + args.maximum + ' item';
+                    if (args.maximum != 1) {
+                        message += 's';
+                    }
+                    return message;
+                },
+                noResults: function () {
+                    return 'No results found';
+                },
+                searching: function () {
+                    return 'Searching\u2026';
+                }
+            };
+        });
+        S2.define('select2/defaults', [
+            'jquery',
+            'require',
+            './results',
+            './selection/single',
+            './selection/multiple',
+            './selection/placeholder',
+            './selection/allowClear',
+            './selection/search',
+            './selection/eventRelay',
+            './utils',
+            './translation',
+            './diacritics',
+            './data/select',
+            './data/array',
+            './data/ajax',
+            './data/tags',
+            './data/tokenizer',
+            './data/minimumInputLength',
+            './data/maximumInputLength',
+            './data/maximumSelectionLength',
+            './dropdown',
+            './dropdown/search',
+            './dropdown/hidePlaceholder',
+            './dropdown/infiniteScroll',
+            './dropdown/attachBody',
+            './dropdown/minimumResultsForSearch',
+            './dropdown/selectOnClose',
+            './dropdown/closeOnSelect',
+            './i18n/en'
+        ], function ($, require, ResultsList, SingleSelection, MultipleSelection, Placeholder, AllowClear, SelectionSearch, EventRelay, Utils, Translation, DIACRITICS, SelectData, ArrayData, AjaxData, Tags, Tokenizer, MinimumInputLength, MaximumInputLength, MaximumSelectionLength, Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll, AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect, EnglishTranslation) {
+            function Defaults() {
+                this.reset();
+            }
+            Defaults.prototype.apply = function (options) {
+                options = $.extend(true, {}, this.defaults, options);
+                if (options.dataAdapter == null) {
+                    if (options.ajax != null) {
+                        options.dataAdapter = AjaxData;
+                    } else if (options.data != null) {
+                        options.dataAdapter = ArrayData;
+                    } else {
+                        options.dataAdapter = SelectData;
+                    }
+                    if (options.minimumInputLength > 0) {
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, MinimumInputLength);
+                    }
+                    if (options.maximumInputLength > 0) {
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, MaximumInputLength);
+                    }
+                    if (options.maximumSelectionLength > 0) {
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, MaximumSelectionLength);
+                    }
+                    if (options.tags) {
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+                    }
+                    if (options.tokenSeparators != null || options.tokenizer != null) {
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tokenizer);
+                    }
+                    if (options.query != null) {
+                        var Query = require(options.amdBase + 'compat/query');
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, Query);
+                    }
+                    if (options.initSelection != null) {
+                        var InitSelection = require(options.amdBase + 'compat/initSelection');
+                        options.dataAdapter = Utils.Decorate(options.dataAdapter, InitSelection);
+                    }
+                }
+                if (options.resultsAdapter == null) {
+                    options.resultsAdapter = ResultsList;
+                    if (options.ajax != null) {
+                        options.resultsAdapter = Utils.Decorate(options.resultsAdapter, InfiniteScroll);
+                    }
+                    if (options.placeholder != null) {
+                        options.resultsAdapter = Utils.Decorate(options.resultsAdapter, HidePlaceholder);
+                    }
+                    if (options.selectOnClose) {
+                        options.resultsAdapter = Utils.Decorate(options.resultsAdapter, SelectOnClose);
+                    }
+                }
+                if (options.dropdownAdapter == null) {
+                    if (options.multiple) {
+                        options.dropdownAdapter = Dropdown;
+                    } else {
+                        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
+                        options.dropdownAdapter = SearchableDropdown;
+                    }
+                    if (options.minimumResultsForSearch !== 0) {
+                        options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, MinimumResultsForSearch);
+                    }
+                    if (options.closeOnSelect) {
+                        options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, CloseOnSelect);
+                    }
+                    if (options.dropdownCssClass != null || options.dropdownCss != null || options.adaptDropdownCssClass != null) {
+                        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
+                        options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, DropdownCSS);
+                    }
+                    options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, AttachBody);
+                }
+                if (options.selectionAdapter == null) {
+                    if (options.multiple) {
+                        options.selectionAdapter = MultipleSelection;
+                    } else {
+                        options.selectionAdapter = SingleSelection;
+                    }
+                    if (options.placeholder != null) {
+                        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, Placeholder);
+                    }
+                    if (options.allowClear) {
+                        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, AllowClear);
+                    }
+                    if (options.multiple) {
+                        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, SelectionSearch);
+                    }
+                    if (options.containerCssClass != null || options.containerCss != null || options.adaptContainerCssClass != null) {
+                        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
+                        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, ContainerCSS);
+                    }
+                    options.selectionAdapter = Utils.Decorate(options.selectionAdapter, EventRelay);
+                }
+                if (typeof options.language === 'string') {
+                    if (options.language.indexOf('-') > 0) {
+                        var languageParts = options.language.split('-');
+                        var baseLanguage = languageParts[0];
+                        options.language = [
+                            options.language,
+                            baseLanguage
+                        ];
+                    } else {
+                        options.language = [options.language];
+                    }
+                }
+                if ($.isArray(options.language)) {
+                    var languages = new Translation();
+                    options.language.push('en');
+                    var languageNames = options.language;
+                    for (var l = 0; l < languageNames.length; l++) {
+                        var name = languageNames[l];
+                        var language = {};
+                        try {
+                            language = Translation.loadPath(name);
+                        } catch (e) {
+                            try {
+                                name = this.defaults.amdLanguageBase + name;
+                                language = Translation.loadPath(name);
+                            } catch (ex) {
+                                if (options.debug && window.console && console.warn) {
+                                    console.warn('Select2: The language file for "' + name + '" could not be ' + 'automatically loaded. A fallback will be used instead.');
+                                }
+                                continue;
+                            }
+                        }
+                        languages.extend(language);
+                    }
+                    options.translations = languages;
+                } else {
+                    var baseTranslation = Translation.loadPath(this.defaults.amdLanguageBase + 'en');
+                    var customTranslation = new Translation(options.language);
+                    customTranslation.extend(baseTranslation);
+                    options.translations = customTranslation;
+                }
+                return options;
+            };
+            Defaults.prototype.reset = function () {
+                function stripDiacritics(text) {
+                    function match(a) {
+                        return DIACRITICS[a] || a;
+                    }
+                    return text.replace(/[^\u0000-\u007E]/g, match);
+                }
+                function matcher(params, data) {
+                    if ($.trim(params.term) === '') {
+                        return data;
+                    }
+                    if (data.children && data.children.length > 0) {
+                        var match = $.extend(true, {}, data);
+                        for (var c = data.children.length - 1; c >= 0; c--) {
+                            var child = data.children[c];
+                            var matches = matcher(params, child);
+                            if (matches == null) {
+                                match.children.splice(c, 1);
+                            }
+                        }
+                        if (match.children.length > 0) {
+                            return match;
+                        }
+                        return matcher(params, match);
+                    }
+                    var original = stripDiacritics(data.text).toUpperCase();
+                    var term = stripDiacritics(params.term).toUpperCase();
+                    if (original.indexOf(term) > -1) {
+                        return data;
+                    }
+                    return null;
+                }
+                this.defaults = {
+                    amdBase: './',
+                    amdLanguageBase: './i18n/',
+                    closeOnSelect: true,
+                    debug: false,
+                    dropdownAutoWidth: false,
+                    escapeMarkup: Utils.escapeMarkup,
+                    language: EnglishTranslation,
+                    matcher: matcher,
+                    minimumInputLength: 0,
+                    maximumInputLength: 0,
+                    maximumSelectionLength: 0,
+                    minimumResultsForSearch: 0,
+                    selectOnClose: false,
+                    sorter: function (data) {
+                        return data;
+                    },
+                    templateResult: function (result) {
+                        return result.text;
+                    },
+                    templateSelection: function (selection) {
+                        return selection.text;
+                    },
+                    theme: 'default',
+                    width: 'resolve'
+                };
+            };
+            Defaults.prototype.set = function (key, value) {
+                var camelKey = $.camelCase(key);
+                var data = {};
+                data[camelKey] = value;
+                var convertedData = Utils._convertData(data);
+                $.extend(this.defaults, convertedData);
+            };
+            var defaults = new Defaults();
+            return defaults;
+        });
+        S2.define('select2/options', [
+            'require',
+            'jquery',
+            './defaults',
+            './utils'
+        ], function (require, $, Defaults, Utils) {
+            function Options(options, $element) {
+                this.options = options;
+                if ($element != null) {
+                    this.fromElement($element);
+                }
+                this.options = Defaults.apply(this.options);
+                if ($element && $element.is('input')) {
+                    var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+                    this.options.dataAdapter = Utils.Decorate(this.options.dataAdapter, InputCompat);
+                }
+            }
+            Options.prototype.fromElement = function ($e) {
+                var excludedData = ['select2'];
+                if (this.options.multiple == null) {
+                    this.options.multiple = $e.prop('multiple');
+                }
+                if (this.options.disabled == null) {
+                    this.options.disabled = $e.prop('disabled');
+                }
+                if (this.options.language == null) {
+                    if ($e.prop('lang')) {
+                        this.options.language = $e.prop('lang').toLowerCase();
+                    } else if ($e.closest('[lang]').prop('lang')) {
+                        this.options.language = $e.closest('[lang]').prop('lang');
+                    }
+                }
+                if (this.options.dir == null) {
+                    if ($e.prop('dir')) {
+                        this.options.dir = $e.prop('dir');
+                    } else if ($e.closest('[dir]').prop('dir')) {
+                        this.options.dir = $e.closest('[dir]').prop('dir');
+                    } else {
+                        this.options.dir = 'ltr';
+                    }
+                }
+                $e.prop('disabled', this.options.disabled);
+                $e.prop('multiple', this.options.multiple);
+                if ($e.data('select2Tags')) {
+                    if (this.options.debug && window.console && console.warn) {
+                        console.warn('Select2: The `data-select2-tags` attribute has been changed to ' + 'use the `data-data` and `data-tags="true"` attributes and will be ' + 'removed in future versions of Select2.');
+                    }
+                    $e.data('data', $e.data('select2Tags'));
+                    $e.data('tags', true);
+                }
+                if ($e.data('ajaxUrl')) {
+                    if (this.options.debug && window.console && console.warn) {
+                        console.warn('Select2: The `data-ajax-url` attribute has been changed to ' + '`data-ajax--url` and support for the old attribute will be removed' + ' in future versions of Select2.');
+                    }
+                    $e.attr('ajax--url', $e.data('ajaxUrl'));
+                    $e.data('ajax--url', $e.data('ajaxUrl'));
+                }
+                var dataset = {};
+                if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
+                    dataset = $.extend(true, {}, $e[0].dataset, $e.data());
+                } else {
+                    dataset = $e.data();
+                }
+                var data = $.extend(true, {}, dataset);
+                data = Utils._convertData(data);
+                for (var key in data) {
+                    if ($.inArray(key, excludedData) > -1) {
+                        continue;
+                    }
+                    if ($.isPlainObject(this.options[key])) {
+                        $.extend(this.options[key], data[key]);
+                    } else {
+                        this.options[key] = data[key];
+                    }
+                }
+                return this;
+            };
+            Options.prototype.get = function (key) {
+                return this.options[key];
+            };
+            Options.prototype.set = function (key, val) {
+                this.options[key] = val;
+            };
+            return Options;
+        });
+        S2.define('select2/core', [
+            'jquery',
+            './options',
+            './utils',
+            './keys'
+        ], function ($, Options, Utils, KEYS) {
+            var Select2 = function ($element, options) {
+                if ($element.data('select2') != null) {
+                    $element.data('select2').destroy();
+                }
+                this.$element = $element;
+                this.id = this._generateId($element);
+                options = options || {};
+                this.options = new Options(options, $element);
+                Select2.__super__.constructor.call(this);
+                var tabindex = $element.attr('tabindex') || 0;
+                $element.data('old-tabindex', tabindex);
+                $element.attr('tabindex', '-1');
+                var DataAdapter = this.options.get('dataAdapter');
+                this.dataAdapter = new DataAdapter($element, this.options);
+                var $container = this.render();
+                this._placeContainer($container);
+                var SelectionAdapter = this.options.get('selectionAdapter');
+                this.selection = new SelectionAdapter($element, this.options);
+                this.$selection = this.selection.render();
+                this.selection.position(this.$selection, $container);
+                var DropdownAdapter = this.options.get('dropdownAdapter');
+                this.dropdown = new DropdownAdapter($element, this.options);
+                this.$dropdown = this.dropdown.render();
+                this.dropdown.position(this.$dropdown, $container);
+                var ResultsAdapter = this.options.get('resultsAdapter');
+                this.results = new ResultsAdapter($element, this.options, this.dataAdapter);
+                this.$results = this.results.render();
+                this.results.position(this.$results, this.$dropdown);
+                var self = this;
+                this._bindAdapters();
+                this._registerDomEvents();
+                this._registerDataEvents();
+                this._registerSelectionEvents();
+                this._registerDropdownEvents();
+                this._registerResultsEvents();
+                this._registerEvents();
+                this.dataAdapter.current(function (initialData) {
+                    self.trigger('selection:update', { data: initialData });
+                });
+                $element.addClass('select2-hidden-accessible');
+                $element.attr('aria-hidden', 'true');
+                this._syncAttributes();
+                $element.data('select2', this);
+            };
+            Utils.Extend(Select2, Utils.Observable);
+            Select2.prototype._generateId = function ($element) {
+                var id = '';
+                if ($element.attr('id') != null) {
+                    id = $element.attr('id');
+                } else if ($element.attr('name') != null) {
+                    id = $element.attr('name') + '-' + Utils.generateChars(2);
+                } else {
+                    id = Utils.generateChars(4);
+                }
+                id = id.replace(/(:|\.|\[|\]|,)/g, '');
+                id = 'select2-' + id;
+                return id;
+            };
+            Select2.prototype._placeContainer = function ($container) {
+                $container.insertAfter(this.$element);
+                var width = this._resolveWidth(this.$element, this.options.get('width'));
+                if (width != null) {
+                    $container.css('width', width);
+                }
+            };
+            Select2.prototype._resolveWidth = function ($element, method) {
+                var WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
+                if (method == 'resolve') {
+                    var styleWidth = this._resolveWidth($element, 'style');
+                    if (styleWidth != null) {
+                        return styleWidth;
+                    }
+                    return this._resolveWidth($element, 'element');
+                }
+                if (method == 'element') {
+                    var elementWidth = $element.outerWidth(false);
+                    if (elementWidth <= 0) {
+                        return 'auto';
+                    }
+                    return elementWidth + 'px';
+                }
+                if (method == 'style') {
+                    var style = $element.attr('style');
+                    if (typeof style !== 'string') {
+                        return null;
+                    }
+                    var attrs = style.split(';');
+                    for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+                        var attr = attrs[i].replace(/\s/g, '');
+                        var matches = attr.match(WIDTH);
+                        if (matches !== null && matches.length >= 1) {
+                            return matches[1];
+                        }
+                    }
+                    return null;
+                }
+                return method;
+            };
+            Select2.prototype._bindAdapters = function () {
+                this.dataAdapter.bind(this, this.$container);
+                this.selection.bind(this, this.$container);
+                this.dropdown.bind(this, this.$container);
+                this.results.bind(this, this.$container);
+            };
+            Select2.prototype._registerDomEvents = function () {
+                var self = this;
+                this.$element.on('change.select2', function () {
+                    self.dataAdapter.current(function (data) {
+                        self.trigger('selection:update', { data: data });
+                    });
+                });
+                this._sync = Utils.bind(this._syncAttributes, this);
+                if (this.$element[0].attachEvent) {
+                    this.$element[0].attachEvent('onpropertychange', this._sync);
+                }
+                var observer = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                if (observer != null) {
+                    this._observer = new observer(function (mutations) {
+                        $.each(mutations, self._sync);
+                    });
+                    this._observer.observe(this.$element[0], {
+                        attributes: true,
+                        subtree: false
+                    });
+                } else if (this.$element[0].addEventListener) {
+                    this.$element[0].addEventListener('DOMAttrModified', self._sync, false);
+                }
+            };
+            Select2.prototype._registerDataEvents = function () {
+                var self = this;
+                this.dataAdapter.on('*', function (name, params) {
+                    self.trigger(name, params);
+                });
+            };
+            Select2.prototype._registerSelectionEvents = function () {
+                var self = this;
+                var nonRelayEvents = [
+                    'toggle',
+                    'focus'
+                ];
+                this.selection.on('toggle', function () {
+                    self.toggleDropdown();
+                });
+                this.selection.on('focus', function (params) {
+                    self.focus(params);
+                });
+                this.selection.on('*', function (name, params) {
+                    if ($.inArray(name, nonRelayEvents) !== -1) {
+                        return;
+                    }
+                    self.trigger(name, params);
+                });
+            };
+            Select2.prototype._registerDropdownEvents = function () {
+                var self = this;
+                this.dropdown.on('*', function (name, params) {
+                    self.trigger(name, params);
+                });
+            };
+            Select2.prototype._registerResultsEvents = function () {
+                var self = this;
+                this.results.on('*', function (name, params) {
+                    self.trigger(name, params);
+                });
+            };
+            Select2.prototype._registerEvents = function () {
+                var self = this;
+                this.on('open', function () {
+                    self.$container.addClass('select2-container--open');
+                });
+                this.on('close', function () {
+                    self.$container.removeClass('select2-container--open');
+                });
+                this.on('enable', function () {
+                    self.$container.removeClass('select2-container--disabled');
+                });
+                this.on('disable', function () {
+                    self.$container.addClass('select2-container--disabled');
+                });
+                this.on('blur', function () {
+                    self.$container.removeClass('select2-container--focus');
+                });
+                this.on('query', function (params) {
+                    if (!self.isOpen()) {
+                        self.trigger('open', {});
+                    }
+                    this.dataAdapter.query(params, function (data) {
+                        self.trigger('results:all', {
+                            data: data,
+                            query: params
+                        });
+                    });
+                });
+                this.on('query:append', function (params) {
+                    this.dataAdapter.query(params, function (data) {
+                        self.trigger('results:append', {
+                            data: data,
+                            query: params
+                        });
+                    });
+                });
+                this.on('keypress', function (evt) {
+                    var key = evt.which;
+                    if (self.isOpen()) {
+                        if (key === KEYS.ESC || key === KEYS.TAB || key === KEYS.UP && evt.altKey) {
+                            self.close();
+                            evt.preventDefault();
+                        } else if (key === KEYS.ENTER) {
+                            self.trigger('results:select', {});
+                            evt.preventDefault();
+                        } else if (key === KEYS.SPACE && evt.ctrlKey) {
+                            self.trigger('results:toggle', {});
+                            evt.preventDefault();
+                        } else if (key === KEYS.UP) {
+                            self.trigger('results:previous', {});
+                            evt.preventDefault();
+                        } else if (key === KEYS.DOWN) {
+                            self.trigger('results:next', {});
+                            evt.preventDefault();
+                        }
+                    } else {
+                        if (key === KEYS.ENTER || key === KEYS.SPACE || key === KEYS.DOWN && evt.altKey) {
+                            self.open();
+                            evt.preventDefault();
+                        }
+                    }
+                });
+            };
+            Select2.prototype._syncAttributes = function () {
+                this.options.set('disabled', this.$element.prop('disabled'));
+                if (this.options.get('disabled')) {
+                    if (this.isOpen()) {
+                        this.close();
+                    }
+                    this.trigger('disable', {});
+                } else {
+                    this.trigger('enable', {});
+                }
+            };
+            Select2.prototype.trigger = function (name, args) {
+                var actualTrigger = Select2.__super__.trigger;
+                var preTriggerMap = {
+                    'open': 'opening',
+                    'close': 'closing',
+                    'select': 'selecting',
+                    'unselect': 'unselecting'
+                };
+                if (args === undefined) {
+                    args = {};
+                }
+                if (name in preTriggerMap) {
+                    var preTriggerName = preTriggerMap[name];
+                    var preTriggerArgs = {
+                        prevented: false,
+                        name: name,
+                        args: args
+                    };
+                    actualTrigger.call(this, preTriggerName, preTriggerArgs);
+                    if (preTriggerArgs.prevented) {
+                        args.prevented = true;
+                        return;
+                    }
+                }
+                actualTrigger.call(this, name, args);
+            };
+            Select2.prototype.toggleDropdown = function () {
+                if (this.options.get('disabled')) {
+                    return;
+                }
+                if (this.isOpen()) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            };
+            Select2.prototype.open = function () {
+                if (this.isOpen()) {
+                    return;
+                }
+                this.trigger('query', {});
+            };
+            Select2.prototype.close = function () {
+                if (!this.isOpen()) {
+                    return;
+                }
+                this.trigger('close', {});
+            };
+            Select2.prototype.isOpen = function () {
+                return this.$container.hasClass('select2-container--open');
+            };
+            Select2.prototype.hasFocus = function () {
+                return this.$container.hasClass('select2-container--focus');
+            };
+            Select2.prototype.focus = function (data) {
+                if (this.hasFocus()) {
+                    return;
+                }
+                this.$container.addClass('select2-container--focus');
+                this.trigger('focus', {});
+            };
+            Select2.prototype.enable = function (args) {
+                if (this.options.get('debug') && window.console && console.warn) {
+                    console.warn('Select2: The `select2("enable")` method has been deprecated and will' + ' be removed in later Select2 versions. Use $element.prop("disabled")' + ' instead.');
+                }
+                if (args == null || args.length === 0) {
+                    args = [true];
+                }
+                var disabled = !args[0];
+                this.$element.prop('disabled', disabled);
+            };
+            Select2.prototype.data = function () {
+                if (this.options.get('debug') && arguments.length > 0 && window.console && console.warn) {
+                    console.warn('Select2: Data can no longer be set using `select2("data")`. You ' + 'should consider setting the value instead using `$element.val()`.');
+                }
+                var data = [];
+                this.dataAdapter.current(function (currentData) {
+                    data = currentData;
+                });
+                return data;
+            };
+            Select2.prototype.val = function (args) {
+                if (this.options.get('debug') && window.console && console.warn) {
+                    console.warn('Select2: The `select2("val")` method has been deprecated and will be' + ' removed in later Select2 versions. Use $element.val() instead.');
+                }
+                if (args == null || args.length === 0) {
+                    return this.$element.val();
+                }
+                var newVal = args[0];
+                if ($.isArray(newVal)) {
+                    newVal = $.map(newVal, function (obj) {
+                        return obj.toString();
+                    });
+                }
+                this.$element.val(newVal).trigger('change');
+            };
+            Select2.prototype.destroy = function () {
+                this.$container.remove();
+                if (this.$element[0].detachEvent) {
+                    this.$element[0].detachEvent('onpropertychange', this._sync);
+                }
+                if (this._observer != null) {
+                    this._observer.disconnect();
+                    this._observer = null;
+                } else if (this.$element[0].removeEventListener) {
+                    this.$element[0].removeEventListener('DOMAttrModified', this._sync, false);
+                }
+                this._sync = null;
+                this.$element.off('.select2');
+                this.$element.attr('tabindex', this.$element.data('old-tabindex'));
+                this.$element.removeClass('select2-hidden-accessible');
+                this.$element.attr('aria-hidden', 'false');
+                this.$element.removeData('select2');
+                this.dataAdapter.destroy();
+                this.selection.destroy();
+                this.dropdown.destroy();
+                this.results.destroy();
+                this.dataAdapter = null;
+                this.selection = null;
+                this.dropdown = null;
+                this.results = null;
+            };
+            Select2.prototype.render = function () {
+                var $container = $('<span class="select2 select2-container">' + '<span class="selection"></span>' + '<span class="dropdown-wrapper" aria-hidden="true"></span>' + '</span>');
+                $container.attr('dir', this.options.get('dir'));
+                this.$container = $container;
+                this.$container.addClass('select2-container--' + this.options.get('theme'));
+                $container.data('element', this.$element);
+                return $container;
+            };
+            return Select2;
+        });
+        S2.define('select2/compat/utils', ['jquery'], function ($) {
+            function syncCssClasses($dest, $src, adapter) {
+                var classes, replacements = [], adapted;
+                classes = $.trim($dest.attr('class'));
+                if (classes) {
+                    classes = '' + classes;
+                    $(classes.split(/\s+/)).each(function () {
+                        if (this.indexOf('select2-') === 0) {
+                            replacements.push(this);
+                        }
+                    });
+                }
+                classes = $.trim($src.attr('class'));
+                if (classes) {
+                    classes = '' + classes;
+                    $(classes.split(/\s+/)).each(function () {
+                        if (this.indexOf('select2-') !== 0) {
+                            adapted = adapter(this);
+                            if (adapted != null) {
+                                replacements.push(adapted);
+                            }
+                        }
+                    });
+                }
+                $dest.attr('class', replacements.join(' '));
+            }
+            return { syncCssClasses: syncCssClasses };
+        });
+        S2.define('select2/compat/containerCss', [
+            'jquery',
+            './utils'
+        ], function ($, CompatUtils) {
+            function _containerAdapter(clazz) {
+                return null;
+            }
+            function ContainerCSS() {
+            }
+            ContainerCSS.prototype.render = function (decorated) {
+                var $container = decorated.call(this);
+                var containerCssClass = this.options.get('containerCssClass') || '';
+                if ($.isFunction(containerCssClass)) {
+                    containerCssClass = containerCssClass(this.$element);
+                }
+                var containerCssAdapter = this.options.get('adaptContainerCssClass');
+                containerCssAdapter = containerCssAdapter || _containerAdapter;
+                if (containerCssClass.indexOf(':all:') !== -1) {
+                    containerCssClass = containerCssClass.replace(':all:', '');
+                    var _cssAdapter = containerCssAdapter;
+                    containerCssAdapter = function (clazz) {
+                        var adapted = _cssAdapter(clazz);
+                        if (adapted != null) {
+                            return adapted + ' ' + clazz;
+                        }
+                        return clazz;
+                    };
+                }
+                var containerCss = this.options.get('containerCss') || {};
+                if ($.isFunction(containerCss)) {
+                    containerCss = containerCss(this.$element);
+                }
+                CompatUtils.syncCssClasses($container, this.$element, containerCssAdapter);
+                $container.css(containerCss);
+                $container.addClass(containerCssClass);
+                return $container;
+            };
+            return ContainerCSS;
+        });
+        S2.define('select2/compat/dropdownCss', [
+            'jquery',
+            './utils'
+        ], function ($, CompatUtils) {
+            function _dropdownAdapter(clazz) {
+                return null;
+            }
+            function DropdownCSS() {
+            }
+            DropdownCSS.prototype.render = function (decorated) {
+                var $dropdown = decorated.call(this);
+                var dropdownCssClass = this.options.get('dropdownCssClass') || '';
+                if ($.isFunction(dropdownCssClass)) {
+                    dropdownCssClass = dropdownCssClass(this.$element);
+                }
+                var dropdownCssAdapter = this.options.get('adaptDropdownCssClass');
+                dropdownCssAdapter = dropdownCssAdapter || _dropdownAdapter;
+                if (dropdownCssClass.indexOf(':all:') !== -1) {
+                    dropdownCssClass = dropdownCssClass.replace(':all:', '');
+                    var _cssAdapter = dropdownCssAdapter;
+                    dropdownCssAdapter = function (clazz) {
+                        var adapted = _cssAdapter(clazz);
+                        if (adapted != null) {
+                            return adapted + ' ' + clazz;
+                        }
+                        return clazz;
+                    };
+                }
+                var dropdownCss = this.options.get('dropdownCss') || {};
+                if ($.isFunction(dropdownCss)) {
+                    dropdownCss = dropdownCss(this.$element);
+                }
+                CompatUtils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
+                $dropdown.css(dropdownCss);
+                $dropdown.addClass(dropdownCssClass);
+                return $dropdown;
+            };
+            return DropdownCSS;
+        });
+        S2.define('select2/compat/initSelection', ['jquery'], function ($) {
+            function InitSelection(decorated, $element, options) {
+                if (options.get('debug') && window.console && console.warn) {
+                    console.warn('Select2: The `initSelection` option has been deprecated in favor' + ' of a custom data adapter that overrides the `current` method. ' + 'This method is now called multiple times instead of a single ' + 'time when the instance is initialized. Support will be removed ' + 'for the `initSelection` option in future versions of Select2');
+                }
+                this.initSelection = options.get('initSelection');
+                this._isInitialized = false;
+                decorated.call(this, $element, options);
+            }
+            InitSelection.prototype.current = function (decorated, callback) {
+                var self = this;
+                if (this._isInitialized) {
+                    decorated.call(this, callback);
+                    return;
+                }
+                this.initSelection.call(null, this.$element, function (data) {
+                    self._isInitialized = true;
+                    if (!$.isArray(data)) {
+                        data = [data];
+                    }
+                    callback(data);
+                });
+            };
+            return InitSelection;
+        });
+        S2.define('select2/compat/inputData', ['jquery'], function ($) {
+            function InputData(decorated, $element, options) {
+                this._currentData = [];
+                this._valueSeparator = options.get('valueSeparator') || ',';
+                if ($element.prop('type') === 'hidden') {
+                    if (options.get('debug') && console && console.warn) {
+                        console.warn('Select2: Using a hidden input with Select2 is no longer ' + 'supported and may stop working in the future. It is recommended ' + 'to use a `<select>` element instead.');
+                    }
+                }
+                decorated.call(this, $element, options);
+            }
+            InputData.prototype.current = function (_, callback) {
+                function getSelected(data, selectedIds) {
+                    var selected = [];
+                    if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
+                        data.selected = true;
+                        selected.push(data);
+                    } else {
+                        data.selected = false;
+                    }
+                    if (data.children) {
+                        selected.push.apply(selected, getSelected(data.children, selectedIds));
+                    }
+                    return selected;
+                }
+                var selected = [];
+                for (var d = 0; d < this._currentData.length; d++) {
+                    var data = this._currentData[d];
+                    selected.push.apply(selected, getSelected(data, this.$element.val().split(this._valueSeparator)));
+                }
+                callback(selected);
+            };
+            InputData.prototype.select = function (_, data) {
+                if (!this.options.get('multiple')) {
+                    this.current(function (allData) {
+                        $.map(allData, function (data) {
+                            data.selected = false;
+                        });
+                    });
+                    this.$element.val(data.id);
+                    this.$element.trigger('change');
+                } else {
+                    var value = this.$element.val();
+                    value += this._valueSeparator + data.id;
+                    this.$element.val(value);
+                    this.$element.trigger('change');
+                }
+            };
+            InputData.prototype.unselect = function (_, data) {
+                var self = this;
+                data.selected = false;
+                this.current(function (allData) {
+                    var values = [];
+                    for (var d = 0; d < allData.length; d++) {
+                        var item = allData[d];
+                        if (data.id == item.id) {
+                            continue;
+                        }
+                        values.push(item.id);
+                    }
+                    self.$element.val(values.join(self._valueSeparator));
+                    self.$element.trigger('change');
+                });
+            };
+            InputData.prototype.query = function (_, params, callback) {
+                var results = [];
+                for (var d = 0; d < this._currentData.length; d++) {
+                    var data = this._currentData[d];
+                    var matches = this.matches(params, data);
+                    if (matches !== null) {
+                        results.push(matches);
+                    }
+                }
+                callback({ results: results });
+            };
+            InputData.prototype.addOptions = function (_, $options) {
+                var options = $.map($options, function ($option) {
+                    return $.data($option[0], 'data');
+                });
+                this._currentData.push.apply(this._currentData, options);
+            };
+            return InputData;
+        });
+        S2.define('select2/compat/matcher', ['jquery'], function ($) {
+            function oldMatcher(matcher) {
+                function wrappedMatcher(params, data) {
+                    var match = $.extend(true, {}, data);
+                    if (params.term == null || $.trim(params.term) === '') {
+                        return match;
+                    }
+                    if (data.children) {
+                        for (var c = data.children.length - 1; c >= 0; c--) {
+                            var child = data.children[c];
+                            var doesMatch = matcher(params.term, child.text, child);
+                            if (!doesMatch) {
+                                match.children.splice(c, 1);
+                            }
+                        }
+                        if (match.children.length > 0) {
+                            return match;
+                        }
+                    }
+                    if (matcher(params.term, data.text, data)) {
+                        return match;
+                    }
+                    return null;
+                }
+                return wrappedMatcher;
+            }
+            return oldMatcher;
+        });
+        S2.define('select2/compat/query', [], function () {
+            function Query(decorated, $element, options) {
+                if (options.get('debug') && window.console && console.warn) {
+                    console.warn('Select2: The `query` option has been deprecated in favor of a ' + 'custom data adapter that overrides the `query` method. Support ' + 'will be removed for the `query` option in future versions of ' + 'Select2.');
+                }
+                decorated.call(this, $element, options);
+            }
+            Query.prototype.query = function (_, params, callback) {
+                params.callback = callback;
+                var query = this.options.get('query');
+                query.call(null, params);
+            };
+            return Query;
+        });
+        S2.define('select2/dropdown/attachContainer', [], function () {
+            function AttachContainer(decorated, $element, options) {
+                decorated.call(this, $element, options);
+            }
+            AttachContainer.prototype.position = function (decorated, $dropdown, $container) {
+                var $dropdownContainer = $container.find('.dropdown-wrapper');
+                $dropdownContainer.append($dropdown);
+                $dropdown.addClass('select2-dropdown--below');
+                $container.addClass('select2-container--below');
+            };
+            return AttachContainer;
+        });
+        S2.define('select2/dropdown/stopPropagation', [], function () {
+            function StopPropagation() {
+            }
+            StopPropagation.prototype.bind = function (decorated, container, $container) {
+                decorated.call(this, container, $container);
+                var stoppedEvents = [
+                    'blur',
+                    'change',
+                    'click',
+                    'dblclick',
+                    'focus',
+                    'focusin',
+                    'focusout',
+                    'input',
+                    'keydown',
+                    'keyup',
+                    'keypress',
+                    'mousedown',
+                    'mouseenter',
+                    'mouseleave',
+                    'mousemove',
+                    'mouseover',
+                    'mouseup',
+                    'search',
+                    'touchend',
+                    'touchstart'
+                ];
+                this.$dropdown.on(stoppedEvents.join(' '), function (evt) {
+                    evt.stopPropagation();
+                });
+            };
+            return StopPropagation;
+        });
+        S2.define('select2/selection/stopPropagation', [], function () {
+            function StopPropagation() {
+            }
+            StopPropagation.prototype.bind = function (decorated, container, $container) {
+                decorated.call(this, container, $container);
+                var stoppedEvents = [
+                    'blur',
+                    'change',
+                    'click',
+                    'dblclick',
+                    'focus',
+                    'focusin',
+                    'focusout',
+                    'input',
+                    'keydown',
+                    'keyup',
+                    'keypress',
+                    'mousedown',
+                    'mouseenter',
+                    'mouseleave',
+                    'mousemove',
+                    'mouseover',
+                    'mouseup',
+                    'search',
+                    'touchend',
+                    'touchstart'
+                ];
+                this.$selection.on(stoppedEvents.join(' '), function (evt) {
+                    evt.stopPropagation();
+                });
+            };
+            return StopPropagation;
+        });
+        (function (factory) {
+            if (typeof S2.define === 'function' && S2.define.amd) {
+                S2.define('jquery-mousewheel', ['jquery'], factory);
+            } else if (typeof exports === 'object') {
+                module.exports = factory;
+            } else {
+                factory(jQuery);
+            }
+        }(function ($) {
+            var toFix = [
+                    'wheel',
+                    'mousewheel',
+                    'DOMMouseScroll',
+                    'MozMousePixelScroll'
+                ], toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : [
+                    'mousewheel',
+                    'DomMouseScroll',
+                    'MozMousePixelScroll'
+                ], slice = Array.prototype.slice, nullLowestDeltaTimeout, lowestDelta;
+            if ($.event.fixHooks) {
+                for (var i = toFix.length; i;) {
+                    $.event.fixHooks[toFix[--i]] = $.event.mouseHooks;
+                }
+            }
+            var special = $.event.special.mousewheel = {
+                version: '3.1.12',
+                setup: function () {
+                    if (this.addEventListener) {
+                        for (var i = toBind.length; i;) {
+                            this.addEventListener(toBind[--i], handler, false);
+                        }
+                    } else {
+                        this.onmousewheel = handler;
+                    }
+                    $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+                    $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+                },
+                teardown: function () {
+                    if (this.removeEventListener) {
+                        for (var i = toBind.length; i;) {
+                            this.removeEventListener(toBind[--i], handler, false);
+                        }
+                    } else {
+                        this.onmousewheel = null;
+                    }
+                    $.removeData(this, 'mousewheel-line-height');
+                    $.removeData(this, 'mousewheel-page-height');
+                },
+                getLineHeight: function (elem) {
+                    var $elem = $(elem), $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+                    if (!$parent.length) {
+                        $parent = $('body');
+                    }
+                    return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+                },
+                getPageHeight: function (elem) {
+                    return $(elem).height();
+                },
+                settings: {
+                    adjustOldDeltas: true,
+                    normalizeOffset: true
+                }
+            };
+            $.fn.extend({
+                mousewheel: function (fn) {
+                    return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+                },
+                unmousewheel: function (fn) {
+                    return this.unbind('mousewheel', fn);
+                }
+            });
+            function handler(event) {
+                var orgEvent = event || window.event, args = slice.call(arguments, 1), delta = 0, deltaX = 0, deltaY = 0, absDelta = 0, offsetX = 0, offsetY = 0;
+                event = $.event.fix(orgEvent);
+                event.type = 'mousewheel';
+                if ('detail' in orgEvent) {
+                    deltaY = orgEvent.detail * -1;
+                }
+                if ('wheelDelta' in orgEvent) {
+                    deltaY = orgEvent.wheelDelta;
+                }
+                if ('wheelDeltaY' in orgEvent) {
+                    deltaY = orgEvent.wheelDeltaY;
+                }
+                if ('wheelDeltaX' in orgEvent) {
+                    deltaX = orgEvent.wheelDeltaX * -1;
+                }
+                if ('axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
+                    deltaX = deltaY * -1;
+                    deltaY = 0;
+                }
+                delta = deltaY === 0 ? deltaX : deltaY;
+                if ('deltaY' in orgEvent) {
+                    deltaY = orgEvent.deltaY * -1;
+                    delta = deltaY;
+                }
+                if ('deltaX' in orgEvent) {
+                    deltaX = orgEvent.deltaX;
+                    if (deltaY === 0) {
+                        delta = deltaX * -1;
+                    }
+                }
+                if (deltaY === 0 && deltaX === 0) {
+                    return;
+                }
+                if (orgEvent.deltaMode === 1) {
+                    var lineHeight = $.data(this, 'mousewheel-line-height');
+                    delta *= lineHeight;
+                    deltaY *= lineHeight;
+                    deltaX *= lineHeight;
+                } else if (orgEvent.deltaMode === 2) {
+                    var pageHeight = $.data(this, 'mousewheel-page-height');
+                    delta *= pageHeight;
+                    deltaY *= pageHeight;
+                    deltaX *= pageHeight;
+                }
+                absDelta = Math.max(Math.abs(deltaY), Math.abs(deltaX));
+                if (!lowestDelta || absDelta < lowestDelta) {
+                    lowestDelta = absDelta;
+                    if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+                        lowestDelta /= 40;
+                    }
+                }
+                if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
+                    delta /= 40;
+                    deltaX /= 40;
+                    deltaY /= 40;
+                }
+                delta = Math[delta >= 1 ? 'floor' : 'ceil'](delta / lowestDelta);
+                deltaX = Math[deltaX >= 1 ? 'floor' : 'ceil'](deltaX / lowestDelta);
+                deltaY = Math[deltaY >= 1 ? 'floor' : 'ceil'](deltaY / lowestDelta);
+                if (special.settings.normalizeOffset && this.getBoundingClientRect) {
+                    var boundingRect = this.getBoundingClientRect();
+                    offsetX = event.clientX - boundingRect.left;
+                    offsetY = event.clientY - boundingRect.top;
+                }
+                event.deltaX = deltaX;
+                event.deltaY = deltaY;
+                event.deltaFactor = lowestDelta;
+                event.offsetX = offsetX;
+                event.offsetY = offsetY;
+                event.deltaMode = 0;
+                args.unshift(event, delta, deltaX, deltaY);
+                if (nullLowestDeltaTimeout) {
+                    clearTimeout(nullLowestDeltaTimeout);
+                }
+                nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+                return ($.event.dispatch || $.event.handle).apply(this, args);
+            }
+            function nullLowestDelta() {
+                lowestDelta = null;
+            }
+            function shouldAdjustOldDeltas(orgEvent, absDelta) {
+                return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+            }
+        }));
+        S2.define('jquery.select2', [
+            'jquery',
+            'jquery-mousewheel',
+            './select2/core',
+            './select2/defaults'
+        ], function ($, _, Select2, Defaults) {
+            if ($.fn.select2 == null) {
+                var thisMethods = [
+                    'open',
+                    'close',
+                    'destroy'
+                ];
+                $.fn.select2 = function (options) {
+                    options = options || {};
+                    if (typeof options === 'object') {
+                        this.each(function () {
+                            var instanceOptions = $.extend(true, {}, options);
+                            var instance = new Select2($(this), instanceOptions);
+                        });
+                        return this;
+                    } else if (typeof options === 'string') {
+                        var ret;
+                        this.each(function () {
+                            var instance = $(this).data('select2');
+                            if (instance == null && window.console && console.error) {
+                                console.error('The select2(\'' + options + '\') method was called on an ' + 'element that is not using Select2.');
+                            }
+                            var args = Array.prototype.slice.call(arguments, 1);
+                            ret = instance[options].apply(instance, args);
+                        });
+                        if ($.inArray(options, thisMethods) > -1) {
+                            return this;
+                        }
+                        return ret;
+                    } else {
+                        throw new Error('Invalid arguments for Select2: ' + options);
+                    }
+                };
+            }
+            if ($.fn.select2.defaults == null) {
+                $.fn.select2.defaults = Defaults;
+            }
+            return Select2;
+        });
+        return {
+            define: S2.define,
+            require: S2.require
+        };
+    }();
+    var select2 = S2.require('jquery.select2');
+    jQuery.fn.select2.amd = S2;
+    return select2;
+}));
+define('editable', ['jquery'], function () {
+    (function ($) {
+        'use strict';
+        var EditableForm = function (div, options) {
+            this.options = $.extend({}, $.fn.editableform.defaults, options);
+            this.$div = $(div);
+            if (!this.options.scope) {
+                this.options.scope = this;
+            }
+        };
+        EditableForm.prototype = {
+            constructor: EditableForm,
+            initInput: function () {
+                this.input = this.options.input;
+                this.value = this.input.str2value(this.options.value);
+                this.input.prerender();
+            },
+            initTemplate: function () {
+                this.$form = $($.fn.editableform.template);
+            },
+            initButtons: function () {
+                var $btn = this.$form.find('.editable-buttons');
+                $btn.append($.fn.editableform.buttons);
+                if (this.options.showbuttons === 'bottom') {
+                    $btn.addClass('editable-buttons-bottom');
+                }
+            },
+            render: function () {
+                this.$loading = $($.fn.editableform.loading);
+                this.$div.empty().append(this.$loading);
+                this.initTemplate();
+                if (this.options.showbuttons) {
+                    this.initButtons();
+                } else {
+                    this.$form.find('.editable-buttons').remove();
+                }
+                this.showLoading();
+                this.isSaving = false;
+                this.$div.triggerHandler('rendering');
+                this.initInput();
+                this.$form.find('div.editable-input').append(this.input.$tpl);
+                this.$div.append(this.$form);
+                $.when(this.input.render()).then($.proxy(function () {
+                    if (!this.options.showbuttons) {
+                        this.input.autosubmit();
+                    }
+                    this.$form.find('.editable-cancel').click($.proxy(this.cancel, this));
+                    if (this.input.error) {
+                        this.error(this.input.error);
+                        this.$form.find('.editable-submit').attr('disabled', true);
+                        this.input.$input.attr('disabled', true);
+                        this.$form.submit(function (e) {
+                            e.preventDefault();
+                        });
+                    } else {
+                        this.error(false);
+                        this.input.$input.removeAttr('disabled');
+                        this.$form.find('.editable-submit').removeAttr('disabled');
+                        var value = this.value === null || this.value === undefined || this.value === '' ? this.options.defaultValue : this.value;
+                        this.input.value2input(value);
+                        this.$form.submit($.proxy(this.submit, this));
+                    }
+                    this.$div.triggerHandler('rendered');
+                    this.showForm();
+                    if (this.input.postrender) {
+                        this.input.postrender();
+                    }
+                }, this));
+            },
+            cancel: function () {
+                this.$div.triggerHandler('cancel');
+            },
+            showLoading: function () {
+                var w, h;
+                if (this.$form) {
+                    w = this.$form.outerWidth();
+                    h = this.$form.outerHeight();
+                    if (w) {
+                        this.$loading.width(w);
+                    }
+                    if (h) {
+                        this.$loading.height(h);
+                    }
+                    this.$form.hide();
+                } else {
+                    w = this.$loading.parent().width();
+                    if (w) {
+                        this.$loading.width(w);
+                    }
+                }
+                this.$loading.show();
+            },
+            showForm: function (activate) {
+                this.$loading.hide();
+                this.$form.show();
+                if (activate !== false) {
+                    this.input.activate();
+                }
+                this.$div.triggerHandler('show');
+            },
+            error: function (msg) {
+                var $group = this.$form.find('.control-group'), $block = this.$form.find('.editable-error-block'), lines;
+                if (msg === false) {
+                    $group.removeClass($.fn.editableform.errorGroupClass);
+                    $block.removeClass($.fn.editableform.errorBlockClass).empty().hide();
+                } else {
+                    if (msg) {
+                        lines = ('' + msg).split('\n');
+                        for (var i = 0; i < lines.length; i++) {
+                            lines[i] = $('<div>').text(lines[i]).html();
+                        }
+                        msg = lines.join('<br>');
+                    }
+                    $group.addClass($.fn.editableform.errorGroupClass);
+                    $block.addClass($.fn.editableform.errorBlockClass).html(msg).show();
+                }
+            },
+            submit: function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                var newValue = this.input.input2value();
+                var error = this.validate(newValue);
+                if ($.type(error) === 'object' && error.newValue !== undefined) {
+                    newValue = error.newValue;
+                    this.input.value2input(newValue);
+                    if (typeof error.msg === 'string') {
+                        this.error(error.msg);
+                        this.showForm();
+                        return;
+                    }
+                } else if (error) {
+                    this.error(error);
+                    this.showForm();
+                    return;
+                }
+                if (!this.options.savenochange && this.input.value2str(newValue) == this.input.value2str(this.value)) {
+                    this.$div.triggerHandler('nochange');
+                    return;
+                }
+                var submitValue = this.input.value2submit(newValue);
+                this.isSaving = true;
+                $.when(this.save(submitValue)).done($.proxy(function (response) {
+                    this.isSaving = false;
+                    var res = typeof this.options.success === 'function' ? this.options.success.call(this.options.scope, response, newValue) : null;
+                    if (res === false) {
+                        this.error(false);
+                        this.showForm(false);
+                        return;
+                    }
+                    if (typeof res === 'string') {
+                        this.error(res);
+                        this.showForm();
+                        return;
+                    }
+                    if (res && typeof res === 'object' && res.hasOwnProperty('newValue')) {
+                        newValue = res.newValue;
+                    }
+                    this.error(false);
+                    this.value = newValue;
+                    this.$div.triggerHandler('save', {
+                        newValue: newValue,
+                        submitValue: submitValue,
+                        response: response
+                    });
+                }, this)).fail($.proxy(function (xhr) {
+                    this.isSaving = false;
+                    var msg;
+                    if (typeof this.options.error === 'function') {
+                        msg = this.options.error.call(this.options.scope, xhr, newValue);
+                    } else {
+                        msg = typeof xhr === 'string' ? xhr : xhr.responseText || xhr.statusText || 'Unknown error!';
+                    }
+                    this.error(msg);
+                    this.showForm();
+                }, this));
+            },
+            save: function (submitValue) {
+                this.options.pk = $.fn.editableutils.tryParseJson(this.options.pk, true);
+                var pk = typeof this.options.pk === 'function' ? this.options.pk.call(this.options.scope) : this.options.pk, send = !!(typeof this.options.url === 'function' || this.options.url && (this.options.send === 'always' || this.options.send === 'auto' && pk !== null && pk !== undefined)), params;
+                if (send) {
+                    this.showLoading();
+                    params = {
+                        name: this.options.name || '',
+                        value: submitValue,
+                        pk: pk
+                    };
+                    if (typeof this.options.params === 'function') {
+                        params = this.options.params.call(this.options.scope, params);
+                    } else {
+                        this.options.params = $.fn.editableutils.tryParseJson(this.options.params, true);
+                        $.extend(params, this.options.params);
+                    }
+                    if (typeof this.options.url === 'function') {
+                        return this.options.url.call(this.options.scope, params);
+                    } else {
+                        return $.ajax($.extend({
+                            url: this.options.url,
+                            data: params,
+                            type: 'POST'
+                        }, this.options.ajaxOptions));
+                    }
+                }
+            },
+            validate: function (value) {
+                if (value === undefined) {
+                    value = this.value;
+                }
+                if (typeof this.options.validate === 'function') {
+                    return this.options.validate.call(this.options.scope, value);
+                }
+            },
+            option: function (key, value) {
+                if (key in this.options) {
+                    this.options[key] = value;
+                }
+                if (key === 'value') {
+                    this.setValue(value);
+                }
+            },
+            setValue: function (value, convertStr) {
+                if (convertStr) {
+                    this.value = this.input.str2value(value);
+                } else {
+                    this.value = value;
+                }
+                if (this.$form && this.$form.is(':visible')) {
+                    this.input.value2input(this.value);
+                }
+            }
+        };
+        $.fn.editableform = function (option) {
+            var args = arguments;
+            return this.each(function () {
+                var $this = $(this), data = $this.data('editableform'), options = typeof option === 'object' && option;
+                if (!data) {
+                    $this.data('editableform', data = new EditableForm(this, options));
+                }
+                if (typeof option === 'string') {
+                    data[option].apply(data, Array.prototype.slice.call(args, 1));
+                }
+            });
+        };
+        $.fn.editableform.Constructor = EditableForm;
+        $.fn.editableform.defaults = {
+            type: 'text',
+            url: null,
+            params: null,
+            name: null,
+            pk: null,
+            value: null,
+            defaultValue: null,
+            send: 'auto',
+            validate: null,
+            success: null,
+            error: null,
+            ajaxOptions: null,
+            showbuttons: true,
+            scope: null,
+            savenochange: false
+        };
+        $.fn.editableform.template = '<form class="form-inline editableform">' + '<div class="control-group">' + '<div><div class="editable-input"></div><div class="editable-buttons"></div></div>' + '<div class="editable-error-block"></div>' + '</div>' + '</form>';
+        $.fn.editableform.loading = '<div class="editableform-loading"></div>';
+        $.fn.editableform.buttons = '<button type="submit" class="editable-submit">ok</button>' + '<button type="button" class="editable-cancel">cancel</button>';
+        $.fn.editableform.errorGroupClass = null;
+        $.fn.editableform.errorBlockClass = 'editable-error';
+        $.fn.editableform.engine = 'jquery';
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        $.fn.editableutils = {
+            inherit: function (Child, Parent) {
+                var F = function () {
+                };
+                F.prototype = Parent.prototype;
+                Child.prototype = new F();
+                Child.prototype.constructor = Child;
+                Child.superclass = Parent.prototype;
+            },
+            setCursorPosition: function (elem, pos) {
+                if (elem.setSelectionRange) {
+                    elem.setSelectionRange(pos, pos);
+                } else if (elem.createTextRange) {
+                    var range = elem.createTextRange();
+                    range.collapse(true);
+                    range.moveEnd('character', pos);
+                    range.moveStart('character', pos);
+                    range.select();
+                }
+            },
+            tryParseJson: function (s, safe) {
+                if (typeof s === 'string' && s.length && s.match(/^[\{\[].*[\}\]]$/)) {
+                    if (safe) {
+                        try {
+                            s = new Function('return ' + s)();
+                        } catch (e) {
+                        } finally {
+                            return s;
+                        }
+                    } else {
+                        s = new Function('return ' + s)();
+                    }
+                }
+                return s;
+            },
+            sliceObj: function (obj, keys, caseSensitive) {
+                var key, keyLower, newObj = {};
+                if (!$.isArray(keys) || !keys.length) {
+                    return newObj;
+                }
+                for (var i = 0; i < keys.length; i++) {
+                    key = keys[i];
+                    if (obj.hasOwnProperty(key)) {
+                        newObj[key] = obj[key];
+                    }
+                    if (caseSensitive === true) {
+                        continue;
+                    }
+                    keyLower = key.toLowerCase();
+                    if (obj.hasOwnProperty(keyLower)) {
+                        newObj[key] = obj[keyLower];
+                    }
+                }
+                return newObj;
+            },
+            getConfigData: function ($element) {
+                var data = {};
+                $.each($element.data(), function (k, v) {
+                    if (typeof v !== 'object' || v && typeof v === 'object' && (v.constructor === Object || v.constructor === Array)) {
+                        data[k] = v;
+                    }
+                });
+                return data;
+            },
+            objectKeys: function (o) {
+                if (Object.keys) {
+                    return Object.keys(o);
+                } else {
+                    if (o !== Object(o)) {
+                        throw new TypeError('Object.keys called on a non-object');
+                    }
+                    var k = [], p;
+                    for (p in o) {
+                        if (Object.prototype.hasOwnProperty.call(o, p)) {
+                            k.push(p);
+                        }
+                    }
+                    return k;
+                }
+            },
+            escape: function (str) {
+                return $('<div>').text(str).html();
+            },
+            itemsByValue: function (value, sourceData, valueProp) {
+                if (!sourceData || value === null) {
+                    return [];
+                }
+                if (typeof valueProp !== 'function') {
+                    var idKey = valueProp || 'value';
+                    valueProp = function (e) {
+                        return e[idKey];
+                    };
+                }
+                var isValArray = $.isArray(value), result = [], that = this;
+                $.each(sourceData, function (i, o) {
+                    if (o.children) {
+                        result = result.concat(that.itemsByValue(value, o.children, valueProp));
+                    } else {
+                        if (isValArray) {
+                            if ($.grep(value, function (v) {
+                                    return v == (o && typeof o === 'object' ? valueProp(o) : o);
+                                }).length) {
+                                result.push(o);
+                            }
+                        } else {
+                            var itemValue = o && typeof o === 'object' ? valueProp(o) : o;
+                            if (value == itemValue) {
+                                result.push(o);
+                            }
+                        }
+                    }
+                });
+                return result;
+            },
+            createInput: function (options) {
+                var TypeConstructor, typeOptions, input, type = options.type;
+                if (type === 'date') {
+                    if (options.mode === 'inline') {
+                        if ($.fn.editabletypes.datefield) {
+                            type = 'datefield';
+                        } else if ($.fn.editabletypes.dateuifield) {
+                            type = 'dateuifield';
+                        }
+                    } else {
+                        if ($.fn.editabletypes.date) {
+                            type = 'date';
+                        } else if ($.fn.editabletypes.dateui) {
+                            type = 'dateui';
+                        }
+                    }
+                    if (type === 'date' && !$.fn.editabletypes.date) {
+                        type = 'combodate';
+                    }
+                }
+                if (type === 'datetime' && options.mode === 'inline') {
+                    type = 'datetimefield';
+                }
+                if (type === 'wysihtml5' && !$.fn.editabletypes[type]) {
+                    type = 'textarea';
+                }
+                if (typeof $.fn.editabletypes[type] === 'function') {
+                    TypeConstructor = $.fn.editabletypes[type];
+                    typeOptions = this.sliceObj(options, this.objectKeys(TypeConstructor.defaults));
+                    input = new TypeConstructor(typeOptions);
+                    return input;
+                } else {
+                    $.error('Unknown type: ' + type);
+                    return false;
+                }
+            },
+            supportsTransitions: function () {
+                var b = document.body || document.documentElement, s = b.style, p = 'transition', v = [
+                        'Moz',
+                        'Webkit',
+                        'Khtml',
+                        'O',
+                        'ms'
+                    ];
+                if (typeof s[p] === 'string') {
+                    return true;
+                }
+                p = p.charAt(0).toUpperCase() + p.substr(1);
+                for (var i = 0; i < v.length; i++) {
+                    if (typeof s[v[i] + p] === 'string') {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Popup = function (element, options) {
+            this.init(element, options);
+        };
+        var Inline = function (element, options) {
+            this.init(element, options);
+        };
+        Popup.prototype = {
+            containerName: null,
+            containerDataName: null,
+            innerCss: null,
+            containerClass: 'editable-container editable-popup',
+            defaults: {},
+            init: function (element, options) {
+                this.$element = $(element);
+                this.options = $.extend({}, $.fn.editableContainer.defaults, options);
+                this.splitOptions();
+                this.formOptions.scope = this.$element[0];
+                this.initContainer();
+                this.delayedHide = false;
+                this.$element.on('destroyed', $.proxy(function () {
+                    this.destroy();
+                }, this));
+                if (!$(document).data('editable-handlers-attached')) {
+                    $(document).on('keyup.editable', function (e) {
+                        if (e.which === 27) {
+                            $('.editable-open').editableContainer('hide');
+                        }
+                    });
+                    $(document).on('click.editable', function (e) {
+                        var $target = $(e.target), i, exclude_classes = [
+                                '.editable-container',
+                                '.ui-datepicker-header',
+                                '.datepicker',
+                                '.modal-backdrop',
+                                '.bootstrap-wysihtml5-insert-image-modal',
+                                '.bootstrap-wysihtml5-insert-link-modal'
+                            ];
+                        if (!$.contains(document.documentElement, e.target)) {
+                            return;
+                        }
+                        if ($target.is(document)) {
+                            return;
+                        }
+                        for (i = 0; i < exclude_classes.length; i++) {
+                            if ($target.is(exclude_classes[i]) || $target.parents(exclude_classes[i]).length) {
+                                return;
+                            }
+                        }
+                        Popup.prototype.closeOthers(e.target);
+                    });
+                    $(document).data('editable-handlers-attached', true);
+                }
+            },
+            splitOptions: function () {
+                this.containerOptions = {};
+                this.formOptions = {};
+                if (!$.fn[this.containerName]) {
+                    throw new Error(this.containerName + ' not found. Have you included corresponding js file?');
+                }
+                for (var k in this.options) {
+                    if (k in this.defaults) {
+                        this.containerOptions[k] = this.options[k];
+                    } else {
+                        this.formOptions[k] = this.options[k];
+                    }
+                }
+            },
+            tip: function () {
+                return this.container() ? this.container().$tip : null;
+            },
+            container: function () {
+                var container;
+                if (this.containerDataName) {
+                    if (container = this.$element.data(this.containerDataName)) {
+                        return container;
+                    }
+                }
+                container = this.$element.data(this.containerName);
+                return container;
+            },
+            call: function () {
+                this.$element[this.containerName].apply(this.$element, arguments);
+            },
+            initContainer: function () {
+                this.call(this.containerOptions);
+            },
+            renderForm: function () {
+                this.$form.editableform(this.formOptions).on({
+                    save: $.proxy(this.save, this),
+                    nochange: $.proxy(function () {
+                        this.hide('nochange');
+                    }, this),
+                    cancel: $.proxy(function () {
+                        this.hide('cancel');
+                    }, this),
+                    show: $.proxy(function () {
+                        if (this.delayedHide) {
+                            this.hide(this.delayedHide.reason);
+                            this.delayedHide = false;
+                        } else {
+                            this.setPosition();
+                        }
+                    }, this),
+                    rendering: $.proxy(this.setPosition, this),
+                    resize: $.proxy(this.setPosition, this),
+                    rendered: $.proxy(function () {
+                        this.$element.triggerHandler('shown', $(this.options.scope).data('editable'));
+                    }, this)
+                }).editableform('render');
+            },
+            show: function (closeAll) {
+                this.$element.addClass('editable-open');
+                if (closeAll !== false) {
+                    this.closeOthers(this.$element[0]);
+                }
+                this.innerShow();
+                this.tip().addClass(this.containerClass);
+                if (this.$form) {
+                }
+                this.$form = $('<div>');
+                if (this.tip().is(this.innerCss)) {
+                    this.tip().append(this.$form);
+                } else {
+                    this.tip().find(this.innerCss).append(this.$form);
+                }
+                this.renderForm();
+            },
+            hide: function (reason) {
+                if (!this.tip() || !this.tip().is(':visible') || !this.$element.hasClass('editable-open')) {
+                    return;
+                }
+                if (this.$form.data('editableform').isSaving) {
+                    this.delayedHide = { reason: reason };
+                    return;
+                } else {
+                    this.delayedHide = false;
+                }
+                this.$element.removeClass('editable-open');
+                this.innerHide();
+                this.$element.triggerHandler('hidden', reason || 'manual');
+            },
+            innerShow: function () {
+            },
+            innerHide: function () {
+            },
+            toggle: function (closeAll) {
+                if (this.container() && this.tip() && this.tip().is(':visible')) {
+                    this.hide();
+                } else {
+                    this.show(closeAll);
+                }
+            },
+            setPosition: function () {
+            },
+            save: function (e, params) {
+                this.$element.triggerHandler('save', params);
+                this.hide('save');
+            },
+            option: function (key, value) {
+                this.options[key] = value;
+                if (key in this.containerOptions) {
+                    this.containerOptions[key] = value;
+                    this.setContainerOption(key, value);
+                } else {
+                    this.formOptions[key] = value;
+                    if (this.$form) {
+                        this.$form.editableform('option', key, value);
+                    }
+                }
+            },
+            setContainerOption: function (key, value) {
+                this.call('option', key, value);
+            },
+            destroy: function () {
+                this.hide();
+                this.innerDestroy();
+                this.$element.off('destroyed');
+                this.$element.removeData('editableContainer');
+            },
+            innerDestroy: function () {
+            },
+            closeOthers: function (element) {
+                $('.editable-open').each(function (i, el) {
+                    if (el === element || $(el).find(element).length) {
+                        return;
+                    }
+                    var $el = $(el), ec = $el.data('editableContainer');
+                    if (!ec) {
+                        return;
+                    }
+                    if (ec.options.onblur === 'cancel') {
+                        $el.data('editableContainer').hide('onblur');
+                    } else if (ec.options.onblur === 'submit') {
+                        $el.data('editableContainer').tip().find('form').submit();
+                    }
+                });
+            },
+            activate: function () {
+                if (this.tip && this.tip().is(':visible') && this.$form) {
+                    this.$form.data('editableform').input.activate();
+                }
+            }
+        };
+        $.fn.editableContainer = function (option) {
+            var args = arguments;
+            return this.each(function () {
+                var $this = $(this), dataKey = 'editableContainer', data = $this.data(dataKey), options = typeof option === 'object' && option, Constructor = options.mode === 'inline' ? Inline : Popup;
+                if (!data) {
+                    $this.data(dataKey, data = new Constructor(this, options));
+                }
+                if (typeof option === 'string') {
+                    data[option].apply(data, Array.prototype.slice.call(args, 1));
+                }
+            });
+        };
+        $.fn.editableContainer.Popup = Popup;
+        $.fn.editableContainer.Inline = Inline;
+        $.fn.editableContainer.defaults = {
+            value: null,
+            placement: 'top',
+            autohide: true,
+            onblur: 'cancel',
+            anim: false,
+            mode: 'popup'
+        };
+        jQuery.event.special.destroyed = {
+            remove: function (o) {
+                if (o.handler) {
+                    o.handler();
+                }
+            }
+        };
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        $.extend($.fn.editableContainer.Inline.prototype, $.fn.editableContainer.Popup.prototype, {
+            containerName: 'editableform',
+            innerCss: '.editable-inline',
+            containerClass: 'editable-container editable-inline',
+            initContainer: function () {
+                this.$tip = $('<span></span>');
+                if (!this.options.anim) {
+                    this.options.anim = 0;
+                }
+            },
+            splitOptions: function () {
+                this.containerOptions = {};
+                this.formOptions = this.options;
+            },
+            tip: function () {
+                return this.$tip;
+            },
+            innerShow: function () {
+                this.$element.hide();
+                this.tip().insertAfter(this.$element).show();
+            },
+            innerHide: function () {
+                this.$tip.hide(this.options.anim, $.proxy(function () {
+                    this.$element.show();
+                    this.innerDestroy();
+                }, this));
+            },
+            innerDestroy: function () {
+                if (this.tip()) {
+                    this.tip().empty().remove();
+                }
+            }
+        });
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Editable = function (element, options) {
+            this.$element = $(element);
+            this.options = $.extend({}, $.fn.editable.defaults, options, $.fn.editableutils.getConfigData(this.$element));
+            if (this.options.selector) {
+                this.initLive();
+            } else {
+                this.init();
+            }
+            if (this.options.highlight && !$.fn.editableutils.supportsTransitions()) {
+                this.options.highlight = false;
+            }
+        };
+        Editable.prototype = {
+            constructor: Editable,
+            init: function () {
+                var isValueByText = false, doAutotext, finalize;
+                this.options.name = this.options.name || this.$element.attr('id');
+                this.options.scope = this.$element[0];
+                this.input = $.fn.editableutils.createInput(this.options);
+                if (!this.input) {
+                    return;
+                }
+                if (this.options.value === undefined || this.options.value === null) {
+                    this.value = this.input.html2value($.trim(this.$element.html()));
+                    isValueByText = true;
+                } else {
+                    this.options.value = $.fn.editableutils.tryParseJson(this.options.value, true);
+                    if (typeof this.options.value === 'string') {
+                        this.value = this.input.str2value(this.options.value);
+                    } else {
+                        this.value = this.options.value;
+                    }
+                }
+                this.$element.addClass('editable');
+                if (this.input.type === 'textarea') {
+                    this.$element.addClass('editable-pre-wrapped');
+                }
+                if (this.options.toggle !== 'manual') {
+                    this.$element.addClass('editable-click');
+                    this.$element.on(this.options.toggle + '.editable', $.proxy(function (e) {
+                        if (!this.options.disabled) {
+                            e.preventDefault();
+                        }
+                        if (this.options.toggle === 'mouseenter') {
+                            this.show();
+                        } else {
+                            var closeAll = this.options.toggle !== 'click';
+                            this.toggle(closeAll);
+                        }
+                    }, this));
+                } else {
+                    this.$element.attr('tabindex', -1);
+                }
+                if (typeof this.options.display === 'function') {
+                    this.options.autotext = 'always';
+                }
+                switch (this.options.autotext) {
+                case 'always':
+                    doAutotext = true;
+                    break;
+                case 'auto':
+                    doAutotext = !$.trim(this.$element.text()).length && this.value !== null && this.value !== undefined && !isValueByText;
+                    break;
+                default:
+                    doAutotext = false;
+                }
+                $.when(doAutotext ? this.render() : true).then($.proxy(function () {
+                    if (this.options.disabled) {
+                        this.disable();
+                    } else {
+                        this.enable();
+                    }
+                    this.$element.triggerHandler('init', this);
+                }, this));
+            },
+            initLive: function () {
+                var selector = this.options.selector;
+                this.options.selector = false;
+                this.options.autotext = 'never';
+                this.$element.on(this.options.toggle + '.editable', selector, $.proxy(function (e) {
+                    var $target = $(e.target);
+                    if (!$target.data('editable')) {
+                        if ($target.hasClass(this.options.emptyclass)) {
+                            $target.empty();
+                        }
+                        $target.editable(this.options).trigger(e);
+                    }
+                }, this));
+            },
+            render: function (response) {
+                if (this.options.display === false) {
+                    return;
+                }
+                if (this.input.value2htmlFinal) {
+                    return this.input.value2html(this.value, this.$element[0], this.options.display, response);
+                } else if (typeof this.options.display === 'function') {
+                    return this.options.display.call(this.$element[0], this.value, response);
+                } else {
+                    return this.input.value2html(this.value, this.$element[0]);
+                }
+            },
+            enable: function () {
+                this.options.disabled = false;
+                this.$element.removeClass('editable-disabled');
+                this.handleEmpty(this.isEmpty);
+                if (this.options.toggle !== 'manual') {
+                    if (this.$element.attr('tabindex') === '-1') {
+                        this.$element.removeAttr('tabindex');
+                    }
+                }
+            },
+            disable: function () {
+                this.options.disabled = true;
+                this.hide();
+                this.$element.addClass('editable-disabled');
+                this.handleEmpty(this.isEmpty);
+                this.$element.attr('tabindex', -1);
+            },
+            toggleDisabled: function () {
+                if (this.options.disabled) {
+                    this.enable();
+                } else {
+                    this.disable();
+                }
+            },
+            option: function (key, value) {
+                if (key && typeof key === 'object') {
+                    $.each(key, $.proxy(function (k, v) {
+                        this.option($.trim(k), v);
+                    }, this));
+                    return;
+                }
+                this.options[key] = value;
+                if (key === 'disabled') {
+                    return value ? this.disable() : this.enable();
+                }
+                if (key === 'value') {
+                    this.setValue(value);
+                }
+                if (this.container) {
+                    this.container.option(key, value);
+                }
+                if (this.input.option) {
+                    this.input.option(key, value);
+                }
+            },
+            handleEmpty: function (isEmpty) {
+                if (this.options.display === false) {
+                    return;
+                }
+                if (isEmpty !== undefined) {
+                    this.isEmpty = isEmpty;
+                } else {
+                    if (typeof this.input.isEmpty === 'function') {
+                        this.isEmpty = this.input.isEmpty(this.$element);
+                    } else {
+                        this.isEmpty = $.trim(this.$element.html()) === '';
+                    }
+                }
+                if (!this.options.disabled) {
+                    if (this.isEmpty) {
+                        this.$element.html(this.options.emptytext);
+                        if (this.options.emptyclass) {
+                            this.$element.addClass(this.options.emptyclass);
+                        }
+                    } else if (this.options.emptyclass) {
+                        this.$element.removeClass(this.options.emptyclass);
+                    }
+                } else {
+                    if (this.isEmpty) {
+                        this.$element.empty();
+                        if (this.options.emptyclass) {
+                            this.$element.removeClass(this.options.emptyclass);
+                        }
+                    }
+                }
+            },
+            show: function (closeAll) {
+                if (this.options.disabled) {
+                    return;
+                }
+                if (!this.container) {
+                    var containerOptions = $.extend({}, this.options, {
+                        value: this.value,
+                        input: this.input
+                    });
+                    this.$element.editableContainer(containerOptions);
+                    this.$element.on('save.internal', $.proxy(this.save, this));
+                    this.container = this.$element.data('editableContainer');
+                } else if (this.container.tip().is(':visible')) {
+                    return;
+                }
+                this.container.show(closeAll);
+            },
+            hide: function () {
+                if (this.container) {
+                    this.container.hide();
+                }
+            },
+            toggle: function (closeAll) {
+                if (this.container && this.container.tip().is(':visible')) {
+                    this.hide();
+                } else {
+                    this.show(closeAll);
+                }
+            },
+            save: function (e, params) {
+                if (this.options.unsavedclass) {
+                    var sent = false;
+                    sent = sent || typeof this.options.url === 'function';
+                    sent = sent || this.options.display === false;
+                    sent = sent || params.response !== undefined;
+                    sent = sent || this.options.savenochange && this.input.value2str(this.value) !== this.input.value2str(params.newValue);
+                    if (sent) {
+                        this.$element.removeClass(this.options.unsavedclass);
+                    } else {
+                        this.$element.addClass(this.options.unsavedclass);
+                    }
+                }
+                if (this.options.highlight) {
+                    var $e = this.$element, bgColor = $e.css('background-color');
+                    $e.css('background-color', this.options.highlight);
+                    setTimeout(function () {
+                        if (bgColor === 'transparent') {
+                            bgColor = '';
+                        }
+                        $e.css('background-color', bgColor);
+                        $e.addClass('editable-bg-transition');
+                        setTimeout(function () {
+                            $e.removeClass('editable-bg-transition');
+                        }, 1700);
+                    }, 10);
+                }
+                this.setValue(params.newValue, false, params.response);
+            },
+            validate: function () {
+                if (typeof this.options.validate === 'function') {
+                    return this.options.validate.call(this, this.value);
+                }
+            },
+            setValue: function (value, convertStr, response) {
+                if (convertStr) {
+                    this.value = this.input.str2value(value);
+                } else {
+                    this.value = value;
+                }
+                if (this.container) {
+                    this.container.option('value', this.value);
+                }
+                $.when(this.render(response)).then($.proxy(function () {
+                    this.handleEmpty();
+                }, this));
+            },
+            activate: function () {
+                if (this.container) {
+                    this.container.activate();
+                }
+            },
+            destroy: function () {
+                this.disable();
+                if (this.container) {
+                    this.container.destroy();
+                }
+                this.input.destroy();
+                if (this.options.toggle !== 'manual') {
+                    this.$element.removeClass('editable-click');
+                    this.$element.off(this.options.toggle + '.editable');
+                }
+                this.$element.off('save.internal');
+                this.$element.removeClass('editable editable-open editable-disabled');
+                this.$element.removeData('editable');
+            }
+        };
+        $.fn.editable = function (option) {
+            var result = {}, args = arguments, datakey = 'editable';
+            switch (option) {
+            case 'validate':
+                this.each(function () {
+                    var $this = $(this), data = $this.data(datakey), error;
+                    if (data && (error = data.validate())) {
+                        result[data.options.name] = error;
+                    }
+                });
+                return result;
+            case 'getValue':
+                if (arguments.length === 2 && arguments[1] === true) {
+                    result = this.eq(0).data(datakey).value;
+                } else {
+                    this.each(function () {
+                        var $this = $(this), data = $this.data(datakey);
+                        if (data && data.value !== undefined && data.value !== null) {
+                            result[data.options.name] = data.input.value2submit(data.value);
+                        }
+                    });
+                }
+                return result;
+            case 'submit':
+                var config = arguments[1] || {}, $elems = this, errors = this.editable('validate');
+                if ($.isEmptyObject(errors)) {
+                    var ajaxOptions = {};
+                    if ($elems.length === 1) {
+                        var editable = $elems.data('editable');
+                        var params = {
+                            name: editable.options.name || '',
+                            value: editable.input.value2submit(editable.value),
+                            pk: typeof editable.options.pk === 'function' ? editable.options.pk.call(editable.options.scope) : editable.options.pk
+                        };
+                        if (typeof editable.options.params === 'function') {
+                            params = editable.options.params.call(editable.options.scope, params);
+                        } else {
+                            editable.options.params = $.fn.editableutils.tryParseJson(editable.options.params, true);
+                            $.extend(params, editable.options.params);
+                        }
+                        ajaxOptions = {
+                            url: editable.options.url,
+                            data: params,
+                            type: 'POST'
+                        };
+                        config.success = config.success || editable.options.success;
+                        config.error = config.error || editable.options.error;
+                    } else {
+                        var values = this.editable('getValue');
+                        ajaxOptions = {
+                            url: config.url,
+                            data: values,
+                            type: 'POST'
+                        };
+                    }
+                    ajaxOptions.success = typeof config.success === 'function' ? function (response) {
+                        config.success.call($elems, response, config);
+                    } : $.noop;
+                    ajaxOptions.error = typeof config.error === 'function' ? function () {
+                        config.error.apply($elems, arguments);
+                    } : $.noop;
+                    if (config.ajaxOptions) {
+                        $.extend(ajaxOptions, config.ajaxOptions);
+                    }
+                    if (config.data) {
+                        $.extend(ajaxOptions.data, config.data);
+                    }
+                    $.ajax(ajaxOptions);
+                } else {
+                    if (typeof config.error === 'function') {
+                        config.error.call($elems, errors);
+                    }
+                }
+                return this;
+            }
+            return this.each(function () {
+                var $this = $(this), data = $this.data(datakey), options = typeof option === 'object' && option;
+                if (options && options.selector) {
+                    data = new Editable(this, options);
+                    return;
+                }
+                if (!data) {
+                    $this.data(datakey, data = new Editable(this, options));
+                }
+                if (typeof option === 'string') {
+                    data[option].apply(data, Array.prototype.slice.call(args, 1));
+                }
+            });
+        };
+        $.fn.editable.defaults = {
+            type: 'text',
+            disabled: false,
+            toggle: 'click',
+            emptytext: 'Empty',
+            autotext: 'auto',
+            value: null,
+            display: null,
+            emptyclass: 'editable-empty',
+            unsavedclass: 'editable-unsaved',
+            selector: null,
+            highlight: '#FFFF80'
+        };
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        $.fn.editabletypes = {};
+        var AbstractInput = function () {
+        };
+        AbstractInput.prototype = {
+            init: function (type, options, defaults) {
+                this.type = type;
+                this.options = $.extend({}, defaults, options);
+            },
+            prerender: function () {
+                this.$tpl = $(this.options.tpl);
+                this.$input = this.$tpl;
+                this.$clear = null;
+                this.error = null;
+            },
+            render: function () {
+            },
+            value2html: function (value, element) {
+                $(element)[this.options.escape ? 'text' : 'html']($.trim(value));
+            },
+            html2value: function (html) {
+                return $('<div>').html(html).text();
+            },
+            value2str: function (value) {
+                return value;
+            },
+            str2value: function (str) {
+                return str;
+            },
+            value2submit: function (value) {
+                return value;
+            },
+            value2input: function (value) {
+                this.$input.val(value);
+            },
+            input2value: function () {
+                return this.$input.val();
+            },
+            activate: function () {
+                if (this.$input.is(':visible')) {
+                    this.$input.focus();
+                }
+            },
+            clear: function () {
+                this.$input.val(null);
+            },
+            escape: function (str) {
+                return $('<div>').text(str).html();
+            },
+            autosubmit: function () {
+            },
+            destroy: function () {
+            },
+            setClass: function () {
+                if (this.options.inputclass) {
+                    this.$input.addClass(this.options.inputclass);
+                }
+            },
+            setAttr: function (attr) {
+                if (this.options[attr] !== undefined && this.options[attr] !== null) {
+                    this.$input.attr(attr, this.options[attr]);
+                }
+            },
+            option: function (key, value) {
+                this.options[key] = value;
+            }
+        };
+        AbstractInput.defaults = {
+            tpl: '',
+            inputclass: null,
+            escape: true,
+            scope: null,
+            showbuttons: true
+        };
+        $.extend($.fn.editabletypes, { abstractinput: AbstractInput });
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var List = function (options) {
+        };
+        $.fn.editableutils.inherit(List, $.fn.editabletypes.abstractinput);
+        $.extend(List.prototype, {
+            render: function () {
+                var deferred = $.Deferred();
+                this.error = null;
+                this.onSourceReady(function () {
+                    this.renderList();
+                    deferred.resolve();
+                }, function () {
+                    this.error = this.options.sourceError;
+                    deferred.resolve();
+                });
+                return deferred.promise();
+            },
+            html2value: function (html) {
+                return null;
+            },
+            value2html: function (value, element, display, response) {
+                var deferred = $.Deferred(), success = function () {
+                        if (typeof display === 'function') {
+                            display.call(element, value, this.sourceData, response);
+                        } else {
+                            this.value2htmlFinal(value, element);
+                        }
+                        deferred.resolve();
+                    };
+                if (value === null) {
+                    success.call(this);
+                } else {
+                    this.onSourceReady(success, function () {
+                        deferred.resolve();
+                    });
+                }
+                return deferred.promise();
+            },
+            onSourceReady: function (success, error) {
+                var source;
+                if ($.isFunction(this.options.source)) {
+                    source = this.options.source.call(this.options.scope);
+                    this.sourceData = null;
+                } else {
+                    source = this.options.source;
+                }
+                if (this.options.sourceCache && $.isArray(this.sourceData)) {
+                    success.call(this);
+                    return;
+                }
+                try {
+                    source = $.fn.editableutils.tryParseJson(source, false);
+                } catch (e) {
+                    error.call(this);
+                    return;
+                }
+                if (typeof source === 'string') {
+                    if (this.options.sourceCache) {
+                        var cacheID = source, cache;
+                        if (!$(document).data(cacheID)) {
+                            $(document).data(cacheID, {});
+                        }
+                        cache = $(document).data(cacheID);
+                        if (cache.loading === false && cache.sourceData) {
+                            this.sourceData = cache.sourceData;
+                            this.doPrepend();
+                            success.call(this);
+                            return;
+                        } else if (cache.loading === true) {
+                            cache.callbacks.push($.proxy(function () {
+                                this.sourceData = cache.sourceData;
+                                this.doPrepend();
+                                success.call(this);
+                            }, this));
+                            cache.err_callbacks.push($.proxy(error, this));
+                            return;
+                        } else {
+                            cache.loading = true;
+                            cache.callbacks = [];
+                            cache.err_callbacks = [];
+                        }
+                    }
+                    var ajaxOptions = $.extend({
+                        url: source,
+                        type: 'get',
+                        cache: false,
+                        dataType: 'json',
+                        success: $.proxy(function (data) {
+                            if (cache) {
+                                cache.loading = false;
+                            }
+                            this.sourceData = this.makeArray(data);
+                            if ($.isArray(this.sourceData)) {
+                                if (cache) {
+                                    cache.sourceData = this.sourceData;
+                                    $.each(cache.callbacks, function () {
+                                        this.call();
+                                    });
+                                }
+                                this.doPrepend();
+                                success.call(this);
+                            } else {
+                                error.call(this);
+                                if (cache) {
+                                    $.each(cache.err_callbacks, function () {
+                                        this.call();
+                                    });
+                                }
+                            }
+                        }, this),
+                        error: $.proxy(function () {
+                            error.call(this);
+                            if (cache) {
+                                cache.loading = false;
+                                $.each(cache.err_callbacks, function () {
+                                    this.call();
+                                });
+                            }
+                        }, this)
+                    }, this.options.sourceOptions);
+                    $.ajax(ajaxOptions);
+                } else {
+                    this.sourceData = this.makeArray(source);
+                    if ($.isArray(this.sourceData)) {
+                        this.doPrepend();
+                        success.call(this);
+                    } else {
+                        error.call(this);
+                    }
+                }
+            },
+            doPrepend: function () {
+                if (this.options.prepend === null || this.options.prepend === undefined) {
+                    return;
+                }
+                if (!$.isArray(this.prependData)) {
+                    if ($.isFunction(this.options.prepend)) {
+                        this.options.prepend = this.options.prepend.call(this.options.scope);
+                    }
+                    this.options.prepend = $.fn.editableutils.tryParseJson(this.options.prepend, true);
+                    if (typeof this.options.prepend === 'string') {
+                        this.options.prepend = { '': this.options.prepend };
+                    }
+                    this.prependData = this.makeArray(this.options.prepend);
+                }
+                if ($.isArray(this.prependData) && $.isArray(this.sourceData)) {
+                    this.sourceData = this.prependData.concat(this.sourceData);
+                }
+            },
+            renderList: function () {
+            },
+            value2htmlFinal: function (value, element) {
+            },
+            makeArray: function (data) {
+                var count, obj, result = [], item, iterateItem;
+                if (!data || typeof data === 'string') {
+                    return null;
+                }
+                if ($.isArray(data)) {
+                    iterateItem = function (k, v) {
+                        obj = {
+                            value: k,
+                            text: v
+                        };
+                        if (count++ >= 2) {
+                            return false;
+                        }
+                    };
+                    for (var i = 0; i < data.length; i++) {
+                        item = data[i];
+                        if (typeof item === 'object') {
+                            count = 0;
+                            $.each(item, iterateItem);
+                            if (count === 1) {
+                                result.push(obj);
+                            } else if (count > 1) {
+                                if (item.children) {
+                                    item.children = this.makeArray(item.children);
+                                }
+                                result.push(item);
+                            }
+                        } else {
+                            result.push({
+                                value: item,
+                                text: item
+                            });
+                        }
+                    }
+                } else {
+                    $.each(data, function (k, v) {
+                        result.push({
+                            value: k,
+                            text: v
+                        });
+                    });
+                }
+                return result;
+            },
+            option: function (key, value) {
+                this.options[key] = value;
+                if (key === 'source') {
+                    this.sourceData = null;
+                }
+                if (key === 'prepend') {
+                    this.prependData = null;
+                }
+            }
+        });
+        List.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            source: null,
+            prepend: false,
+            sourceError: 'Error when loading list',
+            sourceCache: true,
+            sourceOptions: null
+        });
+        $.fn.editabletypes.list = List;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Text = function (options) {
+            this.init('text', options, Text.defaults);
+        };
+        $.fn.editableutils.inherit(Text, $.fn.editabletypes.abstractinput);
+        $.extend(Text.prototype, {
+            render: function () {
+                this.renderClear();
+                this.setClass();
+                this.setAttr('placeholder');
+            },
+            activate: function () {
+                if (this.$input.is(':visible')) {
+                    this.$input.focus();
+                    $.fn.editableutils.setCursorPosition(this.$input.get(0), this.$input.val().length);
+                    if (this.toggleClear) {
+                        this.toggleClear();
+                    }
+                }
+            },
+            renderClear: function () {
+                if (this.options.clear) {
+                    this.$clear = $('<span class="editable-clear-x"></span>');
+                    this.$input.after(this.$clear).css('padding-right', 24).keyup($.proxy(function (e) {
+                        if (~$.inArray(e.keyCode, [
+                                40,
+                                38,
+                                9,
+                                13,
+                                27
+                            ])) {
+                            return;
+                        }
+                        clearTimeout(this.t);
+                        var that = this;
+                        this.t = setTimeout(function () {
+                            that.toggleClear(e);
+                        }, 100);
+                    }, this)).parent().css('position', 'relative');
+                    this.$clear.click($.proxy(this.clear, this));
+                }
+            },
+            postrender: function () {
+            },
+            toggleClear: function (e) {
+                if (!this.$clear) {
+                    return;
+                }
+                var len = this.$input.val().length, visible = this.$clear.is(':visible');
+                if (len && !visible) {
+                    this.$clear.show();
+                }
+                if (!len && visible) {
+                    this.$clear.hide();
+                }
+            },
+            clear: function () {
+                this.$clear.hide();
+                this.$input.val('').focus();
+            }
+        });
+        Text.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<input type="text">',
+            placeholder: null,
+            clear: true
+        });
+        $.fn.editabletypes.text = Text;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Textarea = function (options) {
+            this.init('textarea', options, Textarea.defaults);
+        };
+        $.fn.editableutils.inherit(Textarea, $.fn.editabletypes.abstractinput);
+        $.extend(Textarea.prototype, {
+            render: function () {
+                this.setClass();
+                this.setAttr('placeholder');
+                this.setAttr('rows');
+                this.$input.keydown(function (e) {
+                    if (e.ctrlKey && e.which === 13) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            },
+            activate: function () {
+                $.fn.editabletypes.text.prototype.activate.call(this);
+            }
+        });
+        Textarea.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<textarea></textarea>',
+            inputclass: 'input-large',
+            placeholder: null,
+            rows: 7
+        });
+        $.fn.editabletypes.textarea = Textarea;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Select = function (options) {
+            this.init('select', options, Select.defaults);
+        };
+        $.fn.editableutils.inherit(Select, $.fn.editabletypes.list);
+        $.extend(Select.prototype, {
+            renderList: function () {
+                this.$input.empty();
+                var fillItems = function ($el, data) {
+                    var attr;
+                    if ($.isArray(data)) {
+                        for (var i = 0; i < data.length; i++) {
+                            attr = {};
+                            if (data[i].children) {
+                                attr.label = data[i].text;
+                                $el.append(fillItems($('<optgroup>', attr), data[i].children));
+                            } else {
+                                attr.value = data[i].value;
+                                if (data[i].disabled) {
+                                    attr.disabled = true;
+                                }
+                                $el.append($('<option>', attr).text(data[i].text));
+                            }
+                        }
+                    }
+                    return $el;
+                };
+                fillItems(this.$input, this.sourceData);
+                this.setClass();
+                this.$input.on('keydown.editable', function (e) {
+                    if (e.which === 13) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            },
+            value2htmlFinal: function (value, element) {
+                var text = '', items = $.fn.editableutils.itemsByValue(value, this.sourceData);
+                if (items.length) {
+                    text = items[0].text;
+                }
+                $.fn.editabletypes.abstractinput.prototype.value2html.call(this, text, element);
+            },
+            autosubmit: function () {
+                this.$input.off('keydown.editable').on('change.editable', function () {
+                    $(this).closest('form').submit();
+                });
+            }
+        });
+        Select.defaults = $.extend({}, $.fn.editabletypes.list.defaults, { tpl: '<select></select>' });
+        $.fn.editabletypes.select = Select;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Checklist = function (options) {
+            this.init('checklist', options, Checklist.defaults);
+        };
+        $.fn.editableutils.inherit(Checklist, $.fn.editabletypes.list);
+        $.extend(Checklist.prototype, {
+            renderList: function () {
+                var $label, $div;
+                this.$tpl.empty();
+                if (!$.isArray(this.sourceData)) {
+                    return;
+                }
+                for (var i = 0; i < this.sourceData.length; i++) {
+                    $label = $('<label>').append($('<input>', {
+                        type: 'checkbox',
+                        value: this.sourceData[i].value
+                    })).append($('<span>').text(' ' + this.sourceData[i].text));
+                    $('<div>').append($label).appendTo(this.$tpl);
+                }
+                this.$input = this.$tpl.find('input[type="checkbox"]');
+                this.setClass();
+            },
+            value2str: function (value) {
+                return $.isArray(value) ? value.sort().join($.trim(this.options.separator)) : '';
+            },
+            str2value: function (str) {
+                var reg, value = null;
+                if (typeof str === 'string' && str.length) {
+                    reg = new RegExp('\\s*' + $.trim(this.options.separator) + '\\s*');
+                    value = str.split(reg);
+                } else if ($.isArray(str)) {
+                    value = str;
+                } else {
+                    value = [str];
+                }
+                return value;
+            },
+            value2input: function (value) {
+                this.$input.prop('checked', false);
+                if ($.isArray(value) && value.length) {
+                    this.$input.each(function (i, el) {
+                        var $el = $(el);
+                        $.each(value, function (j, val) {
+                            if ($el.val() == val) {
+                                $el.prop('checked', true);
+                            }
+                        });
+                    });
+                }
+            },
+            input2value: function () {
+                var checked = [];
+                this.$input.filter(':checked').each(function (i, el) {
+                    checked.push($(el).val());
+                });
+                return checked;
+            },
+            value2htmlFinal: function (value, element) {
+                var html = [], checked = $.fn.editableutils.itemsByValue(value, this.sourceData), escape = this.options.escape;
+                if (checked.length) {
+                    $.each(checked, function (i, v) {
+                        var text = escape ? $.fn.editableutils.escape(v.text) : v.text;
+                        html.push(text);
+                    });
+                    $(element).html(html.join('<br>'));
+                } else {
+                    $(element).empty();
+                }
+            },
+            activate: function () {
+                this.$input.first().focus();
+            },
+            autosubmit: function () {
+                this.$input.on('keydown', function (e) {
+                    if (e.which === 13) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            }
+        });
+        Checklist.defaults = $.extend({}, $.fn.editabletypes.list.defaults, {
+            tpl: '<div class="editable-checklist"></div>',
+            inputclass: null,
+            separator: ','
+        });
+        $.fn.editabletypes.checklist = Checklist;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Password = function (options) {
+            this.init('password', options, Password.defaults);
+        };
+        $.fn.editableutils.inherit(Password, $.fn.editabletypes.text);
+        $.extend(Password.prototype, {
+            value2html: function (value, element) {
+                if (value) {
+                    $(element).text('[hidden]');
+                } else {
+                    $(element).empty();
+                }
+            },
+            html2value: function (html) {
+                return null;
+            }
+        });
+        Password.defaults = $.extend({}, $.fn.editabletypes.text.defaults, { tpl: '<input type="password">' });
+        $.fn.editabletypes.password = Password;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Email = function (options) {
+            this.init('email', options, Email.defaults);
+        };
+        $.fn.editableutils.inherit(Email, $.fn.editabletypes.text);
+        Email.defaults = $.extend({}, $.fn.editabletypes.text.defaults, { tpl: '<input type="email">' });
+        $.fn.editabletypes.email = Email;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Url = function (options) {
+            this.init('url', options, Url.defaults);
+        };
+        $.fn.editableutils.inherit(Url, $.fn.editabletypes.text);
+        Url.defaults = $.extend({}, $.fn.editabletypes.text.defaults, { tpl: '<input type="url">' });
+        $.fn.editabletypes.url = Url;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Tel = function (options) {
+            this.init('tel', options, Tel.defaults);
+        };
+        $.fn.editableutils.inherit(Tel, $.fn.editabletypes.text);
+        Tel.defaults = $.extend({}, $.fn.editabletypes.text.defaults, { tpl: '<input type="tel">' });
+        $.fn.editabletypes.tel = Tel;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var NumberInput = function (options) {
+            this.init('number', options, NumberInput.defaults);
+        };
+        $.fn.editableutils.inherit(NumberInput, $.fn.editabletypes.text);
+        $.extend(NumberInput.prototype, {
+            render: function () {
+                NumberInput.superclass.render.call(this);
+                this.setAttr('min');
+                this.setAttr('max');
+                this.setAttr('step');
+            },
+            postrender: function () {
+                if (this.$clear) {
+                    this.$clear.css({ right: 24 });
+                }
+            }
+        });
+        NumberInput.defaults = $.extend({}, $.fn.editabletypes.text.defaults, {
+            tpl: '<input type="number">',
+            inputclass: 'input-mini',
+            min: null,
+            max: null,
+            step: null
+        });
+        $.fn.editabletypes.number = NumberInput;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Range = function (options) {
+            this.init('range', options, Range.defaults);
+        };
+        $.fn.editableutils.inherit(Range, $.fn.editabletypes.number);
+        $.extend(Range.prototype, {
+            render: function () {
+                this.$input = this.$tpl.filter('input');
+                this.setClass();
+                this.setAttr('min');
+                this.setAttr('max');
+                this.setAttr('step');
+                this.$input.on('input', function () {
+                    $(this).siblings('output').text($(this).val());
+                });
+            },
+            activate: function () {
+                this.$input.focus();
+            }
+        });
+        Range.defaults = $.extend({}, $.fn.editabletypes.number.defaults, {
+            tpl: '<input type="range"><output style="width: 30px; display: inline-block"></output>',
+            inputclass: 'input-medium'
+        });
+        $.fn.editabletypes.range = Range;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Time = function (options) {
+            this.init('time', options, Time.defaults);
+        };
+        $.fn.editableutils.inherit(Time, $.fn.editabletypes.abstractinput);
+        $.extend(Time.prototype, {
+            render: function () {
+                this.setClass();
+            }
+        });
+        Time.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, { tpl: '<input type="time">' });
+        $.fn.editabletypes.time = Time;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Constructor = function (options) {
+            this.init('select2', options, Constructor.defaults);
+            options.select2 = options.select2 || {};
+            this.sourceData = null;
+            if (options.placeholder) {
+                options.select2.placeholder = options.placeholder;
+            }
+            if (!options.select2.tags && options.source) {
+                var source = options.source;
+                if ($.isFunction(options.source)) {
+                    source = options.source.call(options.scope);
+                }
+                if (typeof source === 'string') {
+                    options.select2.ajax = options.select2.ajax || {};
+                    if (!options.select2.ajax.data) {
+                        options.select2.ajax.data = function (term) {
+                            return { query: term };
+                        };
+                    }
+                    if (!options.select2.ajax.results) {
+                        options.select2.ajax.results = function (data) {
+                            return { results: data };
+                        };
+                    }
+                    options.select2.ajax.url = source;
+                } else {
+                    this.sourceData = this.convertSource(source);
+                    options.select2.data = this.sourceData;
+                }
+            }
+            this.options.select2 = $.extend({}, Constructor.defaults.select2, options.select2);
+            this.isMultiple = this.options.select2.tags || this.options.select2.multiple;
+            this.isRemote = 'ajax' in this.options.select2;
+            this.idFunc = this.options.select2.id;
+            if (typeof this.idFunc !== 'function') {
+                var idKey = this.idFunc || 'id';
+                this.idFunc = function (e) {
+                    return e[idKey];
+                };
+            }
+            this.formatSelection = this.options.select2.formatSelection;
+            if (typeof this.formatSelection !== 'function') {
+                this.formatSelection = function (e) {
+                    return e.text;
+                };
+            }
+        };
+        $.fn.editableutils.inherit(Constructor, $.fn.editabletypes.abstractinput);
+        $.extend(Constructor.prototype, {
+            render: function () {
+                this.setClass();
+                if (this.isRemote) {
+                    this.$input.on('select2-loaded', $.proxy(function (e) {
+                        this.sourceData = e.items.results;
+                    }, this));
+                }
+                if (this.isMultiple) {
+                    this.$input.on('change', function () {
+                        $(this).closest('form').parent().triggerHandler('resize');
+                    });
+                }
+            },
+            value2html: function (value, element) {
+                var text = '', data, that = this;
+                if (this.options.select2.tags) {
+                    data = value;
+                } else if (this.sourceData) {
+                    data = $.fn.editableutils.itemsByValue(value, this.sourceData, this.idFunc);
+                } else {
+                }
+                if ($.isArray(data)) {
+                    text = [];
+                    $.each(data, function (k, v) {
+                        text.push(v && typeof v === 'object' ? that.formatSelection(v) : v);
+                    });
+                } else if (data) {
+                    text = that.formatSelection(data);
+                }
+                text = $.isArray(text) ? text.join(this.options.viewseparator) : text;
+                Constructor.superclass.value2html.call(this, text, element);
+            },
+            html2value: function (html) {
+                return this.options.select2.tags ? this.str2value(html, this.options.viewseparator) : null;
+            },
+            value2input: function (value) {
+                if ($.isArray(value)) {
+                    value = value.join(this.getSeparator());
+                }
+                if (!this.$input.data('select2')) {
+                    this.$input.val(value);
+                    this.$input.select2(this.options.select2);
+                } else {
+                    this.$input.val(value).trigger('change', true);
+                }
+                if (this.isRemote && !this.isMultiple && !this.options.select2.initSelection) {
+                    var customId = this.options.select2.id, customText = this.options.select2.formatSelection;
+                    if (!customId && !customText) {
+                        var $el = $(this.options.scope);
+                        if (!$el.data('editable').isEmpty) {
+                            var data = {
+                                id: value,
+                                text: $el.text()
+                            };
+                            this.$input.select2('data', data);
+                        }
+                    }
+                }
+            },
+            input2value: function () {
+                return this.$input.select2('val');
+            },
+            str2value: function (str, separator) {
+                if (typeof str !== 'string' || !this.isMultiple) {
+                    return str;
+                }
+                separator = separator || this.getSeparator();
+                var val, i, l;
+                if (str === null || str.length < 1) {
+                    return null;
+                }
+                val = str.split(separator);
+                for (i = 0, l = val.length; i < l; i = i + 1) {
+                    val[i] = $.trim(val[i]);
+                }
+                return val;
+            },
+            autosubmit: function () {
+                this.$input.on('change', function (e, isInitial) {
+                    if (!isInitial) {
+                        $(this).closest('form').submit();
+                    }
+                });
+            },
+            getSeparator: function () {
+                return this.options.select2.separator || $.fn.select2.defaults.separator;
+            },
+            convertSource: function (source) {
+                if ($.isArray(source) && source.length && source[0].value !== undefined) {
+                    for (var i = 0; i < source.length; i++) {
+                        if (source[i].value !== undefined) {
+                            source[i].id = source[i].value;
+                            delete source[i].value;
+                        }
+                    }
+                }
+                return source;
+            },
+            destroy: function () {
+                if (this.$input.data('select2')) {
+                    this.$input.select2('destroy');
+                }
+            }
+        });
+        Constructor.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<input type="hidden">',
+            select2: null,
+            placeholder: null,
+            source: null,
+            viewseparator: ', '
+        });
+        $.fn.editabletypes.select2 = Constructor;
+    }(window.jQuery));
+    (function ($) {
+        var Combodate = function (element, options) {
+            this.$element = $(element);
+            if (!this.$element.is('input')) {
+                $.error('Combodate should be applied to INPUT element');
+                return;
+            }
+            this.options = $.extend({}, $.fn.combodate.defaults, options, this.$element.data());
+            this.init();
+        };
+        Combodate.prototype = {
+            constructor: Combodate,
+            init: function () {
+                this.map = {
+                    day: [
+                        'D',
+                        'date'
+                    ],
+                    month: [
+                        'M',
+                        'month'
+                    ],
+                    year: [
+                        'Y',
+                        'year'
+                    ],
+                    hour: [
+                        '[Hh]',
+                        'hours'
+                    ],
+                    minute: [
+                        'm',
+                        'minutes'
+                    ],
+                    second: [
+                        's',
+                        'seconds'
+                    ],
+                    ampm: [
+                        '[Aa]',
+                        ''
+                    ]
+                };
+                this.$widget = $('<span class="combodate"></span>').html(this.getTemplate());
+                this.initCombos();
+                this.$widget.on('change', 'select', $.proxy(function (e) {
+                    this.$element.val(this.getValue()).change();
+                    if (this.options.smartDays) {
+                        if ($(e.target).is('.month') || $(e.target).is('.year')) {
+                            this.fillCombo('day');
+                        }
+                    }
+                }, this));
+                this.$widget.find('select').css('width', 'auto');
+                this.$element.hide().after(this.$widget);
+                this.setValue(this.$element.val() || this.options.value);
+            },
+            getTemplate: function () {
+                var tpl = this.options.template;
+                $.each(this.map, function (k, v) {
+                    v = v[0];
+                    var r = new RegExp(v + '+'), token = v.length > 1 ? v.substring(1, 2) : v;
+                    tpl = tpl.replace(r, '{' + token + '}');
+                });
+                tpl = tpl.replace(/ /g, '&nbsp;');
+                $.each(this.map, function (k, v) {
+                    v = v[0];
+                    var token = v.length > 1 ? v.substring(1, 2) : v;
+                    tpl = tpl.replace('{' + token + '}', '<select class="' + k + '"></select>');
+                });
+                return tpl;
+            },
+            initCombos: function () {
+                for (var k in this.map) {
+                    var $c = this.$widget.find('.' + k);
+                    this['$' + k] = $c.length ? $c : null;
+                    this.fillCombo(k);
+                }
+            },
+            fillCombo: function (k) {
+                var $combo = this['$' + k];
+                if (!$combo) {
+                    return;
+                }
+                var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1);
+                var items = this[f]();
+                var value = $combo.val();
+                $combo.empty();
+                for (var i = 0; i < items.length; i++) {
+                    $combo.append('<option value="' + items[i][0] + '">' + items[i][1] + '</option>');
+                }
+                $combo.val(value);
+            },
+            fillCommon: function (key) {
+                var values = [], relTime;
+                if (this.options.firstItem === 'name') {
+                    relTime = moment.relativeTime || moment.langData()._relativeTime;
+                    var header = typeof relTime[key] === 'function' ? relTime[key](1, true, key, false) : relTime[key];
+                    header = header.split(' ').reverse()[0];
+                    values.push([
+                        '',
+                        header
+                    ]);
+                } else if (this.options.firstItem === 'empty') {
+                    values.push([
+                        '',
+                        ''
+                    ]);
+                }
+                return values;
+            },
+            fillDay: function () {
+                var items = this.fillCommon('d'), name, i, twoDigit = this.options.template.indexOf('DD') !== -1, daysCount = 31;
+                if (this.options.smartDays && this.$month && this.$year) {
+                    var month = parseInt(this.$month.val(), 10);
+                    var year = parseInt(this.$year.val(), 10);
+                    if (!isNaN(month) && !isNaN(year)) {
+                        daysCount = moment([
+                            year,
+                            month
+                        ]).daysInMonth();
+                    }
+                }
+                for (i = 1; i <= daysCount; i++) {
+                    name = twoDigit ? this.leadZero(i) : i;
+                    items.push([
+                        i,
+                        name
+                    ]);
+                }
+                return items;
+            },
+            fillMonth: function () {
+                var items = this.fillCommon('M'), name, i, longNames = this.options.template.indexOf('MMMM') !== -1, shortNames = this.options.template.indexOf('MMM') !== -1, twoDigit = this.options.template.indexOf('MM') !== -1;
+                for (i = 0; i <= 11; i++) {
+                    if (longNames) {
+                        name = moment().date(1).month(i).format('MMMM');
+                    } else if (shortNames) {
+                        name = moment().date(1).month(i).format('MMM');
+                    } else if (twoDigit) {
+                        name = this.leadZero(i + 1);
+                    } else {
+                        name = i + 1;
+                    }
+                    items.push([
+                        i,
+                        name
+                    ]);
+                }
+                return items;
+            },
+            fillYear: function () {
+                var items = [], name, i, longNames = this.options.template.indexOf('YYYY') !== -1;
+                for (i = this.options.maxYear; i >= this.options.minYear; i--) {
+                    name = longNames ? i : (i + '').substring(2);
+                    items[this.options.yearDescending ? 'push' : 'unshift']([
+                        i,
+                        name
+                    ]);
+                }
+                items = this.fillCommon('y').concat(items);
+                return items;
+            },
+            fillHour: function () {
+                var items = this.fillCommon('h'), name, i, h12 = this.options.template.indexOf('h') !== -1, h24 = this.options.template.indexOf('H') !== -1, twoDigit = this.options.template.toLowerCase().indexOf('hh') !== -1, min = h12 ? 1 : 0, max = h12 ? 12 : 23;
+                for (i = min; i <= max; i++) {
+                    name = twoDigit ? this.leadZero(i) : i;
+                    items.push([
+                        i,
+                        name
+                    ]);
+                }
+                return items;
+            },
+            fillMinute: function () {
+                var items = this.fillCommon('m'), name, i, twoDigit = this.options.template.indexOf('mm') !== -1;
+                for (i = 0; i <= 59; i += this.options.minuteStep) {
+                    name = twoDigit ? this.leadZero(i) : i;
+                    items.push([
+                        i,
+                        name
+                    ]);
+                }
+                return items;
+            },
+            fillSecond: function () {
+                var items = this.fillCommon('s'), name, i, twoDigit = this.options.template.indexOf('ss') !== -1;
+                for (i = 0; i <= 59; i += this.options.secondStep) {
+                    name = twoDigit ? this.leadZero(i) : i;
+                    items.push([
+                        i,
+                        name
+                    ]);
+                }
+                return items;
+            },
+            fillAmpm: function () {
+                var ampmL = this.options.template.indexOf('a') !== -1, ampmU = this.options.template.indexOf('A') !== -1, items = [
+                        [
+                            'am',
+                            ampmL ? 'am' : 'AM'
+                        ],
+                        [
+                            'pm',
+                            ampmL ? 'pm' : 'PM'
+                        ]
+                    ];
+                return items;
+            },
+            getValue: function (format) {
+                var dt, values = {}, that = this, notSelected = false;
+                $.each(this.map, function (k, v) {
+                    if (k === 'ampm') {
+                        return;
+                    }
+                    var def = k === 'day' ? 1 : 0;
+                    values[k] = that['$' + k] ? parseInt(that['$' + k].val(), 10) : def;
+                    if (isNaN(values[k])) {
+                        notSelected = true;
+                        return false;
+                    }
+                });
+                if (notSelected) {
+                    return '';
+                }
+                if (this.$ampm) {
+                    if (values.hour === 12) {
+                        values.hour = this.$ampm.val() === 'am' ? 0 : 12;
+                    } else {
+                        values.hour = this.$ampm.val() === 'am' ? values.hour : values.hour + 12;
+                    }
+                }
+                dt = moment([
+                    values.year,
+                    values.month,
+                    values.day,
+                    values.hour,
+                    values.minute,
+                    values.second
+                ]);
+                this.highlight(dt);
+                format = format === undefined ? this.options.format : format;
+                if (format === null) {
+                    return dt.isValid() ? dt : null;
+                } else {
+                    return dt.isValid() ? dt.format(format) : '';
+                }
+            },
+            setValue: function (value) {
+                if (!value) {
+                    return;
+                }
+                var dt = typeof value === 'string' ? moment(value, this.options.format) : moment(value), that = this, values = {};
+                function getNearest($select, value) {
+                    var delta = {};
+                    $select.children('option').each(function (i, opt) {
+                        var optValue = $(opt).attr('value'), distance;
+                        if (optValue === '')
+                            return;
+                        distance = Math.abs(optValue - value);
+                        if (typeof delta.distance === 'undefined' || distance < delta.distance) {
+                            delta = {
+                                value: optValue,
+                                distance: distance
+                            };
+                        }
+                    });
+                    return delta.value;
+                }
+                if (dt.isValid()) {
+                    $.each(this.map, function (k, v) {
+                        if (k === 'ampm') {
+                            return;
+                        }
+                        values[k] = dt[v[1]]();
+                    });
+                    if (this.$ampm) {
+                        if (values.hour >= 12) {
+                            values.ampm = 'pm';
+                            if (values.hour > 12) {
+                                values.hour -= 12;
+                            }
+                        } else {
+                            values.ampm = 'am';
+                            if (values.hour === 0) {
+                                values.hour = 12;
+                            }
+                        }
+                    }
+                    $.each(values, function (k, v) {
+                        if (that['$' + k]) {
+                            if (k === 'minute' && that.options.minuteStep > 1 && that.options.roundTime) {
+                                v = getNearest(that['$' + k], v);
+                            }
+                            if (k === 'second' && that.options.secondStep > 1 && that.options.roundTime) {
+                                v = getNearest(that['$' + k], v);
+                            }
+                            that['$' + k].val(v);
+                        }
+                    });
+                    if (this.options.smartDays) {
+                        this.fillCombo('day');
+                    }
+                    this.$element.val(dt.format(this.options.format)).change();
+                }
+            },
+            highlight: function (dt) {
+                if (!dt.isValid()) {
+                    if (this.options.errorClass) {
+                        this.$widget.addClass(this.options.errorClass);
+                    } else {
+                        if (!this.borderColor) {
+                            this.borderColor = this.$widget.find('select').css('border-color');
+                        }
+                        this.$widget.find('select').css('border-color', 'red');
+                    }
+                } else {
+                    if (this.options.errorClass) {
+                        this.$widget.removeClass(this.options.errorClass);
+                    } else {
+                        this.$widget.find('select').css('border-color', this.borderColor);
+                    }
+                }
+            },
+            leadZero: function (v) {
+                return v <= 9 ? '0' + v : v;
+            },
+            destroy: function () {
+                this.$widget.remove();
+                this.$element.removeData('combodate').show();
+            }
+        };
+        $.fn.combodate = function (option) {
+            var d, args = Array.apply(null, arguments);
+            args.shift();
+            if (option === 'getValue' && this.length && (d = this.eq(0).data('combodate'))) {
+                return d.getValue.apply(d, args);
+            }
+            return this.each(function () {
+                var $this = $(this), data = $this.data('combodate'), options = typeof option == 'object' && option;
+                if (!data) {
+                    $this.data('combodate', data = new Combodate(this, options));
+                }
+                if (typeof option == 'string' && typeof data[option] == 'function') {
+                    data[option].apply(data, args);
+                }
+            });
+        };
+        $.fn.combodate.defaults = {
+            format: 'DD-MM-YYYY HH:mm',
+            template: 'D / MMM / YYYY   H : mm',
+            value: null,
+            minYear: 1970,
+            maxYear: 2015,
+            yearDescending: true,
+            minuteStep: 5,
+            secondStep: 1,
+            firstItem: 'empty',
+            errorClass: null,
+            roundTime: true,
+            smartDays: false
+        };
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var Constructor = function (options) {
+            this.init('combodate', options, Constructor.defaults);
+            if (!this.options.viewformat) {
+                this.options.viewformat = this.options.format;
+            }
+            options.combodate = $.fn.editableutils.tryParseJson(options.combodate, true);
+            this.options.combodate = $.extend({}, Constructor.defaults.combodate, options.combodate, {
+                format: this.options.format,
+                template: this.options.template
+            });
+        };
+        $.fn.editableutils.inherit(Constructor, $.fn.editabletypes.abstractinput);
+        $.extend(Constructor.prototype, {
+            render: function () {
+                this.$input.combodate(this.options.combodate);
+                if ($.fn.editableform.engine === 'bs3') {
+                    this.$input.siblings().find('select').addClass('form-control');
+                }
+                if (this.options.inputclass) {
+                    this.$input.siblings().find('select').addClass(this.options.inputclass);
+                }
+            },
+            value2html: function (value, element) {
+                var text = value ? value.format(this.options.viewformat) : '';
+                Constructor.superclass.value2html.call(this, text, element);
+            },
+            html2value: function (html) {
+                return html ? moment(html, this.options.viewformat) : null;
+            },
+            value2str: function (value) {
+                return value ? value.format(this.options.format) : '';
+            },
+            str2value: function (str) {
+                return str ? moment(str, this.options.format) : null;
+            },
+            value2submit: function (value) {
+                return this.value2str(value);
+            },
+            value2input: function (value) {
+                this.$input.combodate('setValue', value);
+            },
+            input2value: function () {
+                return this.$input.combodate('getValue', null);
+            },
+            activate: function () {
+                this.$input.siblings('.combodate').find('select').eq(0).focus();
+            },
+            autosubmit: function () {
+            }
+        });
+        Constructor.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<input type="text">',
+            inputclass: null,
+            format: 'YYYY-MM-DD',
+            viewformat: null,
+            template: 'D / MMM / YYYY',
+            combodate: null
+        });
+        $.fn.editabletypes.combodate = Constructor;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var pInitInput = $.fn.editableform.Constructor.prototype.initInput;
+        $.extend($.fn.editableform.Constructor.prototype, {
+            initTemplate: function () {
+                this.$form = $($.fn.editableform.template);
+                this.$form.find('.control-group').addClass('form-group');
+                this.$form.find('.editable-error-block').addClass('help-block');
+            },
+            initInput: function () {
+                pInitInput.apply(this);
+                var emptyInputClass = this.input.options.inputclass === null || this.input.options.inputclass === false;
+                var defaultClass = 'input-sm';
+                var stdtypes = 'text,select,textarea,password,email,url,tel,number,range,time,typeaheadjs'.split(',');
+                if (~$.inArray(this.input.type, stdtypes)) {
+                    this.input.$input.addClass('form-control');
+                    if (emptyInputClass) {
+                        this.input.options.inputclass = defaultClass;
+                        this.input.$input.addClass(defaultClass);
+                    }
+                }
+                var $btn = this.$form.find('.editable-buttons');
+                var classes = emptyInputClass ? [defaultClass] : this.input.options.inputclass.split(' ');
+                for (var i = 0; i < classes.length; i++) {
+                    if (classes[i].toLowerCase() === 'input-lg') {
+                        $btn.find('button').removeClass('btn-sm').addClass('btn-lg');
+                    }
+                }
+            }
+        });
+        $.fn.editableform.buttons = '<button type="submit" class="btn btn-primary btn-sm editable-submit">' + '<i class="glyphicon glyphicon-ok"></i>' + '</button>' + '<button type="button" class="btn btn-default btn-sm editable-cancel">' + '<i class="glyphicon glyphicon-remove"></i>' + '</button>';
+        $.fn.editableform.errorGroupClass = 'has-error';
+        $.fn.editableform.errorBlockClass = null;
+        $.fn.editableform.engine = 'bs3';
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        $.extend($.fn.editableContainer.Popup.prototype, {
+            containerName: 'popover',
+            containerDataName: 'bs.popover',
+            innerCss: '.popover-content',
+            defaults: $.fn.popover.Constructor.DEFAULTS,
+            initContainer: function () {
+                $.extend(this.containerOptions, {
+                    trigger: 'manual',
+                    selector: false,
+                    content: ' ',
+                    template: this.defaults.template
+                });
+                var t;
+                if (this.$element.data('template')) {
+                    t = this.$element.data('template');
+                    this.$element.removeData('template');
+                }
+                this.call(this.containerOptions);
+                if (t) {
+                    this.$element.data('template', t);
+                }
+            },
+            innerShow: function () {
+                this.call('show');
+            },
+            innerHide: function () {
+                this.call('hide');
+            },
+            innerDestroy: function () {
+                this.call('destroy');
+            },
+            setContainerOption: function (key, value) {
+                this.container().options[key] = value;
+            },
+            setPosition: function () {
+                (function () {
+                    var $tip = this.tip();
+                    var placement = typeof this.options.placement == 'function' ? this.options.placement.call(this, $tip[0], this.$element[0]) : this.options.placement;
+                    var autoToken = /\s?auto?\s?/i;
+                    var autoPlace = autoToken.test(placement);
+                    if (autoPlace) {
+                        placement = placement.replace(autoToken, '') || 'top';
+                    }
+                    var pos = this.getPosition();
+                    var actualWidth = $tip[0].offsetWidth;
+                    var actualHeight = $tip[0].offsetHeight;
+                    if (autoPlace) {
+                        var $parent = this.$element.parent();
+                        var orgPlacement = placement;
+                        var docScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                        var parentWidth = this.options.container == 'body' ? window.innerWidth : $parent.outerWidth();
+                        var parentHeight = this.options.container == 'body' ? window.innerHeight : $parent.outerHeight();
+                        var parentLeft = this.options.container == 'body' ? 0 : $parent.offset().left;
+                        placement = placement == 'bottom' && pos.top + pos.height + actualHeight - docScroll > parentHeight ? 'top' : placement == 'top' && pos.top - docScroll - actualHeight < 0 ? 'bottom' : placement == 'right' && pos.right + actualWidth > parentWidth ? 'left' : placement == 'left' && pos.left - actualWidth < parentLeft ? 'right' : placement;
+                        $tip.removeClass(orgPlacement).addClass(placement);
+                    }
+                    var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight);
+                    this.applyPlacement(calculatedOffset, placement);
+                }.call(this.container()));
+            }
+        });
+    }(window.jQuery));
+    (function ($) {
+        function UTCDate() {
+            return new Date(Date.UTC.apply(Date, arguments));
+        }
+        function UTCToday() {
+            var today = new Date();
+            return UTCDate(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+        }
+        var Datepicker = function (element, options) {
+            var that = this;
+            this._process_options(options);
+            this.element = $(element);
+            this.isInline = false;
+            this.isInput = this.element.is('input');
+            this.component = this.element.is('.date') ? this.element.find('.add-on, .btn') : false;
+            this.hasInput = this.component && this.element.find('input').length;
+            if (this.component && this.component.length === 0)
+                this.component = false;
+            this.picker = $(DPGlobal.template);
+            this._buildEvents();
+            this._attachEvents();
+            if (this.isInline) {
+                this.picker.addClass('datepicker-inline').appendTo(this.element);
+            } else {
+                this.picker.addClass('datepicker-dropdown dropdown-menu');
+            }
+            if (this.o.rtl) {
+                this.picker.addClass('datepicker-rtl');
+                this.picker.find('.prev i, .next i').toggleClass('icon-arrow-left icon-arrow-right');
+            }
+            this.viewMode = this.o.startView;
+            if (this.o.calendarWeeks)
+                this.picker.find('tfoot th.today').attr('colspan', function (i, val) {
+                    return parseInt(val) + 1;
+                });
+            this._allow_update = false;
+            this.setStartDate(this.o.startDate);
+            this.setEndDate(this.o.endDate);
+            this.setDaysOfWeekDisabled(this.o.daysOfWeekDisabled);
+            this.fillDow();
+            this.fillMonths();
+            this._allow_update = true;
+            this.update();
+            this.showMode();
+            if (this.isInline) {
+                this.show();
+            }
+        };
+        Datepicker.prototype = {
+            constructor: Datepicker,
+            _process_options: function (opts) {
+                this._o = $.extend({}, this._o, opts);
+                var o = this.o = $.extend({}, this._o);
+                var lang = o.language;
+                if (!dates[lang]) {
+                    lang = lang.split('-')[0];
+                    if (!dates[lang])
+                        lang = defaults.language;
+                }
+                o.language = lang;
+                switch (o.startView) {
+                case 2:
+                case 'decade':
+                    o.startView = 2;
+                    break;
+                case 1:
+                case 'year':
+                    o.startView = 1;
+                    break;
+                default:
+                    o.startView = 0;
+                }
+                switch (o.minViewMode) {
+                case 1:
+                case 'months':
+                    o.minViewMode = 1;
+                    break;
+                case 2:
+                case 'years':
+                    o.minViewMode = 2;
+                    break;
+                default:
+                    o.minViewMode = 0;
+                }
+                o.startView = Math.max(o.startView, o.minViewMode);
+                o.weekStart %= 7;
+                o.weekEnd = (o.weekStart + 6) % 7;
+                var format = DPGlobal.parseFormat(o.format);
+                if (o.startDate !== -Infinity) {
+                    o.startDate = DPGlobal.parseDate(o.startDate, format, o.language);
+                }
+                if (o.endDate !== Infinity) {
+                    o.endDate = DPGlobal.parseDate(o.endDate, format, o.language);
+                }
+                o.daysOfWeekDisabled = o.daysOfWeekDisabled || [];
+                if (!$.isArray(o.daysOfWeekDisabled))
+                    o.daysOfWeekDisabled = o.daysOfWeekDisabled.split(/[,\s]*/);
+                o.daysOfWeekDisabled = $.map(o.daysOfWeekDisabled, function (d) {
+                    return parseInt(d, 10);
+                });
+            },
+            _events: [],
+            _secondaryEvents: [],
+            _applyEvents: function (evs) {
+                for (var i = 0, el, ev; i < evs.length; i++) {
+                    el = evs[i][0];
+                    ev = evs[i][1];
+                    el.on(ev);
+                }
+            },
+            _unapplyEvents: function (evs) {
+                for (var i = 0, el, ev; i < evs.length; i++) {
+                    el = evs[i][0];
+                    ev = evs[i][1];
+                    el.off(ev);
+                }
+            },
+            _buildEvents: function () {
+                if (this.isInput) {
+                    this._events = [[
+                            this.element,
+                            {
+                                focus: $.proxy(this.show, this),
+                                keyup: $.proxy(this.update, this),
+                                keydown: $.proxy(this.keydown, this)
+                            }
+                        ]];
+                } else if (this.component && this.hasInput) {
+                    this._events = [
+                        [
+                            this.element.find('input'),
+                            {
+                                focus: $.proxy(this.show, this),
+                                keyup: $.proxy(this.update, this),
+                                keydown: $.proxy(this.keydown, this)
+                            }
+                        ],
+                        [
+                            this.component,
+                            { click: $.proxy(this.show, this) }
+                        ]
+                    ];
+                } else if (this.element.is('div')) {
+                    this.isInline = true;
+                } else {
+                    this._events = [[
+                            this.element,
+                            { click: $.proxy(this.show, this) }
+                        ]];
+                }
+                this._secondaryEvents = [
+                    [
+                        this.picker,
+                        { click: $.proxy(this.click, this) }
+                    ],
+                    [
+                        $(window),
+                        { resize: $.proxy(this.place, this) }
+                    ],
+                    [
+                        $(document),
+                        {
+                            mousedown: $.proxy(function (e) {
+                                if (!(this.element.is(e.target) || this.element.find(e.target).size() || this.picker.is(e.target) || this.picker.find(e.target).size())) {
+                                    this.hide();
+                                }
+                            }, this)
+                        }
+                    ]
+                ];
+            },
+            _attachEvents: function () {
+                this._detachEvents();
+                this._applyEvents(this._events);
+            },
+            _detachEvents: function () {
+                this._unapplyEvents(this._events);
+            },
+            _attachSecondaryEvents: function () {
+                this._detachSecondaryEvents();
+                this._applyEvents(this._secondaryEvents);
+            },
+            _detachSecondaryEvents: function () {
+                this._unapplyEvents(this._secondaryEvents);
+            },
+            _trigger: function (event, altdate) {
+                var date = altdate || this.date, local_date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+                this.element.trigger({
+                    type: event,
+                    date: local_date,
+                    format: $.proxy(function (altformat) {
+                        var format = altformat || this.o.format;
+                        return DPGlobal.formatDate(date, format, this.o.language);
+                    }, this)
+                });
+            },
+            show: function (e) {
+                if (!this.isInline)
+                    this.picker.appendTo('body');
+                this.picker.show();
+                this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
+                this.place();
+                this._attachSecondaryEvents();
+                if (e) {
+                    e.preventDefault();
+                }
+                this._trigger('show');
+            },
+            hide: function (e) {
+                if (this.isInline)
+                    return;
+                if (!this.picker.is(':visible'))
+                    return;
+                this.picker.hide().detach();
+                this._detachSecondaryEvents();
+                this.viewMode = this.o.startView;
+                this.showMode();
+                if (this.o.forceParse && (this.isInput && this.element.val() || this.hasInput && this.element.find('input').val()))
+                    this.setValue();
+                this._trigger('hide');
+            },
+            remove: function () {
+                this.hide();
+                this._detachEvents();
+                this._detachSecondaryEvents();
+                this.picker.remove();
+                delete this.element.data().datepicker;
+                if (!this.isInput) {
+                    delete this.element.data().date;
+                }
+            },
+            getDate: function () {
+                var d = this.getUTCDate();
+                return new Date(d.getTime() + d.getTimezoneOffset() * 60000);
+            },
+            getUTCDate: function () {
+                return this.date;
+            },
+            setDate: function (d) {
+                this.setUTCDate(new Date(d.getTime() - d.getTimezoneOffset() * 60000));
+            },
+            setUTCDate: function (d) {
+                this.date = d;
+                this.setValue();
+            },
+            setValue: function () {
+                var formatted = this.getFormattedDate();
+                if (!this.isInput) {
+                    if (this.component) {
+                        this.element.find('input').val(formatted);
+                    }
+                } else {
+                    this.element.val(formatted);
+                }
+            },
+            getFormattedDate: function (format) {
+                if (format === undefined)
+                    format = this.o.format;
+                return DPGlobal.formatDate(this.date, format, this.o.language);
+            },
+            setStartDate: function (startDate) {
+                this._process_options({ startDate: startDate });
+                this.update();
+                this.updateNavArrows();
+            },
+            setEndDate: function (endDate) {
+                this._process_options({ endDate: endDate });
+                this.update();
+                this.updateNavArrows();
+            },
+            setDaysOfWeekDisabled: function (daysOfWeekDisabled) {
+                this._process_options({ daysOfWeekDisabled: daysOfWeekDisabled });
+                this.update();
+                this.updateNavArrows();
+            },
+            place: function () {
+                if (this.isInline)
+                    return;
+                var zIndex = parseInt(this.element.parents().filter(function () {
+                    return $(this).css('z-index') != 'auto';
+                }).first().css('z-index')) + 10;
+                var offset = this.component ? this.component.parent().offset() : this.element.offset();
+                var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(true);
+                this.picker.css({
+                    top: offset.top + height,
+                    left: offset.left,
+                    zIndex: zIndex
+                });
+            },
+            _allow_update: true,
+            update: function () {
+                if (!this._allow_update)
+                    return;
+                var date, fromArgs = false;
+                if (arguments && arguments.length && (typeof arguments[0] === 'string' || arguments[0] instanceof Date)) {
+                    date = arguments[0];
+                    fromArgs = true;
+                } else {
+                    date = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
+                    delete this.element.data().date;
+                }
+                this.date = DPGlobal.parseDate(date, this.o.format, this.o.language);
+                if (fromArgs)
+                    this.setValue();
+                if (this.date < this.o.startDate) {
+                    this.viewDate = new Date(this.o.startDate);
+                } else if (this.date > this.o.endDate) {
+                    this.viewDate = new Date(this.o.endDate);
+                } else {
+                    this.viewDate = new Date(this.date);
+                }
+                this.fill();
+            },
+            fillDow: function () {
+                var dowCnt = this.o.weekStart, html = '<tr>';
+                if (this.o.calendarWeeks) {
+                    var cell = '<th class="cw">&nbsp;</th>';
+                    html += cell;
+                    this.picker.find('.datepicker-days thead tr:first-child').prepend(cell);
+                }
+                while (dowCnt < this.o.weekStart + 7) {
+                    html += '<th class="dow">' + dates[this.o.language].daysMin[dowCnt++ % 7] + '</th>';
+                }
+                html += '</tr>';
+                this.picker.find('.datepicker-days thead').append(html);
+            },
+            fillMonths: function () {
+                var html = '', i = 0;
+                while (i < 12) {
+                    html += '<span class="month">' + dates[this.o.language].monthsShort[i++] + '</span>';
+                }
+                this.picker.find('.datepicker-months td').html(html);
+            },
+            setRange: function (range) {
+                if (!range || !range.length)
+                    delete this.range;
+                else
+                    this.range = $.map(range, function (d) {
+                        return d.valueOf();
+                    });
+                this.fill();
+            },
+            getClassNames: function (date) {
+                var cls = [], year = this.viewDate.getUTCFullYear(), month = this.viewDate.getUTCMonth(), currentDate = this.date.valueOf(), today = new Date();
+                if (date.getUTCFullYear() < year || date.getUTCFullYear() == year && date.getUTCMonth() < month) {
+                    cls.push('old');
+                } else if (date.getUTCFullYear() > year || date.getUTCFullYear() == year && date.getUTCMonth() > month) {
+                    cls.push('new');
+                }
+                if (this.o.todayHighlight && date.getUTCFullYear() == today.getFullYear() && date.getUTCMonth() == today.getMonth() && date.getUTCDate() == today.getDate()) {
+                    cls.push('today');
+                }
+                if (currentDate && date.valueOf() == currentDate) {
+                    cls.push('active');
+                }
+                if (date.valueOf() < this.o.startDate || date.valueOf() > this.o.endDate || $.inArray(date.getUTCDay(), this.o.daysOfWeekDisabled) !== -1) {
+                    cls.push('disabled');
+                }
+                if (this.range) {
+                    if (date > this.range[0] && date < this.range[this.range.length - 1]) {
+                        cls.push('range');
+                    }
+                    if ($.inArray(date.valueOf(), this.range) != -1) {
+                        cls.push('selected');
+                    }
+                }
+                return cls;
+            },
+            fill: function () {
+                var d = new Date(this.viewDate), year = d.getUTCFullYear(), month = d.getUTCMonth(), startYear = this.o.startDate !== -Infinity ? this.o.startDate.getUTCFullYear() : -Infinity, startMonth = this.o.startDate !== -Infinity ? this.o.startDate.getUTCMonth() : -Infinity, endYear = this.o.endDate !== Infinity ? this.o.endDate.getUTCFullYear() : Infinity, endMonth = this.o.endDate !== Infinity ? this.o.endDate.getUTCMonth() : Infinity, currentDate = this.date && this.date.valueOf(), tooltip;
+                this.picker.find('.datepicker-days thead th.datepicker-switch').text(dates[this.o.language].months[month] + ' ' + year);
+                this.picker.find('tfoot th.today').text(dates[this.o.language].today).toggle(this.o.todayBtn !== false);
+                this.picker.find('tfoot th.clear').text(dates[this.o.language].clear).toggle(this.o.clearBtn !== false);
+                this.updateNavArrows();
+                this.fillMonths();
+                var prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0), day = DPGlobal.getDaysInMonth(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth());
+                prevMonth.setUTCDate(day);
+                prevMonth.setUTCDate(day - (prevMonth.getUTCDay() - this.o.weekStart + 7) % 7);
+                var nextMonth = new Date(prevMonth);
+                nextMonth.setUTCDate(nextMonth.getUTCDate() + 42);
+                nextMonth = nextMonth.valueOf();
+                var html = [];
+                var clsName;
+                while (prevMonth.valueOf() < nextMonth) {
+                    if (prevMonth.getUTCDay() == this.o.weekStart) {
+                        html.push('<tr>');
+                        if (this.o.calendarWeeks) {
+                            var ws = new Date(+prevMonth + (this.o.weekStart - prevMonth.getUTCDay() - 7) % 7 * 86400000), th = new Date(+ws + (7 + 4 - ws.getUTCDay()) % 7 * 86400000), yth = new Date(+(yth = UTCDate(th.getUTCFullYear(), 0, 1)) + (7 + 4 - yth.getUTCDay()) % 7 * 86400000), calWeek = (th - yth) / 86400000 / 7 + 1;
+                            html.push('<td class="cw">' + calWeek + '</td>');
+                        }
+                    }
+                    clsName = this.getClassNames(prevMonth);
+                    clsName.push('day');
+                    var before = this.o.beforeShowDay(prevMonth);
+                    if (before === undefined)
+                        before = {};
+                    else if (typeof before === 'boolean')
+                        before = { enabled: before };
+                    else if (typeof before === 'string')
+                        before = { classes: before };
+                    if (before.enabled === false)
+                        clsName.push('disabled');
+                    if (before.classes)
+                        clsName = clsName.concat(before.classes.split(/\s+/));
+                    if (before.tooltip)
+                        tooltip = before.tooltip;
+                    clsName = $.unique(clsName);
+                    html.push('<td class="' + clsName.join(' ') + '"' + (tooltip ? ' title="' + tooltip + '"' : '') + '>' + prevMonth.getUTCDate() + '</td>');
+                    if (prevMonth.getUTCDay() == this.o.weekEnd) {
+                        html.push('</tr>');
+                    }
+                    prevMonth.setUTCDate(prevMonth.getUTCDate() + 1);
+                }
+                this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
+                var currentYear = this.date && this.date.getUTCFullYear();
+                var months = this.picker.find('.datepicker-months').find('th:eq(1)').text(year).end().find('span').removeClass('active');
+                if (currentYear && currentYear == year) {
+                    months.eq(this.date.getUTCMonth()).addClass('active');
+                }
+                if (year < startYear || year > endYear) {
+                    months.addClass('disabled');
+                }
+                if (year == startYear) {
+                    months.slice(0, startMonth).addClass('disabled');
+                }
+                if (year == endYear) {
+                    months.slice(endMonth + 1).addClass('disabled');
+                }
+                html = '';
+                year = parseInt(year / 10, 10) * 10;
+                var yearCont = this.picker.find('.datepicker-years').find('th:eq(1)').text(year + '-' + (year + 9)).end().find('td');
+                year -= 1;
+                for (var i = -1; i < 11; i++) {
+                    html += '<span class="year' + (i == -1 ? ' old' : i == 10 ? ' new' : '') + (currentYear == year ? ' active' : '') + (year < startYear || year > endYear ? ' disabled' : '') + '">' + year + '</span>';
+                    year += 1;
+                }
+                yearCont.html(html);
+            },
+            updateNavArrows: function () {
+                if (!this._allow_update)
+                    return;
+                var d = new Date(this.viewDate), year = d.getUTCFullYear(), month = d.getUTCMonth();
+                switch (this.viewMode) {
+                case 0:
+                    if (this.o.startDate !== -Infinity && year <= this.o.startDate.getUTCFullYear() && month <= this.o.startDate.getUTCMonth()) {
+                        this.picker.find('.prev').css({ visibility: 'hidden' });
+                    } else {
+                        this.picker.find('.prev').css({ visibility: 'visible' });
+                    }
+                    if (this.o.endDate !== Infinity && year >= this.o.endDate.getUTCFullYear() && month >= this.o.endDate.getUTCMonth()) {
+                        this.picker.find('.next').css({ visibility: 'hidden' });
+                    } else {
+                        this.picker.find('.next').css({ visibility: 'visible' });
+                    }
+                    break;
+                case 1:
+                case 2:
+                    if (this.o.startDate !== -Infinity && year <= this.o.startDate.getUTCFullYear()) {
+                        this.picker.find('.prev').css({ visibility: 'hidden' });
+                    } else {
+                        this.picker.find('.prev').css({ visibility: 'visible' });
+                    }
+                    if (this.o.endDate !== Infinity && year >= this.o.endDate.getUTCFullYear()) {
+                        this.picker.find('.next').css({ visibility: 'hidden' });
+                    } else {
+                        this.picker.find('.next').css({ visibility: 'visible' });
+                    }
+                    break;
+                }
+            },
+            click: function (e) {
+                e.preventDefault();
+                var target = $(e.target).closest('span, td, th');
+                if (target.length == 1) {
+                    switch (target[0].nodeName.toLowerCase()) {
+                    case 'th':
+                        switch (target[0].className) {
+                        case 'datepicker-switch':
+                            this.showMode(1);
+                            break;
+                        case 'prev':
+                        case 'next':
+                            var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'prev' ? -1 : 1);
+                            switch (this.viewMode) {
+                            case 0:
+                                this.viewDate = this.moveMonth(this.viewDate, dir);
+                                break;
+                            case 1:
+                            case 2:
+                                this.viewDate = this.moveYear(this.viewDate, dir);
+                                break;
+                            }
+                            this.fill();
+                            break;
+                        case 'today':
+                            var date = new Date();
+                            date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+                            this.showMode(-2);
+                            var which = this.o.todayBtn == 'linked' ? null : 'view';
+                            this._setDate(date, which);
+                            break;
+                        case 'clear':
+                            var element;
+                            if (this.isInput)
+                                element = this.element;
+                            else if (this.component)
+                                element = this.element.find('input');
+                            if (element)
+                                element.val('').change();
+                            this._trigger('changeDate');
+                            this.update();
+                            if (this.o.autoclose)
+                                this.hide();
+                            break;
+                        }
+                        break;
+                    case 'span':
+                        if (!target.is('.disabled')) {
+                            this.viewDate.setUTCDate(1);
+                            if (target.is('.month')) {
+                                var day = 1;
+                                var month = target.parent().find('span').index(target);
+                                var year = this.viewDate.getUTCFullYear();
+                                this.viewDate.setUTCMonth(month);
+                                this._trigger('changeMonth', this.viewDate);
+                                if (this.o.minViewMode === 1) {
+                                    this._setDate(UTCDate(year, month, day, 0, 0, 0, 0));
+                                }
+                            } else {
+                                var year = parseInt(target.text(), 10) || 0;
+                                var day = 1;
+                                var month = 0;
+                                this.viewDate.setUTCFullYear(year);
+                                this._trigger('changeYear', this.viewDate);
+                                if (this.o.minViewMode === 2) {
+                                    this._setDate(UTCDate(year, month, day, 0, 0, 0, 0));
+                                }
+                            }
+                            this.showMode(-1);
+                            this.fill();
+                        }
+                        break;
+                    case 'td':
+                        if (target.is('.day') && !target.is('.disabled')) {
+                            var day = parseInt(target.text(), 10) || 1;
+                            var year = this.viewDate.getUTCFullYear(), month = this.viewDate.getUTCMonth();
+                            if (target.is('.old')) {
+                                if (month === 0) {
+                                    month = 11;
+                                    year -= 1;
+                                } else {
+                                    month -= 1;
+                                }
+                            } else if (target.is('.new')) {
+                                if (month == 11) {
+                                    month = 0;
+                                    year += 1;
+                                } else {
+                                    month += 1;
+                                }
+                            }
+                            this._setDate(UTCDate(year, month, day, 0, 0, 0, 0));
+                        }
+                        break;
+                    }
+                }
+            },
+            _setDate: function (date, which) {
+                if (!which || which == 'date')
+                    this.date = new Date(date);
+                if (!which || which == 'view')
+                    this.viewDate = new Date(date);
+                this.fill();
+                this.setValue();
+                this._trigger('changeDate');
+                var element;
+                if (this.isInput) {
+                    element = this.element;
+                } else if (this.component) {
+                    element = this.element.find('input');
+                }
+                if (element) {
+                    element.change();
+                    if (this.o.autoclose && (!which || which == 'date')) {
+                        this.hide();
+                    }
+                }
+            },
+            moveMonth: function (date, dir) {
+                if (!dir)
+                    return date;
+                var new_date = new Date(date.valueOf()), day = new_date.getUTCDate(), month = new_date.getUTCMonth(), mag = Math.abs(dir), new_month, test;
+                dir = dir > 0 ? 1 : -1;
+                if (mag == 1) {
+                    test = dir == -1 ? function () {
+                        return new_date.getUTCMonth() == month;
+                    } : function () {
+                        return new_date.getUTCMonth() != new_month;
+                    };
+                    new_month = month + dir;
+                    new_date.setUTCMonth(new_month);
+                    if (new_month < 0 || new_month > 11)
+                        new_month = (new_month + 12) % 12;
+                } else {
+                    for (var i = 0; i < mag; i++)
+                        new_date = this.moveMonth(new_date, dir);
+                    new_month = new_date.getUTCMonth();
+                    new_date.setUTCDate(day);
+                    test = function () {
+                        return new_month != new_date.getUTCMonth();
+                    };
+                }
+                while (test()) {
+                    new_date.setUTCDate(--day);
+                    new_date.setUTCMonth(new_month);
+                }
+                return new_date;
+            },
+            moveYear: function (date, dir) {
+                return this.moveMonth(date, dir * 12);
+            },
+            dateWithinRange: function (date) {
+                return date >= this.o.startDate && date <= this.o.endDate;
+            },
+            keydown: function (e) {
+                if (this.picker.is(':not(:visible)')) {
+                    if (e.keyCode == 27)
+                        this.show();
+                    return;
+                }
+                var dateChanged = false, dir, day, month, newDate, newViewDate;
+                switch (e.keyCode) {
+                case 27:
+                    this.hide();
+                    e.preventDefault();
+                    break;
+                case 37:
+                case 39:
+                    if (!this.o.keyboardNavigation)
+                        break;
+                    dir = e.keyCode == 37 ? -1 : 1;
+                    if (e.ctrlKey) {
+                        newDate = this.moveYear(this.date, dir);
+                        newViewDate = this.moveYear(this.viewDate, dir);
+                    } else if (e.shiftKey) {
+                        newDate = this.moveMonth(this.date, dir);
+                        newViewDate = this.moveMonth(this.viewDate, dir);
+                    } else {
+                        newDate = new Date(this.date);
+                        newDate.setUTCDate(this.date.getUTCDate() + dir);
+                        newViewDate = new Date(this.viewDate);
+                        newViewDate.setUTCDate(this.viewDate.getUTCDate() + dir);
+                    }
+                    if (this.dateWithinRange(newDate)) {
+                        this.date = newDate;
+                        this.viewDate = newViewDate;
+                        this.setValue();
+                        this.update();
+                        e.preventDefault();
+                        dateChanged = true;
+                    }
+                    break;
+                case 38:
+                case 40:
+                    if (!this.o.keyboardNavigation)
+                        break;
+                    dir = e.keyCode == 38 ? -1 : 1;
+                    if (e.ctrlKey) {
+                        newDate = this.moveYear(this.date, dir);
+                        newViewDate = this.moveYear(this.viewDate, dir);
+                    } else if (e.shiftKey) {
+                        newDate = this.moveMonth(this.date, dir);
+                        newViewDate = this.moveMonth(this.viewDate, dir);
+                    } else {
+                        newDate = new Date(this.date);
+                        newDate.setUTCDate(this.date.getUTCDate() + dir * 7);
+                        newViewDate = new Date(this.viewDate);
+                        newViewDate.setUTCDate(this.viewDate.getUTCDate() + dir * 7);
+                    }
+                    if (this.dateWithinRange(newDate)) {
+                        this.date = newDate;
+                        this.viewDate = newViewDate;
+                        this.setValue();
+                        this.update();
+                        e.preventDefault();
+                        dateChanged = true;
+                    }
+                    break;
+                case 13:
+                    this.hide();
+                    e.preventDefault();
+                    break;
+                case 9:
+                    this.hide();
+                    break;
+                }
+                if (dateChanged) {
+                    this._trigger('changeDate');
+                    var element;
+                    if (this.isInput) {
+                        element = this.element;
+                    } else if (this.component) {
+                        element = this.element.find('input');
+                    }
+                    if (element) {
+                        element.change();
+                    }
+                }
+            },
+            showMode: function (dir) {
+                if (dir) {
+                    this.viewMode = Math.max(this.o.minViewMode, Math.min(2, this.viewMode + dir));
+                }
+                this.picker.find('>div').hide().filter('.datepicker-' + DPGlobal.modes[this.viewMode].clsName).css('display', 'block');
+                this.updateNavArrows();
+            }
+        };
+        var DateRangePicker = function (element, options) {
+            this.element = $(element);
+            this.inputs = $.map(options.inputs, function (i) {
+                return i.jquery ? i[0] : i;
+            });
+            delete options.inputs;
+            $(this.inputs).datepicker(options).bind('changeDate', $.proxy(this.dateUpdated, this));
+            this.pickers = $.map(this.inputs, function (i) {
+                return $(i).data('datepicker');
+            });
+            this.updateDates();
+        };
+        DateRangePicker.prototype = {
+            updateDates: function () {
+                this.dates = $.map(this.pickers, function (i) {
+                    return i.date;
+                });
+                this.updateRanges();
+            },
+            updateRanges: function () {
+                var range = $.map(this.dates, function (d) {
+                    return d.valueOf();
+                });
+                $.each(this.pickers, function (i, p) {
+                    p.setRange(range);
+                });
+            },
+            dateUpdated: function (e) {
+                var dp = $(e.target).data('datepicker'), new_date = dp.getUTCDate(), i = $.inArray(e.target, this.inputs), l = this.inputs.length;
+                if (i == -1)
+                    return;
+                if (new_date < this.dates[i]) {
+                    while (i >= 0 && new_date < this.dates[i]) {
+                        this.pickers[i--].setUTCDate(new_date);
+                    }
+                } else if (new_date > this.dates[i]) {
+                    while (i < l && new_date > this.dates[i]) {
+                        this.pickers[i++].setUTCDate(new_date);
+                    }
+                }
+                this.updateDates();
+            },
+            remove: function () {
+                $.map(this.pickers, function (p) {
+                    p.remove();
+                });
+                delete this.element.data().datepicker;
+            }
+        };
+        function opts_from_el(el, prefix) {
+            var data = $(el).data(), out = {}, inkey, replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])'), prefix = new RegExp('^' + prefix.toLowerCase());
+            for (var key in data)
+                if (prefix.test(key)) {
+                    inkey = key.replace(replace, function (_, a) {
+                        return a.toLowerCase();
+                    });
+                    out[inkey] = data[key];
+                }
+            return out;
+        }
+        function opts_from_locale(lang) {
+            var out = {};
+            if (!dates[lang]) {
+                lang = lang.split('-')[0];
+                if (!dates[lang])
+                    return;
+            }
+            var d = dates[lang];
+            $.each(locale_opts, function (i, k) {
+                if (k in d)
+                    out[k] = d[k];
+            });
+            return out;
+        }
+        var old = $.fn.datepicker;
+        var datepicker = $.fn.datepicker = function (option) {
+            var args = Array.apply(null, arguments);
+            args.shift();
+            var internal_return, this_return;
+            this.each(function () {
+                var $this = $(this), data = $this.data('datepicker'), options = typeof option == 'object' && option;
+                if (!data) {
+                    var elopts = opts_from_el(this, 'date'), xopts = $.extend({}, defaults, elopts, options), locopts = opts_from_locale(xopts.language), opts = $.extend({}, defaults, locopts, elopts, options);
+                    if ($this.is('.input-daterange') || opts.inputs) {
+                        var ropts = { inputs: opts.inputs || $this.find('input').toArray() };
+                        $this.data('datepicker', data = new DateRangePicker(this, $.extend(opts, ropts)));
+                    } else {
+                        $this.data('datepicker', data = new Datepicker(this, opts));
+                    }
+                }
+                if (typeof option == 'string' && typeof data[option] == 'function') {
+                    internal_return = data[option].apply(data, args);
+                    if (internal_return !== undefined)
+                        return false;
+                }
+            });
+            if (internal_return !== undefined)
+                return internal_return;
+            else
+                return this;
+        };
+        var defaults = $.fn.datepicker.defaults = {
+            autoclose: false,
+            beforeShowDay: $.noop,
+            calendarWeeks: false,
+            clearBtn: false,
+            daysOfWeekDisabled: [],
+            endDate: Infinity,
+            forceParse: true,
+            format: 'mm/dd/yyyy',
+            keyboardNavigation: true,
+            language: 'en',
+            minViewMode: 0,
+            rtl: false,
+            startDate: -Infinity,
+            startView: 0,
+            todayBtn: false,
+            todayHighlight: false,
+            weekStart: 0
+        };
+        var locale_opts = $.fn.datepicker.locale_opts = [
+            'format',
+            'rtl',
+            'weekStart'
+        ];
+        $.fn.datepicker.Constructor = Datepicker;
+        var dates = $.fn.datepicker.dates = {
+            en: {
+                days: [
+                    'Sunday',
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                    'Sunday'
+                ],
+                daysShort: [
+                    'Sun',
+                    'Mon',
+                    'Tue',
+                    'Wed',
+                    'Thu',
+                    'Fri',
+                    'Sat',
+                    'Sun'
+                ],
+                daysMin: [
+                    'Su',
+                    'Mo',
+                    'Tu',
+                    'We',
+                    'Th',
+                    'Fr',
+                    'Sa',
+                    'Su'
+                ],
+                months: [
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                    'July',
+                    'August',
+                    'September',
+                    'October',
+                    'November',
+                    'December'
+                ],
+                monthsShort: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+                today: 'Today',
+                clear: 'Clear'
+            }
+        };
+        var DPGlobal = {
+            modes: [
+                {
+                    clsName: 'days',
+                    navFnc: 'Month',
+                    navStep: 1
+                },
+                {
+                    clsName: 'months',
+                    navFnc: 'FullYear',
+                    navStep: 1
+                },
+                {
+                    clsName: 'years',
+                    navFnc: 'FullYear',
+                    navStep: 10
+                }
+            ],
+            isLeapYear: function (year) {
+                return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+            },
+            getDaysInMonth: function (year, month) {
+                return [
+                    31,
+                    DPGlobal.isLeapYear(year) ? 29 : 28,
+                    31,
+                    30,
+                    31,
+                    30,
+                    31,
+                    31,
+                    30,
+                    31,
+                    30,
+                    31
+                ][month];
+            },
+            validParts: /dd?|DD?|mm?|MM?|yy(?:yy)?/g,
+            nonpunctuation: /[^ -\/:-@\[\u3400-\u9fff-`{-~\t\n\r]+/g,
+            parseFormat: function (format) {
+                var separators = format.replace(this.validParts, '\0').split('\0'), parts = format.match(this.validParts);
+                if (!separators || !separators.length || !parts || parts.length === 0) {
+                    throw new Error('Invalid date format.');
+                }
+                return {
+                    separators: separators,
+                    parts: parts
+                };
+            },
+            parseDate: function (date, format, language) {
+                if (date instanceof Date)
+                    return date;
+                if (typeof format === 'string')
+                    format = DPGlobal.parseFormat(format);
+                if (/^[\-+]\d+[dmwy]([\s,]+[\-+]\d+[dmwy])*$/.test(date)) {
+                    var part_re = /([\-+]\d+)([dmwy])/, parts = date.match(/([\-+]\d+)([dmwy])/g), part, dir;
+                    date = new Date();
+                    for (var i = 0; i < parts.length; i++) {
+                        part = part_re.exec(parts[i]);
+                        dir = parseInt(part[1]);
+                        switch (part[2]) {
+                        case 'd':
+                            date.setUTCDate(date.getUTCDate() + dir);
+                            break;
+                        case 'm':
+                            date = Datepicker.prototype.moveMonth.call(Datepicker.prototype, date, dir);
+                            break;
+                        case 'w':
+                            date.setUTCDate(date.getUTCDate() + dir * 7);
+                            break;
+                        case 'y':
+                            date = Datepicker.prototype.moveYear.call(Datepicker.prototype, date, dir);
+                            break;
+                        }
+                    }
+                    return UTCDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0);
+                }
+                var parts = date && date.match(this.nonpunctuation) || [], date = new Date(), parsed = {}, setters_order = [
+                        'yyyy',
+                        'yy',
+                        'M',
+                        'MM',
+                        'm',
+                        'mm',
+                        'd',
+                        'dd'
+                    ], setters_map = {
+                        yyyy: function (d, v) {
+                            return d.setUTCFullYear(v);
+                        },
+                        yy: function (d, v) {
+                            return d.setUTCFullYear(2000 + v);
+                        },
+                        m: function (d, v) {
+                            v -= 1;
+                            while (v < 0)
+                                v += 12;
+                            v %= 12;
+                            d.setUTCMonth(v);
+                            while (d.getUTCMonth() != v)
+                                d.setUTCDate(d.getUTCDate() - 1);
+                            return d;
+                        },
+                        d: function (d, v) {
+                            return d.setUTCDate(v);
+                        }
+                    }, val, filtered, part;
+                setters_map['M'] = setters_map['MM'] = setters_map['mm'] = setters_map['m'];
+                setters_map['dd'] = setters_map['d'];
+                date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+                var fparts = format.parts.slice();
+                if (parts.length != fparts.length) {
+                    fparts = $(fparts).filter(function (i, p) {
+                        return $.inArray(p, setters_order) !== -1;
+                    }).toArray();
+                }
+                if (parts.length == fparts.length) {
+                    for (var i = 0, cnt = fparts.length; i < cnt; i++) {
+                        val = parseInt(parts[i], 10);
+                        part = fparts[i];
+                        if (isNaN(val)) {
+                            switch (part) {
+                            case 'MM':
+                                filtered = $(dates[language].months).filter(function () {
+                                    var m = this.slice(0, parts[i].length), p = parts[i].slice(0, m.length);
+                                    return m == p;
+                                });
+                                val = $.inArray(filtered[0], dates[language].months) + 1;
+                                break;
+                            case 'M':
+                                filtered = $(dates[language].monthsShort).filter(function () {
+                                    var m = this.slice(0, parts[i].length), p = parts[i].slice(0, m.length);
+                                    return m == p;
+                                });
+                                val = $.inArray(filtered[0], dates[language].monthsShort) + 1;
+                                break;
+                            }
+                        }
+                        parsed[part] = val;
+                    }
+                    for (var i = 0, s; i < setters_order.length; i++) {
+                        s = setters_order[i];
+                        if (s in parsed && !isNaN(parsed[s]))
+                            setters_map[s](date, parsed[s]);
+                    }
+                }
+                return date;
+            },
+            formatDate: function (date, format, language) {
+                if (typeof format === 'string')
+                    format = DPGlobal.parseFormat(format);
+                var val = {
+                    d: date.getUTCDate(),
+                    D: dates[language].daysShort[date.getUTCDay()],
+                    DD: dates[language].days[date.getUTCDay()],
+                    m: date.getUTCMonth() + 1,
+                    M: dates[language].monthsShort[date.getUTCMonth()],
+                    MM: dates[language].months[date.getUTCMonth()],
+                    yy: date.getUTCFullYear().toString().substring(2),
+                    yyyy: date.getUTCFullYear()
+                };
+                val.dd = (val.d < 10 ? '0' : '') + val.d;
+                val.mm = (val.m < 10 ? '0' : '') + val.m;
+                var date = [], seps = $.extend([], format.separators);
+                for (var i = 0, cnt = format.parts.length; i <= cnt; i++) {
+                    if (seps.length)
+                        date.push(seps.shift());
+                    date.push(val[format.parts[i]]);
+                }
+                return date.join('');
+            },
+            headTemplate: '<thead>' + '<tr>' + '<th class="prev"><i class="icon-arrow-left"/></th>' + '<th colspan="5" class="datepicker-switch"></th>' + '<th class="next"><i class="icon-arrow-right"/></th>' + '</tr>' + '</thead>',
+            contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
+            footTemplate: '<tfoot><tr><th colspan="7" class="today"></th></tr><tr><th colspan="7" class="clear"></th></tr></tfoot>'
+        };
+        DPGlobal.template = '<div class="datepicker">' + '<div class="datepicker-days">' + '<table class=" table-condensed">' + DPGlobal.headTemplate + '<tbody></tbody>' + DPGlobal.footTemplate + '</table>' + '</div>' + '<div class="datepicker-months">' + '<table class="table-condensed">' + DPGlobal.headTemplate + DPGlobal.contTemplate + DPGlobal.footTemplate + '</table>' + '</div>' + '<div class="datepicker-years">' + '<table class="table-condensed">' + DPGlobal.headTemplate + DPGlobal.contTemplate + DPGlobal.footTemplate + '</table>' + '</div>' + '</div>';
+        $.fn.datepicker.DPGlobal = DPGlobal;
+        $.fn.datepicker.noConflict = function () {
+            $.fn.datepicker = old;
+            return this;
+        };
+        $(document).on('focus.datepicker.data-api click.datepicker.data-api', '[data-provide="datepicker"]', function (e) {
+            var $this = $(this);
+            if ($this.data('datepicker'))
+                return;
+            e.preventDefault();
+            datepicker.call($this, 'show');
+        });
+        $(function () {
+            datepicker.call($('[data-provide="datepicker-inline"]'));
+        });
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        $.fn.bdatepicker = $.fn.datepicker.noConflict();
+        if (!$.fn.datepicker) {
+            $.fn.datepicker = $.fn.bdatepicker;
+        }
+        var Date = function (options) {
+            this.init('date', options, Date.defaults);
+            this.initPicker(options, Date.defaults);
+        };
+        $.fn.editableutils.inherit(Date, $.fn.editabletypes.abstractinput);
+        $.extend(Date.prototype, {
+            initPicker: function (options, defaults) {
+                if (!this.options.viewformat) {
+                    this.options.viewformat = this.options.format;
+                }
+                options.datepicker = $.fn.editableutils.tryParseJson(options.datepicker, true);
+                this.options.datepicker = $.extend({}, defaults.datepicker, options.datepicker, { format: this.options.viewformat });
+                this.options.datepicker.language = this.options.datepicker.language || 'en';
+                this.dpg = $.fn.bdatepicker.DPGlobal;
+                this.parsedFormat = this.dpg.parseFormat(this.options.format);
+                this.parsedViewFormat = this.dpg.parseFormat(this.options.viewformat);
+            },
+            render: function () {
+                this.$input.bdatepicker(this.options.datepicker);
+                if (this.options.clear) {
+                    this.$clear = $('<a href="#"></a>').html(this.options.clear).click($.proxy(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.clear();
+                    }, this));
+                    this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));
+                }
+            },
+            value2html: function (value, element) {
+                var text = value ? this.dpg.formatDate(value, this.parsedViewFormat, this.options.datepicker.language) : '';
+                Date.superclass.value2html.call(this, text, element);
+            },
+            html2value: function (html) {
+                return this.parseDate(html, this.parsedViewFormat);
+            },
+            value2str: function (value) {
+                return value ? this.dpg.formatDate(value, this.parsedFormat, this.options.datepicker.language) : '';
+            },
+            str2value: function (str) {
+                return this.parseDate(str, this.parsedFormat);
+            },
+            value2submit: function (value) {
+                return this.value2str(value);
+            },
+            value2input: function (value) {
+                this.$input.bdatepicker('update', value);
+            },
+            input2value: function () {
+                return this.$input.data('datepicker').date;
+            },
+            activate: function () {
+            },
+            clear: function () {
+                this.$input.data('datepicker').date = null;
+                this.$input.find('.active').removeClass('active');
+                if (!this.options.showbuttons) {
+                    this.$input.closest('form').submit();
+                }
+            },
+            autosubmit: function () {
+                this.$input.on('mouseup', '.day', function (e) {
+                    if ($(e.currentTarget).is('.old') || $(e.currentTarget).is('.new')) {
+                        return;
+                    }
+                    var $form = $(this).closest('form');
+                    setTimeout(function () {
+                        $form.submit();
+                    }, 200);
+                });
+            },
+            parseDate: function (str, format) {
+                var date = null, formattedBack;
+                if (str) {
+                    date = this.dpg.parseDate(str, format, this.options.datepicker.language);
+                    if (typeof str === 'string') {
+                        formattedBack = this.dpg.formatDate(date, format, this.options.datepicker.language);
+                        if (str !== formattedBack) {
+                            date = null;
+                        }
+                    }
+                }
+                return date;
+            }
+        });
+        Date.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<div class="editable-date well"></div>',
+            inputclass: null,
+            format: 'yyyy-mm-dd',
+            viewformat: null,
+            datepicker: {
+                weekStart: 0,
+                startView: 0,
+                minViewMode: 0,
+                autoclose: false
+            },
+            clear: '&times; clear'
+        });
+        $.fn.editabletypes.date = Date;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var DateField = function (options) {
+            this.init('datefield', options, DateField.defaults);
+            this.initPicker(options, DateField.defaults);
+        };
+        $.fn.editableutils.inherit(DateField, $.fn.editabletypes.date);
+        $.extend(DateField.prototype, {
+            render: function () {
+                this.$input = this.$tpl.find('input');
+                this.setClass();
+                this.setAttr('placeholder');
+                this.$tpl.bdatepicker(this.options.datepicker);
+                this.$input.off('focus keydown');
+                this.$input.keyup($.proxy(function () {
+                    this.$tpl.removeData('date');
+                    this.$tpl.bdatepicker('update');
+                }, this));
+            },
+            value2input: function (value) {
+                this.$input.val(value ? this.dpg.formatDate(value, this.parsedViewFormat, this.options.datepicker.language) : '');
+                this.$tpl.bdatepicker('update');
+            },
+            input2value: function () {
+                return this.html2value(this.$input.val());
+            },
+            activate: function () {
+                $.fn.editabletypes.text.prototype.activate.call(this);
+            },
+            autosubmit: function () {
+            }
+        });
+        DateField.defaults = $.extend({}, $.fn.editabletypes.date.defaults, {
+            tpl: '<div class="input-append date"><input type="text"/><span class="add-on"><i class="icon-th"></i></span></div>',
+            inputclass: 'input-small',
+            datepicker: {
+                weekStart: 0,
+                startView: 0,
+                minViewMode: 0,
+                autoclose: true
+            }
+        });
+        $.fn.editabletypes.datefield = DateField;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var DateTime = function (options) {
+            this.init('datetime', options, DateTime.defaults);
+            this.initPicker(options, DateTime.defaults);
+        };
+        $.fn.editableutils.inherit(DateTime, $.fn.editabletypes.abstractinput);
+        $.extend(DateTime.prototype, {
+            initPicker: function (options, defaults) {
+                if (!this.options.viewformat) {
+                    this.options.viewformat = this.options.format;
+                }
+                options.datetimepicker = $.fn.editableutils.tryParseJson(options.datetimepicker, true);
+                this.options.datetimepicker = $.extend({}, defaults.datetimepicker, options.datetimepicker, { format: this.options.viewformat });
+                this.options.datetimepicker.language = this.options.datetimepicker.language || 'en';
+                this.dpg = $.fn.datetimepicker.DPGlobal;
+                this.parsedFormat = this.dpg.parseFormat(this.options.format, this.options.formatType);
+                this.parsedViewFormat = this.dpg.parseFormat(this.options.viewformat, this.options.formatType);
+            },
+            render: function () {
+                this.$input.datetimepicker(this.options.datetimepicker);
+                this.$input.on('changeMode', function (e) {
+                    var f = $(this).closest('form').parent();
+                    setTimeout(function () {
+                        f.triggerHandler('resize');
+                    }, 0);
+                });
+                if (this.options.clear) {
+                    this.$clear = $('<a href="#"></a>').html(this.options.clear).click($.proxy(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.clear();
+                    }, this));
+                    this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));
+                }
+            },
+            value2html: function (value, element) {
+                var text = value ? this.dpg.formatDate(this.toUTC(value), this.parsedViewFormat, this.options.datetimepicker.language, this.options.formatType) : '';
+                if (element) {
+                    DateTime.superclass.value2html.call(this, text, element);
+                } else {
+                    return text;
+                }
+            },
+            html2value: function (html) {
+                var value = this.parseDate(html, this.parsedViewFormat);
+                return value ? this.fromUTC(value) : null;
+            },
+            value2str: function (value) {
+                return value ? this.dpg.formatDate(this.toUTC(value), this.parsedFormat, this.options.datetimepicker.language, this.options.formatType) : '';
+            },
+            str2value: function (str) {
+                var value = this.parseDate(str, this.parsedFormat);
+                return value ? this.fromUTC(value) : null;
+            },
+            value2submit: function (value) {
+                return this.value2str(value);
+            },
+            value2input: function (value) {
+                if (value) {
+                    this.$input.data('datetimepicker').setDate(value);
+                }
+            },
+            input2value: function () {
+                var dt = this.$input.data('datetimepicker');
+                return dt.date ? dt.getDate() : null;
+            },
+            activate: function () {
+            },
+            clear: function () {
+                this.$input.data('datetimepicker').date = null;
+                this.$input.find('.active').removeClass('active');
+                if (!this.options.showbuttons) {
+                    this.$input.closest('form').submit();
+                }
+            },
+            autosubmit: function () {
+                this.$input.on('mouseup', '.minute', function (e) {
+                    var $form = $(this).closest('form');
+                    setTimeout(function () {
+                        $form.submit();
+                    }, 200);
+                });
+            },
+            toUTC: function (value) {
+                return value ? new Date(value.valueOf() - value.getTimezoneOffset() * 60000) : value;
+            },
+            fromUTC: function (value) {
+                return value ? new Date(value.valueOf() + value.getTimezoneOffset() * 60000) : value;
+            },
+            parseDate: function (str, format) {
+                var date = null, formattedBack;
+                if (str) {
+                    date = this.dpg.parseDate(str, format, this.options.datetimepicker.language, this.options.formatType);
+                    if (typeof str === 'string') {
+                        formattedBack = this.dpg.formatDate(date, format, this.options.datetimepicker.language, this.options.formatType);
+                        if (str !== formattedBack) {
+                            date = null;
+                        }
+                    }
+                }
+                return date;
+            }
+        });
+        DateTime.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+            tpl: '<div class="editable-date well"></div>',
+            inputclass: null,
+            format: 'yyyy-mm-dd hh:ii',
+            formatType: 'standard',
+            viewformat: null,
+            datetimepicker: {
+                todayHighlight: false,
+                autoclose: false
+            },
+            clear: '&times; clear'
+        });
+        $.fn.editabletypes.datetime = DateTime;
+    }(window.jQuery));
+    (function ($) {
+        'use strict';
+        var DateTimeField = function (options) {
+            this.init('datetimefield', options, DateTimeField.defaults);
+            this.initPicker(options, DateTimeField.defaults);
+        };
+        $.fn.editableutils.inherit(DateTimeField, $.fn.editabletypes.datetime);
+        $.extend(DateTimeField.prototype, {
+            render: function () {
+                this.$input = this.$tpl.find('input');
+                this.setClass();
+                this.setAttr('placeholder');
+                this.$tpl.datetimepicker(this.options.datetimepicker);
+                this.$input.off('focus keydown');
+                this.$input.keyup($.proxy(function () {
+                    this.$tpl.removeData('date');
+                    this.$tpl.datetimepicker('update');
+                }, this));
+            },
+            value2input: function (value) {
+                this.$input.val(this.value2html(value));
+                this.$tpl.datetimepicker('update');
+            },
+            input2value: function () {
+                return this.html2value(this.$input.val());
+            },
+            activate: function () {
+                $.fn.editabletypes.text.prototype.activate.call(this);
+            },
+            autosubmit: function () {
+            }
+        });
+        DateTimeField.defaults = $.extend({}, $.fn.editabletypes.datetime.defaults, {
+            tpl: '<div class="input-append date"><input type="text"/><span class="add-on"><i class="icon-th"></i></span></div>',
+            inputclass: 'input-medium',
+            datetimepicker: {
+                todayHighlight: false,
+                autoclose: true
+            }
+        });
+        $.fn.editabletypes.datetimefield = DateTimeField;
+    }(window.jQuery));
+    return $.fn.editable;
+});
 define('netjoint-ui', [
     'jquery',
     'affix',
@@ -10146,7 +18414,9 @@ define('netjoint-ui', [
     'transition',
     'checkbox',
     'datepicker',
-    'timepicker'
+    'timepicker',
+    'select2',
+    'editable'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

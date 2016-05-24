@@ -29,6 +29,8 @@
   },
   "devDependencies": {
     "amd-optimize": "*",
+    "angular": "~1.2.29",
+    "angular-ui-router": "~0.3.0",
     "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.6.1",
     "gulp": "^3.9.1",
@@ -39,7 +41,8 @@
     "gulp-sass": "*",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
-    "icheck": "^1.0.2",
-    "jquery": "^1.12.3"
+    "jquery": "^1.12.3",
+    "select2": "^4.0.2",
+    "x-editable": "^1.5.1"
   }
 }
