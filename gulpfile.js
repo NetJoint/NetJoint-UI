@@ -87,6 +87,10 @@ gulp.task('jsbuild', function () {
                      'checkbox': {
                         deps: ['jquery'],
                         exports: '$.fn.checkbox'
+                    },
+                    'layout': {
+                        deps: ['jquery'],
+                        exports: '$.fn.layout'
                     }
                 }
             }))

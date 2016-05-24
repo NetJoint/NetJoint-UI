@@ -12,7 +12,8 @@ define(['jquery',
     'tooltip',
     'transition',
     'select2',
-    'checkbox'
+    'checkbox',
+    'layout'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

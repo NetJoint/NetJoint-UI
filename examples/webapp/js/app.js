@@ -30,19 +30,19 @@ define(function () {
                             }]
                     }
                 })
-                .state('form', {
-                    url: '/form',
+                .state('form_create', {
+                    url: '/form/create',
                     views: {
                         "content": {
-                            controller: 'formCtrl',
-                            templateUrl: 'views/form/form.html'
+                            controller: 'formCreateCtrl',
+                            templateUrl: 'views/form/create.html'
                         }
                     },
                     resolve: {
                         loadCtrl: ["$q", function ($q) {
                                 var delay = $q.defer();
                                 require([
-                                    '../views/form/form'
+                                    '../views/form/create'
                                 ], function () {
                                     delay.resolve();
                                 });
@@ -50,6 +50,27 @@ define(function () {
                             }]
                     }
                 })
+                .state('form_edit', {
+                    url: '/form/edit',
+                    views: {
+                        "content": {
+                            controller: 'formEditCtrl',
+                            templateUrl: 'views/form/edit.html'
+                        }
+                    },
+                    resolve: {
+                        loadCtrl: ["$q", function ($q) {
+                                var delay = $q.defer();
+                                require([
+                                    '../views/form/edit'
+                                ], function () {
+                                    delay.resolve();
+                                });
+                                return delay.promise;
+                            }]
+                    }
+                })
+                
         $urlRouterProvider.otherwise('/');
     })
             .directive('ngFocus', function () {

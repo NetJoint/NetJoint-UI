@@ -12398,6 +12398,64 @@ define('checkbox', ['jquery'], function () {
     }(window.jQuery);
     return $.fn.checkbox;
 });
++function ($) {
+    'use strict';
+    var toggle = '[data-toggle="layout"]', handle = '[data-handle="layout"]';
+    var fixHeight = function ($layout) {
+        var $content = $('.layout-content', $layout);
+        $content.css('min-height', $(window).height());
+    };
+    var Layout = function (el) {
+        var $layout = $(el);
+        $layout.on('click', handle, this.handle);
+    };
+    Layout.VERSION = '3.3.6';
+    Layout.prototype.handle = function (e) {
+        var $this = $(this), $layout = $this.parents(toggle), $menu = $('.layout-aside-menu', $layout);
+        if (e)
+            e.preventDefault();
+        if (!$layout.length) {
+            $layout = $this.closest('.layout');
+        }
+        $layout.trigger(e = $.Event('handle.bs.layout'));
+        if (e.isDefaultPrevented())
+            return;
+        if ($layout.hasClass('layout-md')) {
+            $layout.removeClass('layout-md').addClass('layout-sm');
+        } else {
+            $layout.removeClass('layout-sm').addClass('layout-md');
+        }
+        fixHeight($layout);
+    };
+    function Plugin(option) {
+        return this.each(function () {
+            var $this = $(this);
+            alert('aaaaaaa');
+            var data = $this.data('bs.layout');
+            if (!data)
+                $this.data('bs.layout', data = new Layout(this));
+            if (typeof option == 'string')
+                data[option].call($this);
+        });
+    }
+    var old = $.fn.layout;
+    $.fn.layout = Plugin;
+    $.fn.layout.Constructor = Layout;
+    $.fn.layout.noConflict = function () {
+        $.fn.layout = old;
+        return this;
+    };
+    $(document).on('click.bs.layout.data-api', handle, Layout.prototype.handle);
+    $(window).on('load', function () {
+        $(toggle).each(function () {
+            var $layout = $(this);
+            Plugin.call($layout, $layout.data());
+        });
+    });
+}(jQuery);
+define('layout', [], function () {
+    return;
+});
 define('netjoint-ui', [
     'jquery',
     'affix',
@@ -12413,7 +12471,8 @@ define('netjoint-ui', [
     'tooltip',
     'transition',
     'select2',
-    'checkbox'
+    'checkbox',
+    'layout'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

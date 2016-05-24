@@ -1,6 +1,6 @@
 define(['app'], function (app) {
     app.register
-            .controller('formCtrl', function ($scope, baseService) {
+            .controller('formEditCtrl', function ($scope, baseService) {
                 $scope.user ={
                     name:'张仨啊'
                 }
