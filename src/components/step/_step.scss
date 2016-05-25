@@ -1,18 +1,8 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 2016-5-24, 16:28:37
-    Author     : Administrator
-*/
-
-.sui-steps {
+.steps {
     font-size: 0px;
     overflow: hidden;
     line-height: 0px;
-    margin: @baseMargin 0px;
+    margin: 18px 0px;
     .wrap {
         display: inline-block;
     }
@@ -54,7 +44,7 @@ and open the template in the editor.
         .border-radius((@baseFontSize + 4) / 2);
         text-align: center;
         line-height: @baseFontSize + 4;
-        .sui-icon {
+        .icon {
           vertical-align: -1px;
         }
     }
@@ -141,7 +131,7 @@ and open the template in the editor.
 
     }
 }
-.sui-steps-round {
+.steps-round {
     font-size: 0px;
     overflow: hidden;
     line-height: 0px;
