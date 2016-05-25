@@ -13,7 +13,8 @@
     "responsive",
     "front-end",
     "framework",
-    "web"
+    "web",
+    "requirejs"
   ],
   "license": "MIT",
   "homepage": "",
@@ -27,12 +28,8 @@
   "dependencies": {
     "requirejs": "^2.2.0"
   },
-  "devDependencies": {
-    "amd-optimize": "*",
-    "angular": "~1.2.29",
-    "angular-ui-router": "~0.3.0",
-    "bootstrap-sass": "^3.3.6",
-    "font-awesome": "^4.6.1",
+
+  "devDependencies": { 
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "*",
     "gulp-clean-css": "*",
@@ -41,6 +38,8 @@
     "gulp-sass": "*",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
+    "amd-optimize": "*",
+
     "jquery": "^1.12.3",
     "select2": "^4.0.2",
     "x-editable": "^1.5.1"

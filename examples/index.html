@@ -30,7 +30,7 @@
             <li><a href="#css">CSS</a></li>
             <li><a href="#components">Components</a></li>
             <li><a href="#javascript">Javascript</a></li>
-            <li><a href="admin.html">AdminTemplate</a></li>
+            <li><a href="webapp/index.html">AdminTemplate</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -536,6 +536,22 @@
     </div>
     <div class="form-group">
       <input class="form-control input-sm" type="text" placeholder=".input-sm">
+    </div>
+    <br />
+    <div class="form-group">
+      <input class="form-control mini" type="text" placeholder="mini">
+    </div>
+    <div class="form-group">
+      <input class="form-control small" type="text" placeholder="small">
+    </div>
+    <div class="form-group">
+      <input class="form-control medium" type="text" placeholder="medium">
+    </div>
+    <div class="form-group">
+      <input class="form-control large" type="text" placeholder="large">
+    </div>
+    <div class="form-group">
+      <input class="form-control xlarge" type="text" placeholder="xlarge">
     </div>
 
     <!-- Textarea -->
@@ -2528,6 +2544,10 @@
     <p>Via data attributes: <code>data-toggle="dropdown"</code></p>
     <p>Via Javascript: <code>$('select').select2();</code></p><br />
     <div class="cselect" >
+        <select data-toggle="select">
+          <option value="1">aaaaaa</option>  
+          <option value="2" selected="selected">duplicate</option>
+        </select>
         <select class="js-example-data-array"></select>
 
         <select class="js-example-data-array-selected">

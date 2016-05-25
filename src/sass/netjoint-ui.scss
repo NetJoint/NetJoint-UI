@@ -9,6 +9,8 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
 
+// Font awesome
+@import "../../node_modules/font-awesome/scss/font-awesome";
 
 // Components
 @import "../components/code/code";
@@ -40,6 +42,7 @@
 @import "../components/tooltip/tooltip";
 @import "../components/popover/popover";
 @import "../components/carousel/carousel";
+@import "../components/layout/layout";
 
 @import "../components/select/select";
 @import "../components/checkbox/checkbox";
@@ -54,7 +57,3 @@
 // Utility classes
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
-
-// Font awesome
-@import "../../node_modules/font-awesome/scss/font-awesome";
-

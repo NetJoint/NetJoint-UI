@@ -15,10 +15,12 @@ define(['jquery',
     'datepicker',
     'timepicker',
     'select2',
+    'layout',
     'editable'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();
         $('[data-spy="affix"]').affix();
+        $('[data-toggle="select"]').select2();
     });
 });
