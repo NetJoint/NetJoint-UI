@@ -33,7 +33,7 @@ gulp.task('jsbuild', function () {
                 baseUrl: "./src/js",
                 paths: {
                     "jquery": "../../node_modules/jquery/dist/jquery",
-                    "select2":"../../node_modules/select2/dist/js/select2.full",
+                    "select2": "../../node_modules/select2/dist/js/select2.full",
                 },
                 shim: {
                     'affix': {
@@ -63,7 +63,7 @@ gulp.task('jsbuild', function () {
                     'modal': {
                         deps: ['jquery'],
                         exports: '$.fn.modal'
-                    },                    
+                    },
                     'scrollspy': {
                         deps: ['jquery'],
                         exports: '$.fn.scrollspy'
@@ -77,20 +77,32 @@ gulp.task('jsbuild', function () {
                         exports: '$.fn.tooltip'
                     },
                     'popover': {
-                        deps: ['jquery','tooltip'],
+                        deps: ['jquery', 'tooltip'],
                         exports: '$.fn.popover'
                     },
                     'transition': {
                         deps: ['jquery'],
                         exports: '$.fn.transition'
                     },
-                     'checkbox': {
+                    'checkbox': {
                         deps: ['jquery'],
                         exports: '$.fn.checkbox'
                     },
                     'layout': {
                         deps: ['jquery'],
                         exports: '$.fn.layout'
+                    },
+                    'datepicker': {
+                        deps: ['jquery'],
+                        exports: '$.fn.datepicker'
+                    },
+                    'timepicker': {
+                        deps: ['jquery'],
+                        exports: '$.fn.timepicker'
+                    },
+                    'editable': {
+                        deps: ['jquery'],
+                        exports: '$.fn.editable'
                     }
                 }
             }))
@@ -106,7 +118,7 @@ gulp.task('install', function () {
             .pipe(gulp.dest('./dist/fonts'));
     gulp.src('./node_modules/bootstrap-sass/assets/fonts/bootstrap/*.{otf,ttf,woff,woff2,eot,svg}')
             .pipe(gulp.dest('./dist/fonts/bootstrap'));
-    
+
 });
 gulp.task('watch', function () {
     gulp.watch('./src/**/*.scss', ['sass']);

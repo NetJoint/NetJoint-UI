@@ -28,7 +28,8 @@
   "dependencies": {
     "requirejs": "^2.2.0"
   },
-  "devDependencies": {    
+
+  "devDependencies": { 
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "*",
     "gulp-clean-css": "*",
@@ -38,12 +39,9 @@
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
     "amd-optimize": "*",
-    
+
     "jquery": "^1.12.3",
-    "bootstrap-sass": "^3.3.6",
-    "font-awesome" : "^4.6.1",
-    "select2" : "^4.0.2",
-    "angular" : "~1.2.29",
-    "angular-ui-router" : "~0.3.0"
+    "select2": "^4.0.2",
+    "x-editable": "^1.5.1"
   }
 }
