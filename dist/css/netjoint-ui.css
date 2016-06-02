@@ -9166,11 +9166,54 @@ button.close {
     }
 }
 
-@media screen and (max-width: 965px) {
+@media screen and (min-width: 790px) and (max-width: 965px) {
     #content .login-img img{
         height: 280px;
         width: 360px;
+        margin-top: 95px;
     } 
+    
+    .more{
+        float:right;
+        margin-right: 30px;
+        margin-top: 20px;
+    }
+    .more ul{
+        height: 14px;
+        line-height: 14px;
+    }
+    .more ul li{
+        border-left: 1px solid #4d4d4d;
+        padding-bottom: 3px;
+    }
+    .more ul li:first-child{
+        border-left:none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 790px) {
+    #content .login-img img{
+        height: 280px;
+        width: 360px;
+        margin-top: 95px;
+    } 
+    
+    .more{
+        float:right;
+        margin-right: 30px;
+        margin-top: 20px;
+    }
+    .more ul{
+        height: 14px;
+        line-height: 14px;
+    }
+    .more ul li{
+        border-left: 1px solid #4d4d4d;
+        padding-bottom: 3px;
+    }
+    .more ul li:first-child{
+        border-left:none;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -9178,7 +9221,8 @@ button.close {
         margin:0 auto;
     } 
     .more ul li{
-        display: inline;
+        display: inline-block;
+        border:none;
     }
     .more ul li a{
         font-size: 14px;
