@@ -7714,6 +7714,12 @@ button.close {
 
 .layout {
   background: #293039; }
+  .layout .container {
+    width: 100%;
+    padding: 0; }
+  .layout .layout-nav {
+    display: block;
+    margin-left: 200px; }
   .layout .layout-content {
     background: #f5f5f5;
     min-height: 600px; }
@@ -7841,6 +7847,7 @@ button.close {
     padding: 0;
     position: absolute;
     display: -webkit-box;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
   .layout.layout-md .layout-content {
@@ -7865,18 +7872,17 @@ button.close {
     left: 27px;
     position: absolute;
     top: 0; }
-
-@media (max-width: 991px) {
-  .layout-md .layout-content, .layout-md .layout-nav {
-    width: 100%;
-    margin: 0; }
-  .layout-md .col-md-3.layout-aside {
-    display: none; }
-  .layout-md .layout-content {
-    width: 100%;
-    padding-right: 0; }
-  .layout-content {
-    padding: 10px !important; } }
+  @media (max-width: 991px) {
+    .layout.layout-md .layout-content, .layout.layout-md .layout-nav {
+      width: 100%;
+      margin: 0; }
+    .layout.layout-md .col-md-3.layout-aside {
+      display: none; }
+    .layout.layout-md .layout-content {
+      width: 100%;
+      padding-right: 0; }
+    .layout .layout-content {
+      padding: 10px !important; } }
 
 .select2-container {
   box-sizing: border-box;

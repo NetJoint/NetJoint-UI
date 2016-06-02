@@ -14619,7 +14619,10 @@ define('layout', ['jquery'], function () {
     }(jQuery);
     return $.fn.layout;
 });
-define('editable', ['jquery'], function () {
+define('editable', [
+    'jquery',
+    'popover'
+], function () {
     (function ($) {
         'use strict';
         var EditableForm = function (div, options) {
