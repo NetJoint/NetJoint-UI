@@ -1,0 +1,267 @@
+.steps {
+    font-size: 0px;
+    overflow: hidden;
+    line-height: 0px;
+    margin: 18px 0px;
+    .wrap {
+        display: inline-block;
+    }
+    .wrap > div {
+        width: $step-base-width;
+        height: $step-base-height;
+        display: inline-block;
+        line-height: $step-base-height;
+        vertical-align: top;
+        font-size: $font-size-base;
+        position: relative;
+        > label {
+            margin-left: $step-base-height / 2 + 10px;
+            cursor: default;
+        }
+    }
+    .triangle-right {
+        display: inline-block;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: $step-base-height / 2;
+        position: absolute;
+        right: -$step-base-height + 1; //加一个1px，fix wrap带来的宽度
+        z-index: 1;
+    }
+    .triangle-right-bg {
+        @extend .triangle-right;
+        border-width: $step-base-height / 2 + 4;
+        right: -$step-base-height -  4 * 2;
+        border-color: transparent transparent transparent #FFF;
+        top: -4px;
+    }
+
+    .round {
+        display: inline-block;
+        width: $font-size-base + 4;  
+        height: $font-size-base + 4;
+        border-radius:(($font-size-base + 4) / 2);
+        text-align: center;
+        line-height: $font-size-base + 4;
+        .icon {
+          vertical-align: -1px;
+        }
+    }
+    .round + span:before {
+        content: '\00a0';
+    }
+    .finished {
+        background-color: $step-finished-color;
+        color: $step-finished-text-color;
+         .triangle-right {
+            border-color: transparent transparent transparent $step-finished-color;
+        }
+        .round {
+            background-color: $white;
+            background-color: transparent\9;
+            color: $step-finished-color;
+            > i {
+                color: $step-finished-color;
+                font-size: $font-size-base;
+            }
+        }
+    }
+    .current {
+        background-color: $step-current-color;
+        color: $step-current-text-color;
+         .triangle-right {
+            border-color: transparent transparent transparent $step-current-color;
+        }
+        .round {
+            background-color: $white;
+            color: $step-current-color;
+            color: #FFF\9;
+            background-color: transparent\9;
+        }
+    }
+    .todo {
+        background-color: $step-todo-color;
+        color : $step-todo-text-color;
+         .triangle-right {
+            border-color: transparent transparent transparent $step-todo-color;
+        }
+        .round {
+            background-color: $white;
+            background-color: transparent\9;
+        }
+    }
+}
+
+.steps-large {
+    .wrap > div {
+        font-size: $font-size-large;
+        width: $step-base-width * 1.25;
+        height: $step-base-height * 1.25;
+        line-height: $step-base-height * 1.25;
+        > label {
+            font-size: $font-size-large;
+            margin-left: $step-base-height * 1.25 / 2 + 10px;
+        }
+    }
+    .triangle-right {
+        border-width: $step-base-height * 1.25 / 2;
+        right: -$step-base-height * 1.25 + 1;
+    }
+    .triangle-right-bg {
+        border-width: $step-base-height * 1.25 / 2 + 4;
+        right: -$step-base-height * 1.25 -  4 * 2;
+    }
+    .round {
+        width: $font-size-large + 4;  
+        height: $font-size-large + 4;
+        line-height: $font-size-large + 4;
+        border-radius:(($font-size-large + 4) / 2);
+                                        
+    }
+}
+.steps-auto {
+    display: table;
+    width: 100%;
+    .wrap  {
+        display: table-cell;
+        > div {
+            width: 100%;
+        }
+
+    }
+}
+.steps-round {
+    font-size: 0px;
+    overflow: hidden;
+    line-height: 0px;
+    margin: $step-base-margin 0px;
+    padding: 0px $font-size-base / 2;
+    > div {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        .wrap {
+            @extend .clearfix; 
+        } 
+        > label {
+            display: inline-block;
+            text-overflow: ellipsis;
+            font-size: $font-size-base;
+            line-height: $font-size-base;
+            height: $font-size-base; 
+            margin-top: $font-size-base / 2;
+            color: $step-round-finished-text-color;
+            cursor: default;
+            text-align: center;
+            width:50%;
+            margin-left:-25%;
+            position: relative;
+            left:15px;
+        }
+        &:first-child > label{
+            width:auto;
+            max-width: 50%;
+            margin-left:0;
+            left:0;
+        }
+        &:last-child, &.last {
+            width:30px !important;
+            > label {
+                position: absolute;
+                width:auto;
+                margin-left:0;
+                left:auto;
+                right:0;
+            }
+        }
+        .round {
+            width: 22px;
+            height: 22px;
+            border-radius:15px;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: $font-size-base;
+            color: #FFF;
+            line-height: 22px;
+            text-align: center;
+            float: left;
+        }
+        .bar {
+            margin: 10px 10px 0px 40px;
+            width: 200px;
+            height: 6px;
+            vertical-align: middle;
+            border-radius: 4px;
+        }
+    }
+    > .finished {
+        .round {
+            border: 4px $step-finished-color solid;
+            background-color: $step-finished-color;
+            color: $step-finished-text-color;
+        }
+        .bar {
+            background-color: $step-finished-color;
+        }
+    }
+    > .current {
+        .round {
+            border: 4px $step-current-color solid;
+            background-color: $step-current-color;
+        }
+        .bar {
+            background-color: $step-current-color;
+        }
+    }
+    > .todo {
+        > label {
+            color: $step-todo-text-color;
+        }
+        .round {
+            border: 4px $step-round-todo-border-color solid;
+            background-color: #FFF;
+            color: $step-todo-text-color;
+        }
+        .bar {
+            background-color: $step-todo-color;
+        }
+    }
+
+}
+
+.steps-round-auto {
+    display: table;
+    width: 100%;
+    > div {
+        display: table-cell;
+        .bar {
+            width: auto;
+        }
+    }
+}
+.steps-3 {
+    > div {
+        width: 50%;
+    }
+}
+.steps-4 {
+    > div {
+        width: 33%;
+    }
+}
+.steps-5 {
+    > div {
+        width: 25%;
+    }
+}
+.steps-6 {
+    > div {
+        width: 20%;
+    }
+}
+.steps-7 {
+    > div {
+        width: 16%;
+    }
+}

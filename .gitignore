@@ -1,2 +1,7 @@
 /nbproject/
 /node_modules/
+/dist/css/netjoint-ui.css
+/dist/css/netjoint-ui.min.css
+/dist/css/maps
+/dist/js/netjoint-ui.js
+/dist/js/netjoint-ui.min.js
