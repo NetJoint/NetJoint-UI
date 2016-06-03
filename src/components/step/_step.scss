@@ -7,15 +7,15 @@
         display: inline-block;
     }
     .wrap > div {
-        width: @stepsBaseWidth;
-        height: @stepsBaseHeight;
+        width: $step-base-width;
+        height: $step-base-height;
         display: inline-block;
-        line-height: @stepsBaseHeight;
+        line-height: $step-base-height;
         vertical-align: top;
-        font-size: @baseFontSize;
+        font-size: $font-size-base;
         position: relative;
         > label {
-            margin-left: @stepsBaseHeight / 2 + 10px;
+            margin-left: $step-base-height / 2 + 10px;
             cursor: default;
         }
     }
@@ -24,70 +24,70 @@
         width: 0px;
         height: 0px;
         border-style: solid;
-        border-width: @stepsBaseHeight / 2;
+        border-width: $step-base-height / 2;
         position: absolute;
-        right: -@stepsBaseHeight + 1; //加一个1px，fix wrap带来的宽度
+        right: -$step-base-height + 1; //加一个1px，fix wrap带来的宽度
         z-index: 1;
     }
     .triangle-right-bg {
-        .triangle-right;
-        border-width: @stepsBaseHeight / 2 + 4;
-        right: -@stepsBaseHeight -  4 * 2;
+        @extend .triangle-right;
+        border-width: $step-base-height / 2 + 4;
+        right: -$step-base-height -  4 * 2;
         border-color: transparent transparent transparent #FFF;
         top: -4px;
     }
 
     .round {
         display: inline-block;
-        width: @baseFontSize + 4;  
-        height: @baseFontSize + 4;
-        .border-radius((@baseFontSize + 4) / 2);
+        width: $font-size-base + 4;  
+        height: $font-size-base + 4;
+        border-radius:(($font-size-base + 4) / 2);
         text-align: center;
-        line-height: @baseFontSize + 4;
+        line-height: $font-size-base + 4;
         .icon {
-          vertical-align: -1px;
+            vertical-align: -1px;
         }
     }
     .round + span:before {
         content: '\00a0';
     }
     .finished {
-        background-color: @stepsFinishedColor;
-        color: @stepsFinishedTextColor;
-         .triangle-right {
-            border-color: transparent transparent transparent @stepsFinishedColor;
+        background-color: $step-finished-color;
+        color: $step-finished-text-color;
+        .triangle-right {
+            border-color: transparent transparent transparent $step-finished-color;
         }
         .round {
-            background-color: @white;
+            background-color: $white;
             background-color: transparent\9;
-            color: @stepsFinishedColor;
+            color: $step-finished-color;
             > i {
-                color: @stepsFinishedColor;
-                font-size: @baseFontSize;
+                color: $step-finished-color;
+                font-size: $font-size-base;
             }
         }
     }
     .current {
-        background-color: @stepsCurrentColor;
-        color: @stepsCurrentTextColor;
-         .triangle-right {
-            border-color: transparent transparent transparent @stepsCurrentColor;
+        background-color: $step-current-color;
+        color: $step-current-text-color;
+        .triangle-right {
+            border-color: transparent transparent transparent $step-current-color;
         }
         .round {
-            background-color: @white;
-            color: @stepsCurrentColor;
+            background-color: $white;
+            color: $step-current-color;
             color: #FFF\9;
             background-color: transparent\9;
         }
     }
     .todo {
-        background-color: @stepsTodoColor;
-        color : @stepsTodoTextColor;
-         .triangle-right {
-            border-color: transparent transparent transparent @stepsTodoColor;
+        background-color: $step-todo-color;
+        color : $step-todo-text-color;
+        .triangle-right {
+            border-color: transparent transparent transparent $step-todo-color;
         }
         .round {
-            background-color: @white;
+            background-color: $white;
             background-color: transparent\9;
         }
     }
@@ -95,29 +95,29 @@
 
 .steps-large {
     .wrap > div {
-        font-size: @fontSizeLarge;
-        width: @stepsBaseWidth * 1.25;
-        height: @stepsBaseHeight * 1.25;
-        line-height: @stepsBaseHeight * 1.25;
+        font-size: $font-size-large;
+        width: $step-base-width * 1.25;
+        height: $step-base-height * 1.25;
+        line-height: $step-base-height * 1.25;
         > label {
-            font-size: @fontSizeLarge;
-            margin-left: @stepsBaseHeight * 1.25 / 2 + 10px;
+            font-size: $font-size-large;
+            margin-left: $step-base-height * 1.25 / 2 + 10px;
         }
     }
     .triangle-right {
-        border-width: @stepsBaseHeight * 1.25 / 2;
-        right: -@stepsBaseHeight * 1.25 + 1;
+        border-width: $step-base-height * 1.25 / 2;
+        right: -$step-base-height * 1.25 + 1;
     }
     .triangle-right-bg {
-        border-width: @stepsBaseHeight * 1.25 / 2 + 4;
-        right: -@stepsBaseHeight * 1.25 -  4 * 2;
+        border-width: $step-base-height * 1.25 / 2 + 4;
+        right: -$step-base-height * 1.25 -  4 * 2;
     }
     .round {
-        width: @fontSizeLarge + 4;  
-        height: @fontSizeLarge + 4;
-        line-height: @fontSizeLarge + 4;
-        .border-radius((@fontSizeLarge + 4) / 2);
-                                        
+        width: $font-size-large + 4;  
+        height: $font-size-large + 4;
+        line-height: $font-size-large + 4;
+        border-radius:(($font-size-large + 4) / 2);
+
     }
 }
 .steps-auto {
@@ -135,23 +135,23 @@
     font-size: 0px;
     overflow: hidden;
     line-height: 0px;
-    margin: @baseMargin 0px;
-    padding: 0px @baseFontSize / 2;
+    margin: $step-base-margin 0px;
+    padding: 0px $font-size-base / 2;
     > div {
         display: inline-block;
         vertical-align: top;
         position: relative;
         .wrap {
-            .clearfix; 
+            @extend .clearfix; 
         } 
         > label {
             display: inline-block;
-            .text-overflow();
-            font-size: @baseFontSize;
-            line-height: @baseFontSize;
-            height: @baseFontSize; 
-            margin-top: @baseFontSize / 2;
-            color: @stepsRoundFinishedTextColor;
+            text-overflow: ellipsis;
+            font-size: $font-size-base;
+            line-height: $font-size-base;
+            height: $font-size-base; 
+            margin-top: $font-size-base / 2;
+            color: $step-round-finished-text-color;
             cursor: default;
             text-align: center;
             width:50%;
@@ -178,10 +178,10 @@
         .round {
             width: 22px;
             height: 22px;
-            .border-radius(15px);
+            border-radius:15px;
             display: inline-block;
             vertical-align: middle;
-            font-size: @baseFontSize;
+            font-size: $font-size-base;
             color: #FFF;
             line-height: 22px;
             text-align: center;
@@ -192,39 +192,39 @@
             width: 200px;
             height: 6px;
             vertical-align: middle;
-            .border-radius(4px);
+            border-radius: 4px;
         }
     }
     > .finished {
         .round {
-            border: 4px @stepsFinishedColor solid;
-            background-color: @stepsFinishedColor;
-            color: @stepsFinishedTextColor;
+            border: 4px $step-finished-color solid;
+            background-color: $step-finished-color;
+            color: $step-finished-text-color;
         }
         .bar {
-            background-color: @stepsFinishedColor;
+            background-color: $step-finished-color;
         }
     }
     > .current {
         .round {
-            border: 4px @stepsCurrentColor solid;
-            background-color: @stepsCurrentColor;
+            border: 4px $step-current-color solid;
+            background-color: $step-current-color;
         }
         .bar {
-            background-color: @stepsCurrentColor;
+            background-color: $step-current-color;
         }
     }
     > .todo {
         > label {
-            color: @stepsTodoTextColor;
+            color: $step-todo-text-color;
         }
         .round {
-            border: 4px @stepsRoundTodoBorderColor solid;
+            border: 4px $step-round-todo-border-color solid;
             background-color: #FFF;
-            color: @stepsTodoTextColor;
+            color: $step-todo-text-color;
         }
         .bar {
-            background-color: @stepsTodoColor;
+            background-color: $step-todo-color;
         }
     }
 

@@ -4,10 +4,11 @@ $bootstrap-sass-asset-helper: false !default;
 // --------------------------------------------------
 
 
-//== Colors
+//== Color
 //
 //## Gray and brand colors for use across Bootstrap.
-
+$link-hover-color:       #4cb9fc;
+$white:                  #fff;
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333
@@ -88,7 +89,7 @@ $icon-font-name:          "glyphicons-halflings-regular" !default;
 $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 
 
-//== Components
+//== Component
 //
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
@@ -122,7 +123,7 @@ $caret-width-base:          4px !default;
 $caret-width-large:         5px !default;
 
 
-//== Tables
+//== Table
 //    
 //## Customizes the `.table` component with basic values, each used across all table variations.
 
@@ -143,7 +144,7 @@ $table-bg-active:               $table-bg-hover !default;
 $table-border-color:            #e6e6e6 !default;
 
 
-//== Buttons         
+//== Button        
 // 
 //## For each of Bootstrap's buttons, define text, background and border color.
 
@@ -181,7 +182,7 @@ $btn-border-radius-large:        $border-radius-large !default;
 $btn-border-radius-small:        $border-radius-small !default;
 
 
-//== Forms
+//== Form
 //
 //##
 
@@ -232,7 +233,7 @@ $input-group-addon-border-color: $input-border !default;
 $cursor-disabled:                not-allowed !default;
 
 
-//== Dropdowns
+//== Dropdown
 //
 //## Dropdown menu container and contents.
 
@@ -283,7 +284,7 @@ $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
 
 
-//== Media queries breakpoints
+//== Media queries breakpoint
 //
 //## Define the breakpoints at which your layout will change, adapting to different screen sizes.
 
@@ -337,7 +338,7 @@ $grid-float-breakpoint:     $screen-sm-min !default;
 $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
 
 
-//== Container sizes
+//== Container size
 //
 //## Define the maximum width of `.container` for different screen sizes.
 
@@ -373,7 +374,7 @@ $navbar-default-color:             #777 !default;
 $navbar-default-bg:                #f8f8f8 !default;
 $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
-// Navbar links
+// Navbar link
 $navbar-default-link-color:                #777 !default;
 $navbar-default-link-hover-color:          #333 !default;
 $navbar-default-link-hover-bg:             transparent !default;
@@ -399,7 +400,7 @@ $navbar-inverse-color:                      lighten($gray-light, 15%) !default;
 $navbar-inverse-bg:                         #777 !default;
 $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
 
-// Inverted navbar links
+// Inverted navbar link
 $navbar-inverse-link-color:                 lighten($gray-light, 15%) !default;
 $navbar-inverse-link-hover-color:           #fff !default;
 $navbar-inverse-link-hover-bg:              transparent !default;
@@ -419,7 +420,7 @@ $navbar-inverse-toggle-icon-bar-bg:         #fff !default;
 $navbar-inverse-toggle-border-color:        #333 !default;
 
 
-//== Navs
+//== Nav
 //
 //##
 
@@ -430,7 +431,7 @@ $nav-link-hover-bg:                         $gray-lighter !default;
 $nav-disabled-link-color:                   $gray-light !default;
 $nav-disabled-link-hover-color:             $gray-light !default;
 
-//== Tabs
+//== Tab
 $nav-tabs-border-color:                     #ddd !default;
 
 $nav-tabs-link-hover-border-color:          $gray-lighter !default;
@@ -442,7 +443,7 @@ $nav-tabs-active-link-hover-border-color:   #ddd !default;
 $nav-tabs-justified-link-border-color:            #ddd !default;
 $nav-tabs-justified-active-link-border-color:     $body-bg !default;
 
-//== Pills
+//== Pill
 $nav-pills-border-radius:                   $border-radius-base !default;
 $nav-pills-active-link-hover-bg:            $component-active-bg !default;
 $nav-pills-active-link-hover-color:         $component-active-color !default;
@@ -497,7 +498,7 @@ $jumbotron-font-size:            ceil(($font-size-base * 1.5)) !default;
 $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 
          
-//== Form states and alerts
+//== Form state and alert
 //
 //## Define colors for form feedback states and, by default, alerts.
 
@@ -518,7 +519,7 @@ $state-danger-bg:                #f2dede !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
 
-//== Tooltips
+//== Tooltip
 //
 //##
 
@@ -536,7 +537,7 @@ $tooltip-arrow-width:         5px !default;
 $tooltip-arrow-color:         $tooltip-bg !default;
 
 
-//== Popovers
+//== Popover
 //
 //##
 
@@ -565,7 +566,7 @@ $popover-arrow-outer-color:           fade_in($popover-border-color, 0.05) !defa
 $popover-arrow-outer-fallback-color:  darken($popover-fallback-border-color, 20%) !default;
 
 
-//== Labels
+//== Label
 //
 //##
 
@@ -588,7 +589,7 @@ $label-color:                 #fff !default;
 $label-link-hover-color:      #fff !default;
 
 
-//== Modals
+//== Modal
 //
 //##
 
@@ -621,7 +622,7 @@ $modal-md:                    600px !default;
 $modal-sm:                    300px !default;
 
 
-//== Alerts
+//== Alert
 //
 //## Define alert colors, border radius, and padding.
 
@@ -646,7 +647,7 @@ $alert-danger-text:           $state-danger-text !default;
 $alert-danger-border:         $state-danger-border !default;
 
 
-//== Progress bars
+//== Progress bar
 //
 //##
 
@@ -703,7 +704,7 @@ $list-group-link-hover-color:   $list-group-link-color !default;
 $list-group-link-heading-color: #333 !default;
 
 
-//== Panels
+//== Panel
 //
 //##
 
@@ -742,7 +743,7 @@ $panel-danger-border:         $state-danger-border !default;
 $panel-danger-heading-bg:     $state-danger-bg !default;
 
 
-//== Thumbnails
+//== Thumbnail
 //
 //##
 
@@ -761,7 +762,7 @@ $thumbnail-caption-color:     $text-color !default;
 $thumbnail-caption-padding:   9px !default;
 
 
-//== Wells
+//== Well
 //
 //##
 
@@ -769,7 +770,24 @@ $well-bg:                     #f5f5f5 !default;
 $well-border:                 darken($well-bg, 7%) !default;
 
 
-//== Badges
+//==Step
+//
+//##
+
+$step-base-width:                   195px;
+$step-base-height:                  $font-size-h1;
+$step-finished-color:               $brand-primary;
+$step-finished-text-color:          $white;
+$step-current-color:                $link-hover-color;
+$step-current-text-color:           $white;
+$step-todo-color:                   $gray-lighter;
+$step-todo-text-color:              #999;
+$step-base-margin:                  $line-height-base*12px;
+$step-round-finished-text-color:    $step-finished-color;
+$step-round-todo-border-color:      #d3d3d3;
+
+
+//== Badge
 //
 //##
 
@@ -788,7 +806,7 @@ $badge-line-height:           1 !default;
 $badge-border-radius:         10px !default;
 
 
-//== Breadcrumbs
+//== Breadcrumb
 //   
 //##
 

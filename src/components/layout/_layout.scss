@@ -1,5 +1,13 @@
 .layout {
     background: $layout-bg;
+    .container {
+        width: 100%;
+        padding: 0
+      }
+    .layout-nav {
+        display: block;
+        margin-left: $layout-aside-width-base;
+      }
     .layout-content {
         background: $layout-content-bg;
         min-height: 600px;
@@ -193,27 +201,26 @@
             top: 0;
         }
     }
-}
-
-
-
-
-
-
-
-@media (max-width: 991px) {
-    .layout-md .layout-content, .layout-md .layout-nav {
+    
+    @media (max-width: 991px) {
+        &.layout-md {
+            .layout-content, .layout-nav {
         width: 100%;
         margin: 0;
     }
-    .layout-md .col-md-3.layout-aside {
+    .col-md-3.layout-aside {
         display: none;
     }
-    .layout-md .layout-content {
+    .layout-content {
         width: 100%;
         padding-right: 0
     }
+        }
     .layout-content {
         padding: 10px !important;
     }
 }
+
+}
+
+
