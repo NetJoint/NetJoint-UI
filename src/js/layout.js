@@ -25,27 +25,7 @@
     Layout.VERSION = '3.3.6'
 
     Layout.prototype.handle = function (e) {
-        var $this = $(this),
-                $layout = $this.parents(toggle),
-            $menu = $('.layout-aside-menu',$layout);
-        if (e)
-            e.preventDefault()
-
-        if (!$layout.length) {
-            $layout = $this.closest('.layout')
-        }
-
-        $layout.trigger(e = $.Event('handle.bs.layout'))
-
-        if (e.isDefaultPrevented())
-            return
-
-        if ($layout.hasClass('layout-md')) {
-            $layout.removeClass('layout-md').addClass('layout-sm');
-        } else {
-            $layout.removeClass('layout-sm').addClass('layout-md');
-        }
-        fixHeight($layout);
+        
     }
 
 
@@ -55,7 +35,6 @@
     function Plugin(option) {        
         return this.each(function () {
             var $this = $(this)
-            alert('aaaaaaa');
             var data = $this.data('bs.layout')            
             if (!data)
                 $this.data('bs.layout', (data = new Layout(this)))
