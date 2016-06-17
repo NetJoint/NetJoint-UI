@@ -256,13 +256,13 @@
         margin-right: 10px;
         margin-top: 3px;
     }
-    li.active > a > .fa-angle-right {
+    li.actived > a > .fa-angle-right {
         -webkit-transform: rotate(90deg);
         -ms-transform: rotate(90deg);
         -o-transform: rotate(90deg);
         transform: rotate(90deg);
     }
-    li.active > .child-menu {
+    li.actived > .child-menu {
         display: block;
     }
     .child-menu {
@@ -270,11 +270,8 @@
         list-style: none;
         padding: 0;
         margin: 0;
-        padding-left: 5px;
-        .child-menu {
-            padding-left: 20px;
-        }
         > li {
+            padding-left: 5px;
             margin: 0;
             > a {
                 padding: 5px 5px 5px 15px;
@@ -290,6 +287,9 @@
                     width: auto;
                 }
             }
+        }
+        .child-menu > li{
+            padding-left: 20px;
         }
     }
 }
@@ -464,6 +464,10 @@
         } 
     }
     .child-menu > li {
+        &.active{
+            color: $white;
+            background: $sidebar-active-bg;
+        }
         > a {
             color: darken($white, 10%);
         }

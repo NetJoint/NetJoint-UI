@@ -1,1 +1,16 @@
-控制面板
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>手机号</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users">
+            <th>{{user.id}}</th>
+            <td>{{user.name}}</td>
+            <td>{{user.mobile}}</td>
+        </tr>        
+    </tbody>
+</table>

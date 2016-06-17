@@ -1,7 +1,7 @@
 define(['app'], function (app) {
     app.register
-            .controller('dashboardCtrl', function ($scope, $rootScope, userService, $timeout) {
-                $rootScope.title = '控制面板';
+            .controller('tableCtrl', function ($scope, $rootScope, userService) {
+                $rootScope.title = '表格';
                 $scope.loaded = {
                     users: false
                 }
@@ -22,6 +22,6 @@ define(['app'], function (app) {
                                 $scope.loaded.users = true;
                             });
                 };
-                $timeout($scope.loadUsers,1000);
+                $scope.loadUsers();
             })
 })

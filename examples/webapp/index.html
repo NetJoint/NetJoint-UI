@@ -34,15 +34,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="navbar-brand">
-                        标题
-                    </div>                    
+                    <div class="navbar-brand">{{$root.title}}</div>                    
                 </div>
             </div>            
             <div class="main-sidebar">
                 <ul class="sidebar-menu">  
                     <li class="header">功能菜单</li>
-                    <li class="active" ui-sref-active="active">
+                    <li ui-sref-active="active">
                         <a ui-sref="dashboard">
                             <i class="fa fa-dashboard"></i> <span>控制面板</span>
                         </a>
@@ -59,9 +57,16 @@
                             <i class="fa fa-angle-right pull-right"></i>
                         </a>
                         <ul class="child-menu">
-                            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="form_create">
+                                    <i class="fa fa-circle-o"></i> <span>添加</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="form_edit">
+                                    <i class="fa fa-circle-o"></i> <span>修改</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>              

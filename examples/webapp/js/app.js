@@ -1,5 +1,17 @@
 define(function () {
+    var service_debug = true;
     var app = angular.module('webApp', ['ui.router']);
+    var load = function (files) {
+        return {
+            load: ["$q", function ($q) {
+                    var delay = $q.defer();
+                    require(files, function () {
+                        delay.resolve();
+                    });
+                    return delay.promise;
+                }]
+        };
+    }
     app.config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.register = {
             controller: $controllerProvider.register,
@@ -16,17 +28,17 @@ define(function () {
                             templateUrl: 'views/dashboard/dashboard.html'
                         }
                     },
-                    resolve: {
-                        loadCtrl: ["$q", function ($q) {
-                                var delay = $q.defer();
-                                require([
-                                    '../views/dashboard/dashboard'
-                                ], function () {
-                                    delay.resolve();
-                                });
-                                return delay.promise;
-                            }]
-                    }
+                    resolve: load(['../services/userService','../views/dashboard/dashboard'])
+                })
+                .state('table', {
+                    url: '/table/table',
+                    views: {
+                        "content": {
+                            controller: 'tableCtrl',
+                            templateUrl: 'views/table/table.html'
+                        }
+                    },
+                    resolve: load(['../services/userService','../views/table/table'])                            
                 })
                 .state('form_create', {
                     url: '/form/create',
@@ -36,17 +48,7 @@ define(function () {
                             templateUrl: 'views/form/create.html'
                         }
                     },
-                    resolve: {
-                        loadCtrl: ["$q", function ($q) {
-                                var delay = $q.defer();
-                                require([
-                                    '../views/form/create'
-                                ], function () {
-                                    delay.resolve();
-                                });
-                                return delay.promise;
-                            }]
-                    }
+                    resolve: load(['../services/userService','../views/form/create'])
                 })
                 .state('form_edit', {
                     url: '/form/edit',
@@ -56,19 +58,9 @@ define(function () {
                             templateUrl: 'views/form/edit.html'
                         }
                     },
-                    resolve: {
-                        loadCtrl: ["$q", function ($q) {
-                                var delay = $q.defer();
-                                require([
-                                    '../views/form/edit'
-                                ], function () {
-                                    delay.resolve();
-                                });
-                                return delay.promise;
-                            }]
-                    }
+                    resolve: load(['../services/userService','../views/form/edit'])
                 })
-                
+
         $urlRouterProvider.otherwise('/');
     })
             .directive('ngFocus', function () {
@@ -100,61 +92,113 @@ define(function () {
             })
             .factory('baseService', function ($http, $q) {
                 return {
-                    // 获取
+                    // 错误响应
+                    errorMsg: function (error) {
+                        var msg = {
+                            message: '',
+                            status: error.status,
+                            errors: []
+                        }
+                        switch (error.status) {
+                            case 401:
+                                msg.message = '您的登录已超时，请重新登录';
+                                break;
+                            case 403:
+                                msg.message = '您无权进行该操作';
+                                break;
+                            case 404:
+                                msg.message = 'api地址或参数不正确';
+                                break;
+                            case 422:
+                                msg.message = '输入参数不正确';
+                                msg.errors = error.data.errors;
+                                break;
+                            default:
+                                msg.message = error.data.message;
+                        }
+                        this.debug(error);
+                        return msg;
+                    },
+                    debug: function (rs) {
+                        if (service_debug) {
+                            if (rs.status >= 300) {
+                                console.group(rs.config.method + ' ' + rs.config.url);
+                                console.warn(rs.status);
+                                console.warn(rs.data);
+                            } else {
+                                console.groupCollapsed(rs.config.method + ' ' + rs.config.url);
+                                console.info(rs.data);
+                            }
+                            console.groupEnd();
+                        }
+                    },
                     get: function (url, params) {
-                        var delay = $q.defer();
-                        $http.get(url, {params: params})
+                        var delay = $q.defer(), that = this, settings = {};
+                        if (typeof (params) != 'undefined') {
+                            settings = {params: params}
+                        }
+                        $http.get(url, settings)
                                 .then(function (result) {
+                                    that.debug(result);
                                     delay.resolve(result.data);
-                                }, function (errinfo) {
-                                    var msg = {
-                                        message: '',
-                                        errors: []
-                                    }
-                                    switch (errinfo.status) {
-                                        case 401:
-                                            msg.message = '您的登录已超时，请重新登录';
-                                            break;
-                                        case 403:
-                                            msg.message = '您无权进行该操作';
-                                            break;
-                                        default:
-                                            msg.message = errinfo.data.message;
-                                    }
-                                    delay.reject(msg);
+                                }, function (error) {
+                                    delay.reject(that.errorMsg(error));
                                 });
                         return delay.promise;
                     },
-                    // 创建
                     post: function (url, params) {
-                        var delay = $q.defer();
+                        var delay = $q.defer(), that = this;
+                        var form_config = {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            transformRequest: function (data) {
+                                if (!angular.isObject(data)) {
+                                    return ((data == null) ? "" : data.toString());
+                                }
+                                var buffer = [];
+                                for (var p in data) {
+                                    if (!data.hasOwnProperty(p))
+                                        continue;
+                                    buffer.push(encodeURIComponent(p) + "=" +
+                                            encodeURIComponent((data[p] == null) ? "" : data[p]));
+                                }
+                                return buffer.join("&").replace(/%20/g, "+");
+                            }
+                        }
+                        //remove last /
+                        url = url.replace(/\/+$/, '');
                         $http.post(url, params, form_config)
                                 .then(function (result) {
-                                    delay.resolve();
-                                }, function (errinfo) {
-                                    delay.reject(errinfo);
+                                    that.debug(result);
+                                    delay.resolve(result.data);
+                                }, function (error) {
+                                    delay.reject(that.errorMsg(error));
                                 });
                         return delay.promise;
                     },
                     // 更新
                     put: function (url, params) {
-                        var delay = $q.defer();
+                        var delay = $q.defer(), that = this;
                         $http.put(url, params)
                                 .then(function (result) {
-                                    delay.resolve(result);
-                                }, function (errinfo) {
-                                    delay.reject(errinfo);
+                                    that.debug(result);
+                                    delay.resolve(result.data);
+                                }, function (error) {
+                                    delay.reject(that.errorMsg(error));
                                 });
                         return delay.promise;
                     },
-                    // 删除,delete方法会被ie8认为是保留字报错
-                    destroy: function (url) {
-                        var delay = $q.defer();
-                        $http["delete"](url)
+                    // 删除
+                    del: function (url) {
+                        var delay = $q.defer(), that = this;
+                        //ie8 fix $http.delete error
+                        $http['delete'](url)
                                 .then(function (result) {
-                                    delay.resolve();
-                                }, function (errinfo) {
-                                    delay.reject(errinfo);
+                                    that.debug(result);
+                                    delay.resolve(result.data);
+                                }, function (error) {
+                                    delay.reject(that.errorMsg(error));
                                 });
                         return delay.promise;
                     }

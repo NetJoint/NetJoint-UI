@@ -1,8 +1,8 @@
 {
     "data": [
-        {"id": 1, "text": "bug"},
-        {"id": 2, "text": "duplicate"},
-        {"id": 3, "text": "invalid"},
-        {"id": 4, "text": "wontfix"}        
+        {"id": 1, "name": "张一", "mobile": 13485728901},
+        {"id": 2, "name": "王二", "mobile": 13485728902},
+        {"id": 3, "name": "李三", "mobile": 13485728903},
+        {"id": 4, "name": "刘四", "mobile": 13485728904}
     ]
 }
