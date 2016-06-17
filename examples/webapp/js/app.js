@@ -2,9 +2,7 @@ define(function () {
     var app = angular.module('webApp', ['ui.router']);
     app.config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.register = {
-            //得到$controllerProvider的引用
             controller: $controllerProvider.register,
-            //同样的，这里也可以保存directive／filter／service的引用
             directive: $compileProvider.directive,
             filter: $filterProvider.register,
             service: $provide.service
@@ -102,8 +100,8 @@ define(function () {
             })
             .factory('baseService', function ($http, $q) {
                 return {
-                    // 获取列表
-                    getList: function (url, params) {
+                    // 获取
+                    get: function (url, params) {
                         var delay = $q.defer();
                         $http.get(url, {params: params})
                                 .then(function (result) {
@@ -124,17 +122,6 @@ define(function () {
                                             msg.message = errinfo.data.message;
                                     }
                                     delay.reject(msg);
-                                });
-                        return delay.promise;
-                    },
-                    // 获取详情
-                    getDetail: function (url, params) {
-                        var delay = $q.defer();
-                        $http.get(url, {params: params})
-                                .then(function (result) {
-                                    delay.resolve(result);
-                                }, function (errinfo) {
-                                    delay.reject(errinfo);
                                 });
                         return delay.promise;
                     },

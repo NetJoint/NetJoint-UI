@@ -9,58 +9,90 @@
 +function ($) {
     'use strict';
 
-    var toggle = '[data-toggle="layout"]',
-            handle = '[data-handle="layout"]';
-    
-    var fixHeight = function ($layout) {        
-        // reset height
-        var $content = $('.layout-content',$layout);
-        $content.css('min-height', $(window).height());        
-    };
-    var Layout = function (el) {
-        var $layout = $(el);        
-        $layout.on('click', handle, this.handle)
+    var layout_toggle = '[data-toggle="layout"]',
+            main_sidebar_toggle = '[data-toggle="main-sidebar"]',
+            control_sidebar_toggle = '[data-toggle="control-sidebar"]';
+    var screenSizes = {
+            xs: 480,
+            sm: 768,
+            md: 992,
+            lg: 1200
+        }
+
+    var Layout = function (element, options) {
+        this.$element = $(element);
+        this.options = options;
+        this.init();
     }
 
     Layout.VERSION = '3.3.6'
 
-    Layout.prototype.handle = function (e) {
-        var $this = $(this),
-                $layout = $this.parents(toggle),
-            $menu = $('.layout-aside-menu',$layout);
-        if (e)
-            e.preventDefault()
+    Layout.prototype.init = function (e) {
+        var that = this;        
+        this.fix();
+        $(window).resize(function () {
+            that.fix();
+        });
+    }
 
-        if (!$layout.length) {
-            $layout = $this.closest('.layout')
-        }
-
-        $layout.trigger(e = $.Event('handle.bs.layout'))
-
-        if (e.isDefaultPrevented())
-            return
-
-        if ($layout.hasClass('layout-md')) {
-            $layout.removeClass('layout-md').addClass('layout-sm');
+    Layout.prototype.toggleMainSidebar = function (e) {
+        e.preventDefault();        
+        var $layout = $(this).parents(layout_toggle);
+        
+        if ($(window).width() > (screenSizes.sm - 1)) {
+            if ($layout.hasClass('sidebar-collapse')) {
+                $layout.removeClass('sidebar-collapse').trigger('expanded.mainSidebar');
+            } else {
+                $layout.addClass('sidebar-collapse').trigger('collapsed.mainSidebar');
+            }
         } else {
-            $layout.removeClass('layout-sm').addClass('layout-md');
+            if ($layout.hasClass('sidebar-open')) {
+                $layout.removeClass('sidebar-open').removeClass('sidebar-collapse').trigger('collapsed.mainSidebar');
+            } else {
+                $layout.addClass('sidebar-open').trigger('expanded.mainSidebar');
+            }
         }
-        fixHeight($layout);
+    }
+
+    Layout.prototype.toggleControlSidebar = function (e) {
+        alert('b');
+    }
+
+    Layout.prototype.fix = function () {
+        var neg = $('.layout-nav').outerHeight();
+        var window_height = $(window).height();
+        var sidebar_height = $(".main_sidebar").height();
+        if (this.$element.hasClass("fixed")) {
+            $(".layout-content").css('min-height', window_height);
+        } else {
+            var postSetWidth;
+            if (window_height >= sidebar_height) {
+                $(".layout-content").css('min-height', window_height - neg);
+                postSetWidth = window_height - neg;
+            } else {
+                $(".layout-content").css('min-height', sidebar_height);
+                postSetWidth = sidebar_height;
+            }
+            var controlSidebar = $(control_sidebar_toggle);
+            if (typeof controlSidebar !== "undefined") {
+                if (controlSidebar.height() > postSetWidth)
+                    $(".layout-content").css('min-height', controlSidebar.height());
+            }
+        }
     }
 
 
     // ALERT PLUGIN DEFINITION
     // =======================
 
-    function Plugin(option) {        
+    function Plugin(option) {
         return this.each(function () {
             var $this = $(this)
-            alert('aaaaaaa');
-            var data = $this.data('bs.layout')            
+            var data = $this.data('bs.layout')
             if (!data)
                 $this.data('bs.layout', (data = new Layout(this)))
             if (typeof option == 'string')
-                data[option].call($this)            
+                data[option].call($this)
         })
     }
 
@@ -80,16 +112,17 @@
 
 
     // LAYOUT DATA-API
-    // ==============
+    // ==============    
 
-    $(document).on('click.bs.layout.data-api', handle, Layout.prototype.handle)
+    $(document)
+            .on('click.bs.layout.data-api', main_sidebar_toggle, Layout.prototype.toggleMainSidebar)
+            .on('click.bs.layout.data-api', control_sidebar_toggle, Layout.prototype.toggleControlSidebar)
 
-    $(window).on('load', function () {
-        $(toggle).each(function () {
-            var $layout = $(this);            
-            Plugin.call($layout, $layout.data());            
+    $(document).on('ready', function () {
+        $(layout_toggle).each(function () {
+            var $layout = $(this)
+            Plugin.call($layout, $layout.data())
         })
     })
-
 
 }(jQuery);

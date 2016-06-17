@@ -13,168 +13,72 @@
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="layout layout-md" data-toggle="layout">
-            <div class="container">
-                <div class="col-md-3 layout-aside">
-                    <div class="layout-aside scroll-view">
-                        <div class="navbar layout-title" style="border: 0;">
-                            <a href="index.html"><i class="fa fa-home"></i> <span>NetJoint UI</span></a>
-                        </div>
+        <div class="layout layout-default" data-toggle="layout">
 
-                        <div class="clearfix"></div>
-
-                        <!-- aside menu -->
-                        <div class="layout-aside-menu">
-                                <ul class="nav layout-aside-nav">
-                                    <li ui-sref-active="active">
-                                        <a ui-sref="dashboard"><i class="fa fa-home"></i> 控制面板</a>                                        
-                                    </li>
-                                    <li><a data-toggle="collapse" data-target="#form-child"><i class="fa fa-edit"></i> 表单 <span class="fa fa-toggle"></span></a>
-                                        <ul class="nav nav-child collapse in" id="form-child">
-                                            <li  ui-sref-active="active">
-                                                <a ui-sref="form_create">添加</a>
-                                            </li>
-                                            <li  ui-sref-active="active">
-                                                <a ui-sref="form_edit">编辑</a>
-                                            </li>
-                                        </ul>
-                                    </li>                                    
-                                    <li  ui-sref-active="active">
-                                        <a ui-sref="table"><i class="fa fa-table"></i> 表格</a>
-                                    </li>
-                                    <li><a data-toggle="collapse" data-target="#ui-child" class="collapsed"><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-toggle"></span></a>
-                                        <ul class="nav nav-child collapse" id="ui-child">
-                                            <li  ui-sref-active="active"><a ui-sref="ui.a">General Elements</a>
-                                            </li>
-                                            <li  ui-sref-active="active"><a ui-sref="ui.a">Media Gallery</a>
-                                            </li>
-                                            <li ui-sref-active="active"><a ui-sref="ui.a">Typography</a>
-                                            </li>
-                                            <li ui-sref-active="active"><a ui-sref="ui.a">Icons</a>
-                                            </li>                                            
-                                        </ul>
-                                    </li>
-                                </ul>
-                        </div>
-                        <!-- /aside menu -->
+            <div class="layout-nav">
+                <a href="index.html" class="logo">                   
+                    <span class="logo-mini"><i class="fa fa-gears"></i></span>
+                    <span class="logo-lg"><i class="fa fa-gears"></i> NetJoint UI</span>
+                </a>
+                <div class="navbar navbar-inverse navbar-static-top">
+                    <a href="#" class="sidebar-toggle" data-toggle="main-sidebar" role="button">
+                        <span class="sr-only">导航切换</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">                            
+                            <li>
+                                <a href="#" data-toggle="control-sidebar">
+                                    <img src="img/no_avatar.png" class="avatar" alt="用户头像">
+                                    <span class="hidden-xs">管理员</span>
+                                </a>            
+                            </li>
+                        </ul>
                     </div>
+                    <div class="navbar-brand">
+                        标题
+                    </div>                    
                 </div>
-
-                <!-- top navigation -->
-                <div class="layout-nav">
-
-                    <div class="nav_menu">
-                        <nav class="" role="navigation">
-                            <div class="nav toggle">
-                                <a data-handle="layout"><i class="fa fa-bars"></i></a>
-                            </div>
-
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="">
-                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="img/img.jpg" alt="">John Doe
-                                        <span class=" fa fa-angle-down"></span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                        <li><a href="javascript:;">  Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span class="badge bg-red pull-right">50%</span>
-                                                <span>Settings</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">Help</a>
-                                        </li>
-                                        <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li role="presentation" class="dropdown">
-                                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-envelope-o"></i>
-                                        <span class="badge bg-green">6</span>
-                                    </a>
-                                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                        <li>
-                                            <a>
-                                                <span class="image">
-                                                    <img src="img/img.jpg" alt="Profile Image" />
-                                                </span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image">
-                                                    <img src="img/img.jpg" alt="Profile Image" />
-                                                </span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image">
-                                                    <img src="img/img.jpg" alt="Profile Image" />
-                                                </span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image">
-                                                    <img src="img/img.jpg" alt="Profile Image" />
-                                                </span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="text-center">
-                                                <a href="inbox.html">
-                                                    <strong>See All Alerts</strong>
-                                                    <i class="fa fa-angle-right"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </nav>
-                    </div>
-
-                </div>
-                <!-- /top navigation -->
-
-                <div class="layout-content" role="main" ui-view="content"></div>
-
+            </div>            
+            <div class="main-sidebar">
+                <ul class="sidebar-menu">  
+                    <li class="header">功能菜单</li>
+                    <li class="active" ui-sref-active="active">
+                        <a ui-sref="dashboard">
+                            <i class="fa fa-dashboard"></i> <span>控制面板</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="table">
+                            <i class="fa fa-table"></i> <span>表格</span>
+                            <small class="label pull-right label-success">new</small>
+                        </a>
+                    </li>
+                    <li class="child">
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-edit"></i> <span>表单</span>
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                        <ul class="child-menu">
+                            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
+                            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+                            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                        </ul>
+                    </li>
+                </ul>              
             </div>
+
+            <div class="layout-content" role="main" ui-view="content"></div>
+
+            <div class="control-sidebar">
+                <ul class="sidebar-menu">        
+                    <li>
+                        <a ui-sref="logout">
+                            <i class="fa fa-sign-out"></i> <span>退出</span>
+                        </a>
+                    </li>        
+                </ul>
+            </div>
+            <div class="control-sidebar-bg"></div>
         </div>
 
         <script src="../../node_modules/requirejs/require.js" data-main="js/main"></script>
