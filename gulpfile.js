@@ -103,6 +103,10 @@ gulp.task('jsbuild', function () {
                     'editable': {
                         deps: ['jquery','popover'],
                         exports: '$.fn.editable'
+                    },
+                    'validate': {
+                        deps: ['jquery'],
+                        exports: '$.fn.validate'
                     }
                 }
             }))
