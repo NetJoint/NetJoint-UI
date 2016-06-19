@@ -5,7 +5,7 @@ define(['app'], function (app) {
                 $scope.loaded = {
                     users: false
                 }
-                $scope.loadUsers = function (tableState) {
+                $scope.loadUsers = function () {
                     var params = [];
                     userService.getList(params)
                             .then(function (rs) {
