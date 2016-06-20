@@ -4,14 +4,12 @@
         <title>耐特嘉-用户注册</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <link href="../dist/css/netjoint-ui.css" rel="stylesheet" type="text/css"/>
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <link href="css/register.css" rel="stylesheet" type="text/css"/>
         <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
         <link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css" rel="stylesheet">
-        <link href="css/drag.css" rel="stylesheet" type="text/css"/>
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script src="js/drag.js" type="text/javascript"></script>
         <script type="text/javascript" src="http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
         <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     </head>
@@ -26,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="http://www.netjoint.cn"><img src="img/netjoint-logo.png" alt="logo" /></a>
+                <a class="navbar-brand" href="http://www.netjoint.cn"><img src="img/netjoint-logo1.png" alt="logo" /></a>
                 <h2 class="zhdl">用户注册</h2>
             </div>
             
@@ -70,13 +68,6 @@
                 <p id="agreeClause" class="ppt1"><span class="glyphicon glyphicon-remove-sign"></span> 请同意条款</p>
                 
                 <div class="control-group">
-                    <div id="drag"></div>
-                </div>
-                <script type="text/javascript">
-                    $('#drag').drag();
-                </script>
-                
-                <div class="control-group">
                     <label class="control-label"></label>
                     <div class="controls">
                       <button id="register" type="submit" class="sui-btn btn-primary register">立即注册</button>
@@ -98,8 +89,6 @@
                 <p>&copy;NetJoint 2015 - 安徽耐特嘉信息科技有限公司 <a href="#">皖ICP备15012617号-1</a></p>
             </div>
         </footer>
-        
+        <script src="../node_modules/requirejs/require.js" data-main="js/register"></script>
     </body>
-    
-    <script src="js/register.js" type="text/javascript"></script>
 </html>

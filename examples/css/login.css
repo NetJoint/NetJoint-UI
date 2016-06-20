@@ -1,7 +1,6 @@
 /*登录页面*/
 .logo a img{
-    display: inline-block;
-    width: 160px;
+/*    display: inline-block;*/
     margin-top: -8px;
 }
 .logo .zhdl{

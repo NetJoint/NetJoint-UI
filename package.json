@@ -40,7 +40,7 @@
     "gulp-clean-css": "*",
     "gulp-concat": "*",
     "gulp-rename": "*",
-    "gulp-sass": "*",
+    "gulp-sass": "2.3.1",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
     "jquery": "^1.12.3",
