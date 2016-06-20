@@ -45,6 +45,8 @@
     "gulp-uglify": "*",
     "jquery": "^1.12.3",
     "select2": "^4.0.2",
-    "x-editable": "^1.5.1"
+    "x-editable": "^1.5.1",
+    "tableexport": "^3.2.5",
+    "bootstrap-table": "^1.10.1"
   }
 }

@@ -107,6 +107,18 @@ gulp.task('jsbuild', function () {
                     'validate': {
                         deps: ['jquery'],
                         exports: '$.fn.validate'
+                    },
+                    'FileSaver': {
+                        deps: [],
+                        exports: 'saveAs'
+                    },
+                    'tableExport':{
+                        deps: ['jquery','FileSaver'],
+                        exports: '$.fn.tableExport'
+                    },
+                    'bootstrapTable': {
+                        deps: ['jquery','editable','tableExport'],
+                        exports: '$.fn.bootstrapTable'
                     }
                 }
             }))
