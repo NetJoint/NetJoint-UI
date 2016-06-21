@@ -236,7 +236,7 @@
   $.fn.validate.Constructor = Validate
 
   $.fn.validate.defaults = {
-    errorTpl: '<div class="sui-msg msg-error help-inline">\n  <div class="msg-con">\n    <span>$errorMsg</span>\n </div>   <i class="msg-icon"></i>\n  \n</div>',
+    errorTpl: '<div class="msg msg-error help-inline">\n  <div class="msg-con">\n    <span>$errorMsg</span>\n </div>   <i class="msg-icon"></i>\n  \n</div>',
     inputErrorClass: 'input-error',
     placeError: function($input, $error) {
       $input = $($input);
@@ -276,7 +276,7 @@
 
   //自动加载
   $(function() {
-    $(".sui-validate").validate()
+    $(".validate").validate()
   })
   Validate = $.validate;
   trim = function(v) {
