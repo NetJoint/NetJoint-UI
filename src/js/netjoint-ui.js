@@ -16,7 +16,8 @@ define(['jquery',
     'timepicker',
     'select2',
     'layout',
-    'editable'
+    'editable',
+    'validate'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();
