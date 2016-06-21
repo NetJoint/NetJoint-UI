@@ -6,13 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <link href="../dist/css/netjoint-ui.css" rel="stylesheet" type="text/css"/>
-        <link href="css/register.css" rel="stylesheet" type="text/css"/>
-<!--        <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css" rel="stylesheet">
-        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script type="text/javascript" src="http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
-        <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>-->
-    </head>
+        <link href="css/info.css" rel="stylesheet" type="text/css"/>
     <body>
         <!--        导航部分开始-->
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -40,65 +34,58 @@
         <!--        正文部分开始-->
         
         <div class="registerContent">
-            <form class="sui-form form-horizontal sui-validate" id="form1" novalidate="novalidate">
-                <div class="control-group">
-                    <label class="control-label bold">账户设置</label>
-                    <span class="control-label control-tip">请设置您的密码用于登录</span>
-                </div>
-                <div class="control-group">
-                  <label for="inputPassword" class="control-label"><span class="star">*</span>登录密码</label>
-                  <div class="controls">
-                    <input type="password" id="inputPassword" name="password" placeholder="密码"  data-rules="required|minlength=6|maxlength=12">
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="inputRepassword" class="control-label"><span class="star">*</span>密码确认</label>
-                  <div class="controls">
-                    <input type="password" id="inputRepassword" name="repassword" placeholder="重复密码" data-rules="required|match=password">
-                  </div>
-                </div>
-                <hr class="separate" />
-                <div class="control-group">
-                    <label class="control-label bold">基本信息</label>
-                    <span class="control-label control-tip">请输入真实的信息</span>
-                </div>
-                <div class="control-group">
-                    <label for="name" class="control-label"><span class="star">*</span>姓名：</label>
-                    <div class="controls">
-                      <input type="text" id="name" placeholder="您的名字" data-rules="required" name="name">
-                    </div>
+            <form class="form form-horizontal validate">
+                
+                <div class="form-group">
+                    <label class="bold">账户设置</label>
+                    <span>请设置您的密码用于登录</span>
                 </div>
                 
-                <div class="control-group">
-                    <label for="inputGender" class="control-label"><span class="star">*</span>性别：</label>
-                    <div class="controls sex">
-                      <label data-toggle="radio" class="radio-pretty inline checked">
+                <div class="form-group">
+                  <label for="inputPassword"><span class="star">*</span>登录密码</label>
+                  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="密码"  data-rules="required" data-empty-msg="请输入密码">
+                </div>
+                
+                <div class="form-group">
+                  <label for="inputRepassword"><span class="star">*</span>密码确认</label>
+                  <input type="password" id="inputRepassword" class="form-control" name="repassword" placeholder="重复密码" data-rules="required|match=password" data-empty-msg="请输入密码">
+                </div>
+                
+                <hr class="separate" />
+                
+                <div class="form-group">
+                    <label class="bold">基本信息</label>
+                    <span>请输入真实的信息</span>
+                </div>
+                <div class="form-group">
+                    <label for="name"><span class="star">*</span>姓名：</label>
+                    <input type="text" id="name" class="form-control" placeholder="您的名字" data-rules="required" name="user_name" data-empty-msg="请输入姓名" />
+                </div>
+                
+                <div class="form-group">
+                    <label><span class="star">*</span>性别：</label>
+                   
+                      <label data-toggle="radio">
                           <input type="radio" name="gender" value="male" checked="checked"><span>男</span>
                       </label>
-                      <label data-toggle="radio" class="radio-pretty inline">
+                      <label data-toggle="radio">
                           <input type="radio" name="gender" value="female"><span>女</span>
                       </label>
-                    </div>
+                   
                 </div>
                 
-                <div class="control-group">
-                    <label for="tel" class="control-label"><span class="star">*</span>手机号：</label>
-                    <div class="controls">
-                      <input type="text" id="tel" placeholder="您的手机号码" data-rules="required|mobile" name="tel">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="date" class="control-label"><span class="star">*</span>出生年月日：</label>
-                    <div class="controls">
-                      <input type="text" id="date" placeholder="您的出生日期" data-rules="required|date" name="date" data-toggle="datepicker">
-                    </div>
+                <div class="form-group">
+                    <label for="tel"><span class="star">*</span>手机号：</label>
+                      <input type="text" id="tel" class="form-control" placeholder="您的手机号码" data-rules="required|mobile" name="tel" data-empty-msg="请输入手机号">
                 </div>
                 
-                <div class="control-group">
-                    <label class="control-label"></label>
-                    <div class="controls">
-                      <button type="submit" class="sui-btn btn-primary register">完成</button>
-                    </div>
+                <div class="form-group">
+                    <label for="date"><span class="star">*</span>出生年月日：</label>
+                      <input type="text" id="date" class="form-control" placeholder="您的出生日期" data-rules="required|date" name="date" data-toggle="datepicker" data-empty-msg="请输入出生日期">
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary register" value="完成" />
                 </div>
             </form>
         </div>
@@ -116,6 +103,6 @@
                 <p>&copy;NetJoint 2015 - 安徽耐特嘉信息科技有限公司 <a href="#">皖ICP备15012617号-1</a></p>
             </div>
         </footer>
-        
+        <script src="../node_modules/requirejs/require.js" data-main="js/info"></script>
     </body>
 </html>

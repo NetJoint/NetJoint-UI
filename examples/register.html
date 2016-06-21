@@ -7,11 +7,6 @@
         <link href="../dist/css/netjoint-ui.css" rel="stylesheet" type="text/css"/>
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <link href="css/register.css" rel="stylesheet" type="text/css"/>
-        <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css" rel="stylesheet">
-        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script type="text/javascript" src="http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
-        <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     </head>
     <body>
         <!--        导航部分开始-->
@@ -48,30 +43,21 @@
         </div>
         
         <div class="registerContent">
-            <form class="sui-form form-horizontal sui-validate" id="form1" novalidate="novalidate">
+            <form class="form form-horizontal validate">
                 
-                <div class="control-group">
-                    <label for="inputEmail" class="control-label" data-rules="required|email"><span class="star">*</span>邮箱</label>
-                  <div class="controls">
-                      <input type="text" id="inputEmail" name="name" placeholder="邮箱" data-rules="required|email">
-                  </div>
+                <div class="form-group">
+                    <label for="inputEmail"><span class="star">*</span>邮箱</label>
+                    <input type="text" id="inputEmail" class="form-control" placeholder="邮箱" data-rules="required|email" data-empty-msg="请输入邮箱名">
                 </div>
                
-                
-                <div class="control-group">
-                    <div class="controls">
-                      <label class="checkbox-pretty inline clause checked">
-                          <input type="checkbox" id="selectClause" checked="checked"><span>我已经认真阅读并同意<a href="#">《耐特嘉服务条款》</a></span>
-                      </label>
-                    </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" data-rules="required" name="agree" value="1" data-empty-msg="请同意条款" checked><span>我已经认真阅读并同意<a href="#">《耐特嘉服务条款》</a></span>
+                    </label>
                 </div>
-                <p id="agreeClause" class="ppt1"><span class="glyphicon glyphicon-remove-sign"></span> 请同意条款</p>
                 
-                <div class="control-group">
-                    <label class="control-label"></label>
-                    <div class="controls">
-                      <button id="register" type="submit" class="sui-btn btn-primary register">立即注册</button>
-                    </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary register" value="立即注册" />
                 </div>
             </form>
         </div>

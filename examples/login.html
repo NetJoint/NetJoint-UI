@@ -42,24 +42,21 @@
             <div class="col-sm-6 col-md-5 col-xs-12">
                 <div class="login-table panel panel-default">
                     <div class="panel-body">
-                        <form>
+                        <form class="form form-horizontal validate">
                         <div class="form-group">
                             <label for="name">登录名：</label>
-                            <input type="text" class="form-control input-sm" id="name" placeholder="邮箱/会员名/8位ID">
+                            <input type="text" name="name" class="form-control input-sm" placeholder="邮箱/会员名/8位ID" data-rules="required" data-empty-msg="请输入登录名">
                             
                         </div>
-                        
-                        <p id="lostName" class="tipsLocation"><span class="glyphicon glyphicon-remove-sign"></span> 请输入登录名</p>
                                 
                         <div class="form-group">
                             <label for="password">登录密码：</label>
-                            <label for="password" class="fp"><a href="forgetPassword.html" target="_blank">忘记登录密码？</a></label>
-                            <input type="password" class="form-control input-sm" id="password" placeholder="登录密码">
+                            <label class="fp"><a href="forgetPassword.html" target="_blank">忘记登录密码？</a></label>
+                            <input type="password" name="password" class="form-control input-sm" placeholder="登录密码" data-rules="required" data-empty-msg="请输入密码">
                         </div>
-                        
-                        <p id="lostPass" class="tipsLocation"><span class="glyphicon glyphicon-remove-sign"></span> 请输入登录密码</p>
-                        
-                        <input id="submit" type="button" class="btn btn-primary lg" value="登录" />
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary lg" value="登录" />
+                        </div>
                         <p><a href="register.html" target="_blank">免费注册</a></p>
                         </form>
                     </div>

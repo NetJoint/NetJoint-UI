@@ -1,2 +1,7 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
 
+.alert.alert-inline{
+    display:inline-block;
+    padding: 5px;
+    margin: 5px 0 ;
+}
