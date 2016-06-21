@@ -9,7 +9,7 @@ require.config({
             deps: ['angular']
         },
         'app': {
-            deps: ['angular','uiRouter','netjoint-ui']
+            deps: ['netjoint-ui','angular','uiRouter']
         }
     }
 });

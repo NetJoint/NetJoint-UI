@@ -1,6 +1,6 @@
 define(function () {
     var service_debug = true;
-    var app = angular.module('webApp', ['ui.router']);
+    var app = angular.module('webApp', ['ui.router', 'bsTable']);
     var load = function (files) {
         return {
             load: ["$q", function ($q) {
@@ -28,7 +28,7 @@ define(function () {
                             templateUrl: 'views/dashboard/dashboard.html'
                         }
                     },
-                    resolve: load(['../services/userService','../views/dashboard/dashboard'])
+                    resolve: load(['../services/userService', '../views/dashboard/dashboard'])
                 })
                 .state('table', {
                     url: '/table/table',
@@ -38,7 +38,7 @@ define(function () {
                             templateUrl: 'views/table/table.html'
                         }
                     },
-                    resolve: load(['../services/userService','../views/table/table'])                            
+                    resolve: load(['../services/userService', '../views/table/table'])
                 })
                 .state('form_create', {
                     url: '/form/create',
@@ -48,7 +48,7 @@ define(function () {
                             templateUrl: 'views/form/create.html'
                         }
                     },
-                    resolve: load(['../services/userService','../views/form/create'])
+                    resolve: load(['../services/userService', '../views/form/create'])
                 })
                 .state('form_edit', {
                     url: '/form/edit',
@@ -58,7 +58,7 @@ define(function () {
                             templateUrl: 'views/form/edit.html'
                         }
                     },
-                    resolve: load(['../services/userService','../views/form/edit'])
+                    resolve: load(['../services/userService', '../views/form/edit'])
                 })
 
         $urlRouterProvider.otherwise('/');
@@ -89,6 +89,30 @@ define(function () {
                 $rootScope.goBack = function () {
                     window.history.back();
                 };
+                $rootScope.setTable = function (url, data, columns, formatter) {
+                    return {
+                        options: {
+//                            sidePagination: 'server',
+//                            url:url,
+                            data: data,
+                            cache: false,
+                            height: 400,
+                            striped: true,
+                            pagination: true,
+                            mobileResponsive:true,
+                            pageSize: 10,
+                            pageList: [10, 50, 100],
+                            search: true,
+                            showColumns: true,
+                            showRefresh: true,
+                            minimumCountColumns: 2,
+                            clickToSelect: false,
+                            showToggle: true,
+                            maintainSelected: true,
+                            columns: columns
+                        }
+                    }
+                }
             })
             .factory('baseService', function ($http, $q) {
                 return {
