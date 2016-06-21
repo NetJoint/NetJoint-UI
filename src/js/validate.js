@@ -279,7 +279,7 @@
     $(".validate").validate()
   })
   Validate = $.validate;
-  trim = function(v) {
+  var trim = function(v) {
     if (!v) return v;
     return v.replace(/^\s+/g, '').replace(/\s+$/g, '')
   };
