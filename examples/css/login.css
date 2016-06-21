@@ -1,7 +1,6 @@
 /*登录页面*/
 .logo a img{
-    display: inline-block;
-    width: 160px;
+/*    display: inline-block;*/
     margin-top: -8px;
 }
 .logo .zhdl{
@@ -178,4 +177,21 @@
         font-family:  'Microsoft Yahei';
         font-size: 14px;
     }
+    
+    #content .login-table .panel-body .tipsLocation{
+        color:red;
+        position: absolute;
+        left:80px;
+    }
 
+    #content .login-table .panel-body #lostPass{
+        top:278px;
+    }
+    
+    #content .login-table .panel-body #lostName{
+        top:195px;
+    }
+    
+    #content .login-table .panel-body #lostPass,#lostName{
+        display: none;
+    }

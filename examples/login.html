@@ -3,12 +3,10 @@
     <head>
         <title>耐特嘉-账号登录</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
         <link href="../dist/css/netjoint-ui.css" rel="stylesheet" type="text/css"/>
-        <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <link href="css/main.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <!--        导航部分开始-->
@@ -21,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="http://www.netjoint.cn"><img src="img/netjoint-logo.png" alt="logo" /></a>
+                <a class="navbar-brand" href="http://www.netjoint.cn"><img src="img/netjoint-logo1.png" alt="logo" /></a>
                 <h2 class="zhdl">账号登录</h2>
             </div>
             
@@ -44,18 +42,26 @@
             <div class="col-sm-6 col-md-5 col-xs-12">
                 <div class="login-table panel panel-default">
                     <div class="panel-body">
+                        <form>
                         <div class="form-group">
                             <label for="name">登录名：</label>
                             <input type="text" class="form-control input-sm" id="name" placeholder="邮箱/会员名/8位ID">
+                            
                         </div>
+                        
+                        <p id="lostName" class="tipsLocation"><span class="glyphicon glyphicon-remove-sign"></span> 请输入登录名</p>
                                 
                         <div class="form-group">
-                            <label for="name">登录密码：</label>
-                            <label for="name" class="fp"><a href="forgetPassword.html" target="_blank">忘记登录密码？</a></label>
-                            <input type="text" class="form-control input-sm" id="name" placeholder="登录密码">
+                            <label for="password">登录密码：</label>
+                            <label for="password" class="fp"><a href="forgetPassword.html" target="_blank">忘记登录密码？</a></label>
+                            <input type="password" class="form-control input-sm" id="password" placeholder="登录密码">
                         </div>
-                            <input type="button" class="btn btn-primary lg" value="登录" />
-                            <p><a href="register.html" target="_blank">免费注册</a></p>
+                        
+                        <p id="lostPass" class="tipsLocation"><span class="glyphicon glyphicon-remove-sign"></span> 请输入登录密码</p>
+                        
+                        <input id="submit" type="button" class="btn btn-primary lg" value="登录" />
+                        <p><a href="register.html" target="_blank">免费注册</a></p>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -74,6 +80,6 @@
                 <p>&copy;NetJoint 2015 - 安徽耐特嘉信息科技有限公司 <a href="#">皖ICP备15012617号-1</a></p>
             </div>
         </footer>
-        
+        <script src="../node_modules/requirejs/require.js" data-main="js/login"></script>
     </body>
 </html>
