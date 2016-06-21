@@ -92,9 +92,10 @@ define(function () {
                 $rootScope.setTable = function (url, data, columns, formatter) {
                     return {
                         options: {
-//                            sidePagination: 'server',
-//                            url:url,
-                            data: data,
+                            sidePagination: 'server',
+                            url:url,
+                            dataField: 'data',
+//                            data: data,
                             cache: false,
                             height: 400,
                             striped: true,

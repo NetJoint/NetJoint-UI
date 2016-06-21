@@ -1830,9 +1830,9 @@
             cache: this.options.cache,
             contentType: this.options.contentType,
             dataType: this.options.dataType,
-            success: function (res) {
+            success: function (res) {                
                 res = calculateObjectValue(that.options, that.options.responseHandler, [res], res);
-
+                
                 that.load(res);
                 that.trigger('load-success', res);
                 if (!silent) that.$tableLoading.hide();
