@@ -17,7 +17,10 @@ define(['jquery',
     'select2',
     'layout',
     'editable',
-    'validate'
+    'validate',
+    'FileSaver',
+    'tableExport',
+    'bootstrapTable'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();
