@@ -89,28 +89,32 @@ define(function () {
                 $rootScope.goBack = function () {
                     window.history.back();
                 };
-                $rootScope.setTable = function (url, data, columns, formatter) {
+                $rootScope.setTable = function (url, columns, toolbar) {
                     return {
-                        options: {
-                            sidePagination: 'server',
-                            url:url,
-                            dataField: 'data',
-//                            data: data,
-                            cache: false,
-                            height: 400,
-                            striped: true,
-                            pagination: true,
+                        options: {                            
+                            cache: false,                            
+                            striped: true,                            
                             mobileResponsive:true,
                             pageSize: 10,
                             pageList: [10, 50, 100],
-                            search: true,
+                            search: true,                            
+                            minimumCountColumns: 2,
+                            clickToSelect: true,
+                            maintainSelected: true,
+                            //tools
                             showColumns: true,
                             showRefresh: true,
-                            minimumCountColumns: 2,
-                            clickToSelect: false,
+                            //showExport: true,
                             showToggle: true,
-                            maintainSelected: true,
-                            columns: columns
+                            //page
+                            pagination: true,
+                            sidePagination: 'server',                            
+                            dataField: 'data',                            
+                            sortName:"id",
+                            sortOrder:"desc",
+                            url:url,
+                            columns: columns,
+                            toolbar: toolbar,
                         }
                     }
                 }

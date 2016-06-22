@@ -2,8 +2,9 @@ define(['app'], function (app) {
     app.register
             .controller('tableCtrl', function ($scope, $rootScope, userService) {
                 $rootScope.title = '表格';
-                $scope.loaded = {
-                    users: false
+                $scope.message = {
+                    error: '',
+                    success: '',
                 }
                 var columns = [
                     {
@@ -32,12 +33,29 @@ define(['app'], function (app) {
                     }
 
                 ];
-                var data = [
-        {"id": 1, "name": "张一", "mobile": 13485728901},
-        {"id": 2, "name": "王二", "mobile": 13485728902},
-        {"id": 3, "name": "李三", "mobile": 13485728903},
-        {"id": 4, "name": "刘四", "mobile": 13485728904}
-    ];
-                $scope.userTableCtrl = $rootScope.setTable('json/list.json', data,columns);
+                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');
+                $scope.removeUsers = function () {
+                    var selected = $scope.userTableCtrl.state.selected;
+                    if (selected.length == 0) {
+                        return false;
+                    }
+                    if (confirm('确定要删除所选项吗？')) {
+                        $scope.clearMsg();
+                        userService.remove(selected)
+                                .then(function (rs) {
+                                    $scope.message.success = '删除成功';
+                                    $scope.userTableCtrl.call('refresh');
+                                }, function (error) {
+                                    console.log(error);
+                                    $scope.message.error = error.message;
+                                });
+                    }
+                }
+                $scope.clearMsg = function () {
+                    $scope.message = {
+                        error: '',
+                        success: '',
+                    }
+                }
             })
 })
