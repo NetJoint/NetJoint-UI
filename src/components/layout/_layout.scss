@@ -96,6 +96,16 @@
             display: none;
         }
     }
+    .dropdown-menu{
+        padding:1px;
+        min-width: 120px;
+        right:0;
+        left:auto;
+        > li > a{
+            padding: 8px 5px 8px 10px;
+            cursor: pointer;
+        }
+    }
     .navbar-brand {
         font-size: 16px;
     }
@@ -116,6 +126,12 @@
         } 
         .navbar-custom-menu .navbar-nav{
             margin:0;
+            .dropdown.open{
+                .dropdown-menu{
+                    position:absolute;
+                    background-color: $white;
+                }
+            }
         }
         .navbar-brand {
             float: none;
@@ -207,7 +223,6 @@
     &.control-sidebar-open + .control-sidebar-bg {
         right: 0;
     }
-
 }
 @media (max-width: 768px) {
     .control-sidebar {
@@ -428,20 +443,33 @@
                     background: rgba(0, 0, 0, 0.1);
                 }
             }
+            .dropdown-menu > li {
+                &.divider{
+                    background-color: $gray-lighter;
+                    margin:2px 0;
+                }
+                > a{
+                    color: #333;                
+                    &:hover{
+                        color:#444;
+                        background-color: darken($white, 10%);
+                    } 
+                }                
+            }
             @media (max-width: 767px) {
-                .dropdown-menu li{
-                    &.divider {
-                        background-color: rgba(255, 255, 255, 0.1);
-                    }
-                    a {
-                        color: $white;
+                &.divider{
+                    background-color: $gray-lighter;
+                }
+                .dropdown-menu > li {
+                    > a{
+                        color: #333;
                         &:hover {
-                            background: $link-hover-color;
+                            background: darken($white, 10%);
                         }
-                    }
+                    }                                  
                 }
             }
-        }
+        }        
     }
     .sidebar-menu > li{
         &.header {   
@@ -476,7 +504,10 @@
         > a:hover {
             color: $white;
         }
-    } 
+    }
+    .control-sidebar, .control-sidebar + .control-sidebar-bg {
+        background: $sidebar-bg;
+    }
 }
 
 @media print {
