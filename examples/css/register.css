@@ -10,7 +10,6 @@
     width: 990px;
     margin: 0 auto;
     line-height: 35px;
-/*    text-align: center;*/
     font-size: 14px;
     color:red;
     background: #edf4f9;
@@ -19,9 +18,7 @@
 }
 .registerContent{
     width: 990px;
-/*    height: 300px;*/
     margin: 0 auto;
-/*    background:#ccc;*/
     font-size: 10px;
     font-family: '微软雅黑';
 }
@@ -29,52 +26,20 @@
     margin-left:250px;
     padding-top: 50px;
 }
-.registerContent form .control-group .star{
+.registerContent form .form-group .star{
     color:red;
     vertical-align: middle;
     margin-right: 3px;
 }
-.registerContent form .control-group label{
-    font-weight: normal;
-    padding-right: 15px;
-}
-.registerContent form .control-group label.bold{
-    font-weight: 900;
-}
-.registerContent form .control-group .control-tip{
-    display: inline-block;
-    width: 269px;
-    text-align: left;
-}
-.registerContent form .control-group .controls input{
-    width: 269px;
-    height: 35px;
-    line-height: 20px;
-}
-.separate{
-    border:1px dashed #ccc;
-    margin: 30px auto;
-    margin-left: -250px;
-    opacity: .6;
-    overflow: hidden;
-}
-.registerContent form .control-group .sex{
-    vertical-align: middle;
-}
-.registerContent form .control-group .register{
+
+
+.registerContent form .form-group .register{
     height: 34px;
-    width: 89px;
-    margin-left: 90px;
-    margin-top: 20px;
+    width: 90px;
+    margin-left: 215px;
 }
-.registerContent form .control-group .clause{
-    margin-left: 96px;
-    cursor: auto;
-}
-.registerContent form  .ppt1{
-    position: absolute;
-    color: red;
-    left: 538px;
-    display: none;
-    top: 280px;
+
+
+.registerContent form .form-group #inputEmail{
+    width:520px;
 }

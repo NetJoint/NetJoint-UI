@@ -139,7 +139,7 @@
     #content .login-table .form-group{
         width:250px;
         margin: 0 auto;
-        margin-top: 35px;
+        margin-top: 25px;
     }
     
     #content .login-table .form-group label:first-child{
@@ -152,7 +152,6 @@
     
     #content .login-table input.lg{
         width:250px;
-        margin-top: 30px;
         margin-left: 6px;
     }
     

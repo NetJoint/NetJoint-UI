@@ -1,2 +1,41 @@
 
+.registerContent{
+    width: 990px;
+    margin: 0 auto;
+    font-size: 10px;
+    font-family: '微软雅黑';
+}
+.registerContent form{
+    width: 500px;
+    margin:0 auto;
+    padding-top: 50px;
+}
+.registerContent form .form-group .star{
+    color:red;
+    vertical-align: middle;
+    margin-right: 3px;
+}
 
+.separate{
+    border:1px dashed #ccc;
+    margin: 30px auto;
+    margin-left: -250px;
+    opacity: .6;
+    overflow: hidden;
+}
+.registerContent form .form-group .sex{
+    vertical-align: middle;
+}
+.registerContent form .form-group label.bold{
+    font-weight: 900;
+}
+
+.registerContent form .form-group label{
+    font-weight: normal;
+    padding-right: 15px;
+}
+.registerContent form .form-group .register{
+    height: 34px;
+    width: 90px;
+    margin-left: 215px;
+}
