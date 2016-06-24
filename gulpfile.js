@@ -108,12 +108,8 @@ gulp.task('jsbuild', function () {
                         deps: ['jquery'],
                         exports: '$.fn.validate'
                     },
-                    'FileSaver': {
-                        deps: [],
-                        exports: 'saveAs'
-                    },
                     'tableExport':{
-                        deps: ['jquery','FileSaver'],
+                        deps: ['jquery'],
                         exports: '$.fn.tableExport'
                     },
                     'bootstrapTable': {

@@ -37,15 +37,16 @@
 
     Layout.prototype.toggleMainSidebar = function (e) {
         e.preventDefault();
+        
         var $layout = $(this).parents(layout_toggle);
 
         if ($(window).width() > (screenSizes.sm - 1)) {
             if ($layout.hasClass('sidebar-collapse')) {
                 $layout.removeClass('sidebar-collapse').trigger('expanded.mainSidebar');
-            } else {
-                $layout.addClass('sidebar-collapse').trigger('collapsed.mainSidebar');
+            } else {                
+                $layout.addClass('sidebar-collapse').trigger('collapsed.mainSidebar');               
             }
-        } else {
+        } else {           
             if ($layout.hasClass('sidebar-open')) {
                 $layout.removeClass('sidebar-open').removeClass('sidebar-collapse').trigger('collapsed.mainSidebar');
             } else {

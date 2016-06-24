@@ -104,7 +104,7 @@ define(function () {
                             //tools
                             showColumns: true,
                             showRefresh: true,
-                            //showExport: true,
+                            showExport: true,
                             showToggle: true,
                             //page
                             pagination: true,

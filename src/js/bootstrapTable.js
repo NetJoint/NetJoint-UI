@@ -3283,7 +3283,7 @@
     });
 
     $.extend($.fn.bootstrapTable.defaults.icons, {
-        export: 'glyphicon-export icon-share'
+        "export": "glyphicon-export icon-share"
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
@@ -3306,7 +3306,7 @@
                             sprintf(' btn-%s', this.options.iconSize) +
                             ' dropdown-toggle" ' +
                             'data-toggle="dropdown" type="button">',
-                    sprintf('<i class="%s %s"></i> ', this.options.iconsPrefix, this.options.icons.export),
+                    sprintf('<i class="%s %s"></i> ', this.options.iconsPrefix, this.options.icons['export']),
                     '<span class="caret"></span>',
                     '</button>',
                     '<ul class="dropdown-menu" role="menu">',
@@ -3622,13 +3622,6 @@
                 bsTable.$el.bootstrapTable('resetView');
             });
         });
-        function onScroll() {
-            var bsTable = this;
-            var state = bsTable.$s.bsTableControl.state;
-            bsTable.$s.$applyAsync(function () {
-                state.scroll = bsTable.$el.bootstrapTable('getScrollPosition');
-            });
-        }
         $(document)
                 .on('post-header.bs.table', CONTAINER_SELECTOR + ' table', function (evt) { // bootstrap-table calls .off('scroll') in initHeader so reattach here
                     var bsTable = getBsTable(evt.target);
@@ -3637,7 +3630,12 @@
                     bsTable.$el
                             .closest(CONTAINER_SELECTOR)
                             .find(SCROLLABLE_SELECTOR)
-                            .on('scroll', onScroll.bind(bsTable));
+                            .on('scroll', function () {
+                                var state = bsTable.$s.bsTableControl.state;
+                                bsTable.$s.$applyAsync(function () {
+                                    state.scroll = bsTable.$el.bootstrapTable('getScrollPosition');
+                                });
+                            });
                 })
                 .on('sort.bs.table', CONTAINER_SELECTOR + ' table', function (evt, sortName, sortOrder) {
                     var bsTable = getBsTable(evt.target);
@@ -3667,13 +3665,13 @@
                     bsTable.$s.$applyAsync(function () {
                         state.searchText = searchText;
                     });
-                })                
+                })
                 .on('load-success.bs.table load-error.bs.table', CONTAINER_SELECTOR + ' table', function (evt) {
                     var bsTable = getBsTable(evt.target);
                     if (!bsTable)
                         return;
                     var state = bsTable.$s.bsTableControl.state;
-                    bsTable.$s.$applyAsync(function () {                        
+                    bsTable.$s.$applyAsync(function () {
                         state.selected = [];
                     });
                 })
@@ -3686,9 +3684,9 @@
                     $.map(bsTable.$el.bootstrapTable('getSelections'), function (row) {
                         selected.push(row.id);
                     });
-                    bsTable.$s.$applyAsync(function () {                       
+                    bsTable.$s.$applyAsync(function () {
                         state.selected = selected;
-                    });                   
+                    });
                 })
                 .on('focus blur', CONTAINER_SELECTOR + ' ' + SEARCH_SELECTOR, function (evt) {
                     var bsTable = getBsTable(evt.target);
@@ -3714,7 +3712,7 @@
                     }
                 }
                 $s.bsTableControl.$el = $el;
-                $s.bsTableControl.call = function(method, params){
+                $s.bsTableControl.call = function (method, params) {
                     $el.bootstrapTable(method, params);
                 }
                 var bsTable = bsTables[$s.$id] = {$s: $s, $el: $el};

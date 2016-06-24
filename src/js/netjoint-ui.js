@@ -18,7 +18,6 @@ define(['jquery',
     'layout',
     'editable',
     'validate',
-    'FileSaver',
     'tableExport',
     'bootstrapTable'
 ], function () {
