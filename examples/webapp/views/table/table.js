@@ -1,11 +1,7 @@
 define(['app'], function (app) {
     app.register
             .controller('tableCtrl', function ($scope, $rootScope, userService) {
-                $rootScope.title = '表格';
-                $scope.message = {
-                    error: '',
-                    success: '',
-                }
+                $rootScope.title = '表格';                
                 var columns = [
                     {
                         field: 'checked',
@@ -39,23 +35,15 @@ define(['app'], function (app) {
                     if (selected.length == 0) {
                         return false;
                     }
-                    if (confirm('确定要删除所选项吗？')) {
-                        $scope.clearMsg();
+                    if (confirm('确定要删除所选项吗？')) {                        
                         userService.remove(selected)
                                 .then(function (rs) {
-                                    $scope.message.success = '删除成功';
+                                    $rootScope.notify('删除成功','success');
                                     $scope.userTableCtrl.call('refresh');
                                 }, function (error) {
-                                    console.log(error);
-                                    $scope.message.error = error.message;
+                                    $rootScope.notify(error.message,'error');
                                 });
                     }
-                }
-                $scope.clearMsg = function () {
-                    $scope.message = {
-                        error: '',
-                        success: '',
-                    }
-                }
+                }                
             })
 })

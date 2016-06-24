@@ -89,6 +89,11 @@ define(function () {
                 $rootScope.goBack = function () {
                     window.history.back();
                 };
+                $rootScope.notify = function (message, type) {
+                    //type: error, success, info
+                    var humane = require('humane');
+                    humane.log(message, { timeout: 3000, clickToClose: true, addnCls: 'humane-' + type });
+                };                
                 $rootScope.setTable = function (url, columns, toolbar) {
                     return {
                         options: {                            
