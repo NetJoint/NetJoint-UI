@@ -26,6 +26,12 @@ define(['app'], function (app) {
                         align: 'left',
                         valign: 'top',
                         sortable: true
+                    }, {
+                        field: 'id',
+                        title: '操作',                        
+                        formatter:function(value,row){
+                            return '<a href="#/form/edit/'+row.id+'" class="btn btn-success">编辑</a>'
+                        }
                     }
 
                 ];
