@@ -34,6 +34,7 @@ gulp.task('jsbuild', function () {
                 paths: {
                     "jquery": "../../node_modules/jquery/dist/jquery",
                     "select2": "../../node_modules/select2/dist/js/select2.full",
+                    "humane": "../../node_modules/humane-js/humane"
                 },
                 shim: {
                     'affix': {
@@ -108,12 +109,8 @@ gulp.task('jsbuild', function () {
                         deps: ['jquery'],
                         exports: '$.fn.validate'
                     },
-                    'FileSaver': {
-                        deps: [],
-                        exports: 'saveAs'
-                    },
                     'tableExport':{
-                        deps: ['jquery','FileSaver'],
+                        deps: ['jquery'],
                         exports: '$.fn.tableExport'
                     },
                     'bootstrapTable': {

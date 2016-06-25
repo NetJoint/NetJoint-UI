@@ -1,0 +1,9 @@
+<div id="Toolbar">
+    <a ui-sref="form_create" class="btn btn-success"><i class="fa fa-plus-circle"></i> <span>添加</span></a>
+    <a class="btn btn-danger" ng-disabled="!userTableCtrl.state.selected.length" ng-click="removeUsers()"><i class="fa fa-trash-o"></i> <span>删除</span></a>
+</div>
+<table bs-table-control="userTableCtrl"></table>
+<div class="well">
+    <h5>以下为调试信息</h5>
+    <p>userTableCtrl.state:{{userTableCtrl.state}}</p>
+</div>

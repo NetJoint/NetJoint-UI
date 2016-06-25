@@ -1,27 +1,49 @@
 define(['app'], function (app) {
     app.register
             .controller('tableCtrl', function ($scope, $rootScope, userService) {
-                $rootScope.title = '表格';
-                $scope.loaded = {
-                    users: false
-                }
-                $scope.loadUsers = function (tableState) {
-                    var params = [];
-                    userService.getList(params)
-                            .then(function (rs) {
-                                $scope.users = rs.data;                                
-                                if ($scope.users.length > 0) {
-                                    $scope.message = '';
-                                } else {
-                                    $scope.message = '没有匹配的数据';
-                                }
-                                $scope.loaded.users = true;
-                            }, function (error) {
-                                $scope.message = error.message;
-                                $scope.users = [];
-                                $scope.loaded.users = true;
-                            });
-                };
-                $scope.loadUsers();
+                $rootScope.title = '表格';                
+                var columns = [
+                    {
+                        field: 'checked',
+                        checkbox: true
+                    },
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        align: 'center',
+                        valign: 'bottom',
+                        sortable: true
+                    },
+                    {
+                        field: 'name',
+                        title: '姓名',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    }, {
+                        field: 'mobile',
+                        title: '手机号',
+                        align: 'left',
+                        valign: 'top',
+                        sortable: true
+                    }
+
+                ];
+                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');
+                $scope.removeUsers = function () {
+                    var selected = $scope.userTableCtrl.state.selected;
+                    if (selected.length == 0) {
+                        return false;
+                    }
+                    if (confirm('确定要删除所选项吗？')) {                        
+                        userService.remove(selected)
+                                .then(function (rs) {
+                                    $rootScope.notify('删除成功','success');
+                                    $scope.userTableCtrl.call('refresh');
+                                }, function (error) {
+                                    $rootScope.notify(error.message,'error');
+                                });
+                    }
+                }                
             })
 })

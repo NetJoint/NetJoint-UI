@@ -37,6 +37,7 @@
 
     Layout.prototype.toggleMainSidebar = function (e) {
         e.preventDefault();
+
         var $layout = $(this).parents(layout_toggle);
 
         if ($(window).width() > (screenSizes.sm - 1)) {
@@ -55,13 +56,20 @@
     }
 
     Layout.prototype.toggleControlSidebar = function (e) {
-        alert('b');
+        e.preventDefault();
+        var $layout = $(this).parents(layout_toggle);
+        var sidebar = $('.control-sidebar', $layout);
+        if (!sidebar.hasClass('control-sidebar-open')) {
+            sidebar.addClass('control-sidebar-open');
+        } else {
+            sidebar.removeClass('control-sidebar-open');
+        }
     }
 
     Layout.prototype.toggleChildMenu = function (e) {
         e.preventDefault();
         var $this = $(this),
-            $layout = $this.parents(layout_toggle);
+                $layout = $this.parents(layout_toggle);
         var checkElement = $this.next();
         if ((checkElement.is('.child-menu')) && (checkElement.is(':visible')) && (!$layout.hasClass('sidebar-collapse'))) {
             checkElement.slideUp(300, function () {
@@ -74,7 +82,7 @@
             ul.removeClass('menu-open');
             var parent_li = $this.parent("li");
             checkElement.slideDown(300, function () {
-                checkElement.addClass('menu-open');                
+                checkElement.addClass('menu-open');
                 parent_li.addClass('actived');
             });
         }

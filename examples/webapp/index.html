@@ -21,16 +21,32 @@
                     <span class="logo-lg"><i class="fa fa-gears"></i> NetJoint UI</span>
                 </a>
                 <div class="navbar navbar-inverse navbar-static-top">
-                    <a href="#" class="sidebar-toggle" data-toggle="main-sidebar" role="button">
+                    <a href="javascript:void(0)" class="sidebar-toggle" data-toggle="main-sidebar" role="button">
                         <span class="sr-only">导航切换</span>
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">                            
-                            <li>
-                                <a href="#" data-toggle="control-sidebar">
+                            <li class="dropdown">
+                                <a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <img src="img/no_avatar.png" class="avatar" alt="用户头像">
                                     <span class="hidden-xs">管理员</span>
-                                </a>            
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a ui-sref="setting">                                            
+                                            <i class="fa fa-gears"></i> <span>设置</span>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a ui-sref="logout">                                            
+                                            <i class="fa fa-sign-out"></i> <span>退出</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                             </li>
                         </ul>
                     </div>

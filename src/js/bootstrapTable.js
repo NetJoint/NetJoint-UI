@@ -15,8 +15,8 @@
     // it only does '%s', and return '' when arguments are undefined
     var sprintf = function (str) {
         var args = arguments,
-            flag = true,
-            i = 1;
+                flag = true,
+                i = 1;
 
         str = str.replace(/%s/g, function () {
             var arg = args[i++];
@@ -58,8 +58,8 @@
     // http://jsfiddle.net/wenyi/47nz7ez9/3/
     var setFieldIndex = function (columns) {
         var i, j, k,
-            totalCol = 0,
-            flag = [];
+                totalCol = 0,
+                flag = [];
 
         for (i = 0; i < columns[0].length; i++) {
             totalCol += columns[0][i].colspan || 1;
@@ -75,9 +75,9 @@
         for (i = 0; i < columns.length; i++) {
             for (j = 0; j < columns[i].length; j++) {
                 var r = columns[i][j],
-                    rowspan = r.rowspan || 1,
-                    colspan = r.colspan || 1,
-                    index = $.inArray(false, flag[i]);
+                        rowspan = r.rowspan || 1,
+                        colspan = r.colspan || 1,
+                        index = $.inArray(false, flag[i]);
 
                 if (colspan === 1) {
                     r.fieldIndex = index;
@@ -100,8 +100,8 @@
     var getScrollBarWidth = function () {
         if (cachedWidth === null) {
             var inner = $('<p/>').addClass('fixed-table-scroll-inner'),
-                outer = $('<div/>').addClass('fixed-table-scroll-outer'),
-                w1, w2;
+                    outer = $('<div/>').addClass('fixed-table-scroll-outer'),
+                    w1, w2;
 
             outer.append(inner);
             $('body').append(outer);
@@ -151,8 +151,8 @@
     var compareObjects = function (objectA, objectB, compareLength) {
         // Create arrays of property names
         var objectAProperties = Object.getOwnPropertyNames(objectA),
-            objectBProperties = Object.getOwnPropertyNames(objectB),
-            propName = '';
+                objectBProperties = Object.getOwnPropertyNames(objectB),
+                propName = '';
 
         if (compareLength) {
             // If number of properties is different, objects are not equivalent
@@ -180,12 +180,12 @@
     var escapeHTML = function (text) {
         if (typeof text === 'string') {
             return text
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;')
-                .replace(/`/g, '&#x60;');
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/`/g, '&#x60;');
         }
         return text;
     };
@@ -323,15 +323,12 @@
             detailOpen: 'glyphicon-plus icon-plus',
             detailClose: 'glyphicon-minus icon-minus'
         },
-
         rowStyle: function (row, index) {
             return {};
         },
-
         rowAttributes: function (row, index) {
             return {};
         },
-
         onAll: function (name, args) {
             return false;
         },
@@ -543,8 +540,8 @@
             '<div class="bootstrap-table">',
             '<div class="fixed-table-toolbar"></div>',
             this.options.paginationVAlign === 'top' || this.options.paginationVAlign === 'both' ?
-                '<div class="fixed-table-pagination" style="clear: both;"></div>' :
-                '',
+                    '<div class="fixed-table-pagination" style="clear: both;"></div>' :
+                    '',
             '<div class="fixed-table-container">',
             '<div class="fixed-table-header"><table></table></div>',
             '<div class="fixed-table-body">',
@@ -554,8 +551,8 @@
             '</div>',
             '<div class="fixed-table-footer"><table><tr></tr></table></div>',
             this.options.paginationVAlign === 'bottom' || this.options.paginationVAlign === 'both' ?
-                '<div class="fixed-table-pagination"></div>' :
-                '',
+                    '<div class="fixed-table-pagination"></div>' :
+                    '',
             '</div>',
             '</div>'
         ].join(''));
@@ -583,8 +580,8 @@
 
     BootstrapTable.prototype.initTable = function () {
         var that = this,
-            columns = [],
-            data = [];
+                columns = [],
+                data = [];
 
         this.$header = this.$el.find('>thead');
         if (!this.$header.length) {
@@ -654,8 +651,8 @@
 
     BootstrapTable.prototype.initHeader = function () {
         var that = this,
-            visibleColumns = {},
-            html = [];
+                visibleColumns = {},
+                html = [];
 
         this.header = {
             fields: [],
@@ -674,18 +671,18 @@
 
             if (i == 0 && !that.options.cardView && that.options.detailView) {
                 html.push(sprintf('<th class="detail" rowspan="%s"><div class="fht-cell"></div></th>',
-                    that.options.columns.length));
+                        that.options.columns.length));
             }
 
             $.each(columns, function (j, column) {
                 var text = '',
-                    halign = '', // header align style
-                    align = '', // body align style
-                    style = '',
-                    class_ = sprintf(' class="%s"', column['class']),
-                    order = that.options.sortOrder || column.order,
-                    unitWidth = 'px',
-                    width = column.width;
+                        halign = '', // header align style
+                        align = '', // body align style
+                        style = '',
+                        class_ = sprintf(' class="%s"', column['class']),
+                        order = that.options.sortOrder || column.order,
+                        unitWidth = 'px',
+                        width = column.width;
 
                 if (column.width !== undefined && (!that.options.cardView)) {
                     if (typeof column.width === 'string') {
@@ -702,7 +699,7 @@
                 align = sprintf('text-align: %s; ', column.align);
                 style = sprintf('vertical-align: %s; ', column.valign);
                 style += sprintf('width: %s; ', (column.checkbox || column.radio) && !width ?
-                    '36px' : (width ? width + unitWidth : undefined));
+                        '36px' : (width ? width + unitWidth : undefined));
 
                 if (typeof column.fieldIndex !== 'undefined') {
                     that.header.fields[column.fieldIndex] = column.field;
@@ -727,18 +724,18 @@
                 }
 
                 html.push('<th' + sprintf(' title="%s"', column.titleTooltip),
-                    column.checkbox || column.radio ?
+                        column.checkbox || column.radio ?
                         sprintf(' class="bs-checkbox %s"', column['class'] || '') :
                         class_,
-                    sprintf(' style="%s"', halign + style),
-                    sprintf(' rowspan="%s"', column.rowspan),
-                    sprintf(' colspan="%s"', column.colspan),
-                    sprintf(' data-field="%s"', column.field),
-                    "tabindex='0'",
-                    '>');
+                        sprintf(' style="%s"', halign + style),
+                        sprintf(' rowspan="%s"', column.rowspan),
+                        sprintf(' colspan="%s"', column.colspan),
+                        sprintf(' data-field="%s"', column.field),
+                        "tabindex='0'",
+                        '>');
 
                 html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
-                    'sortable both' : ''));
+                        'sortable both' : ''));
 
                 text = column.title;
 
@@ -800,10 +797,10 @@
 
         this.$selectAll = this.$header.find('[name="btSelectAll"]');
         this.$selectAll.off('click').on('click', function () {
-                var checked = $(this).prop('checked');
-                that[checked ? 'checkAll' : 'uncheckAll']();
-                that.updateSelected();
-            });
+            var checked = $(this).prop('checked');
+            that[checked ? 'checkAll' : 'uncheckAll']();
+            that.updateSelected();
+        });
     };
 
     BootstrapTable.prototype.initFooter = function () {
@@ -844,9 +841,9 @@
 
     BootstrapTable.prototype.initSort = function () {
         var that = this,
-            name = this.options.sortName,
-            order = this.options.sortOrder === 'desc' ? -1 : 1,
-            index = $.inArray(this.options.sortName, this.header.fields);
+                name = this.options.sortName,
+                order = this.options.sortOrder === 'desc' ? -1 : 1,
+                index = $.inArray(this.options.sortName, this.header.fields);
 
         if (index !== -1) {
             this.data.sort(function (a, b) {
@@ -854,8 +851,8 @@
                     name = that.header.sortNames[index];
                 }
                 var aa = getItemField(a, name, that.options.escape),
-                    bb = getItemField(b, name, that.options.escape),
-                    value = calculateObjectValue(that.header, that.header.sorters[index], [aa, bb]);
+                        bb = getItemField(b, name, that.options.escape),
+                        value = calculateObjectValue(that.header, that.header.sorters[index], [aa, bb]);
 
                 if (value !== undefined) {
                     return order * value;
@@ -900,7 +897,7 @@
 
     BootstrapTable.prototype.onSort = function (event) {
         var $this = event.type === "keypress" ? $(event.currentTarget) : $(event.currentTarget).parent(),
-            $this_ = this.$header.find('th').eq($this.index());
+                $this_ = this.$header.find('th').eq($this.index());
 
         this.$header.add(this.$header_).find('span.order').remove();
 
@@ -928,11 +925,11 @@
 
     BootstrapTable.prototype.initToolbar = function () {
         var that = this,
-            html = [],
-            timeoutId = 0,
-            $keepOpen,
-            $search,
-            switchableCount = 0;
+                html = [],
+                timeoutId = 0,
+                $keepOpen,
+                $search,
+                switchableCount = 0;
 
         if (this.$toolbar.find('.bars').children().length) {
             $('body').append($(this.options.toolbar));
@@ -941,13 +938,13 @@
 
         if (typeof this.options.toolbar === 'string' || typeof this.options.toolbar === 'object') {
             $(sprintf('<div class="bars pull-%s"></div>', this.options.toolbarAlign))
-                .appendTo(this.$toolbar)
-                .append($(this.options.toolbar));
+                    .appendTo(this.$toolbar)
+                    .append($(this.options.toolbar));
         }
 
         // showColumns, showToggle, showRefresh
         html = [sprintf('<div class="columns columns-%s btn-group pull-%s">',
-            this.options.buttonsAlign, this.options.buttonsAlign)];
+                    this.options.buttonsAlign, this.options.buttonsAlign)];
 
         if (typeof this.options.icons === 'string') {
             this.options.icons = calculateObjectValue(null, this.options.icons);
@@ -956,8 +953,8 @@
         if (this.options.showPaginationSwitch) {
             html.push(sprintf('<button class="btn btn-default" type="button" name="paginationSwitch" title="%s">',
                     this.options.formatPaginationSwitch()),
-                sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.paginationSwitchDown),
-                '</button>');
+                    sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.paginationSwitchDown),
+                    '</button>');
         }
 
         if (this.options.showRefresh) {
@@ -965,8 +962,8 @@
                     sprintf(' btn-%s', this.options.iconSize) +
                     '" type="button" name="refresh" title="%s">',
                     this.options.formatRefresh()),
-                sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.refresh),
-                '</button>');
+                    sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.refresh),
+                    '</button>');
         }
 
         if (this.options.showToggle) {
@@ -974,20 +971,20 @@
                     sprintf(' btn-%s', this.options.iconSize) +
                     '" type="button" name="toggle" title="%s">',
                     this.options.formatToggle()),
-                sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.toggle),
-                '</button>');
+                    sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.toggle),
+                    '</button>');
         }
 
         if (this.options.showColumns) {
             html.push(sprintf('<div class="keep-open btn-group" title="%s">',
                     this.options.formatColumns()),
-                '<button type="button" class="btn btn-default' +
-                sprintf(' btn-%s', this.options.iconSize) +
-                ' dropdown-toggle" data-toggle="dropdown">',
-                sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.columns),
-                ' <span class="caret"></span>',
-                '</button>',
-                '<ul class="dropdown-menu" role="menu">');
+                    '<button type="button" class="btn btn-default' +
+                    sprintf(' btn-%s', this.options.iconSize) +
+                    ' dropdown-toggle" data-toggle="dropdown">',
+                    sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.columns),
+                    ' <span class="caret"></span>',
+                    '</button>',
+                    '<ul class="dropdown-menu" role="menu">');
 
             $.each(this.columns, function (i, column) {
                 if (column.radio || column.checkbox) {
@@ -1002,13 +999,13 @@
 
                 if (column.switchable) {
                     html.push(sprintf('<li>' +
-                        '<label><input type="checkbox" data-field="%s" value="%s"%s> %s</label>' +
-                        '</li>', column.field, i, checked, column.title));
+                            '<label><input type="checkbox" data-field="%s" value="%s"%s> %s</label>' +
+                            '</li>', column.field, i, checked, column.title));
                     switchableCount++;
                 }
             });
             html.push('</ul>',
-                '</div>');
+                    '</div>');
         }
 
         html.push('</div>');
@@ -1020,19 +1017,19 @@
 
         if (this.options.showPaginationSwitch) {
             this.$toolbar.find('button[name="paginationSwitch"]')
-                .off('click').on('click', $.proxy(this.togglePagination, this));
+                    .off('click').on('click', $.proxy(this.togglePagination, this));
         }
 
         if (this.options.showRefresh) {
             this.$toolbar.find('button[name="refresh"]')
-                .off('click').on('click', $.proxy(this.refresh, this));
+                    .off('click').on('click', $.proxy(this.refresh, this));
         }
 
         if (this.options.showToggle) {
             this.$toolbar.find('button[name="toggle"]')
-                .off('click').on('click', function () {
-                    that.toggleView();
-                });
+                    .off('click').on('click', function () {
+                that.toggleView();
+            });
         }
 
         if (this.options.showColumns) {
@@ -1049,7 +1046,7 @@
                 var $this = $(this);
 
                 that.toggleColumn(getFieldIndex(that.columns,
-                    $(this).data('field')), $this.prop('checked'), false);
+                        $(this).data('field')), $this.prop('checked'), false);
                 that.trigger('column-switch', $(this).data('field'), $this.prop('checked'));
             });
         }
@@ -1057,12 +1054,12 @@
         if (this.options.search) {
             html = [];
             html.push(
-                '<div class="pull-' + this.options.searchAlign + ' search">',
-                sprintf('<input class="form-control' +
-                    sprintf(' input-%s', this.options.iconSize) +
-                    '" type="text" placeholder="%s">',
-                    this.options.formatSearch()),
-                '</div>');
+                    '<div class="pull-' + this.options.searchAlign + ' search">',
+                    sprintf('<input class="form-control' +
+                            sprintf(' input-%s', this.options.iconSize) +
+                            '" type="text" placeholder="%s">',
+                            this.options.formatSearch()),
+                    '</div>');
 
             this.$toolbar.append(html.join(''));
             $search = this.$toolbar.find('.search input');
@@ -1135,13 +1132,13 @@
                 for (var key in item) {
                     key = $.isNumeric(key) ? parseInt(key, 10) : key;
                     var value = item[key],
-                        column = that.columns[getFieldIndex(that.columns, key)],
-                        j = $.inArray(key, that.header.fields);
+                            column = that.columns[getFieldIndex(that.columns, key)],
+                            j = $.inArray(key, that.header.fields);
 
                     // Fix #142: search use formatted data
                     if (column && column.searchFormatter) {
                         value = calculateObjectValue(column,
-                            that.header.formatters[j], [value, item, i], value);
+                                that.header.formatters[j], [value, item, i], value);
                     }
 
                     var index = $.inArray(key, that.header.fields);
@@ -1171,14 +1168,14 @@
         }
 
         var that = this,
-            html = [],
-            $allSelected = false,
-            i, from, to,
-            $pageList,
-            $first, $pre,
-            $next, $last,
-            $number,
-            data = this.getData();
+                html = [],
+                $allSelected = false,
+                i, from, to,
+                $pageList,
+                $first, $pre,
+                $next, $last,
+                $number,
+                data = this.getData();
 
         if (this.options.sidePagination !== 'server') {
             this.options.totalRows = data.length;
@@ -1193,9 +1190,9 @@
                 // Fix #667 Table with pagination,
                 // multiple pages and a search that matches to one page throws exception
                 var pageLst = typeof this.options.pageList === 'string' ?
-                    this.options.pageList.replace('[', '').replace(']', '')
+                        this.options.pageList.replace('[', '').replace(']', '')
                         .replace(/ /g, '').toLowerCase().split(',') : this.options.pageList;
-                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst)  > -1) {
+                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst) > -1) {
                     $allSelected = true;
                 }
             }
@@ -1215,39 +1212,39 @@
         }
 
         html.push(
-            '<div class="pull-' + this.options.paginationDetailHAlign + ' pagination-detail">',
-            '<span class="pagination-info">',
-            this.options.onlyInfoPagination ? this.options.formatDetailPagination(this.options.totalRows) :
-            this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
-            '</span>');
+                '<div class="pull-' + this.options.paginationDetailHAlign + ' pagination-detail">',
+                '<span class="pagination-info">',
+                this.options.onlyInfoPagination ? this.options.formatDetailPagination(this.options.totalRows) :
+                this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
+                '</span>');
 
         if (!this.options.onlyInfoPagination) {
             html.push('<span class="page-list">');
 
             var pageNumber = [
-                    sprintf('<span class="btn-group %s">',
+                sprintf('<span class="btn-group %s">',
                         this.options.paginationVAlign === 'top' || this.options.paginationVAlign === 'both' ?
-                            'dropdown' : 'dropup'),
-                    '<button type="button" class="btn btn-default ' +
-                    sprintf(' btn-%s', this.options.iconSize) +
-                    ' dropdown-toggle" data-toggle="dropdown">',
-                    '<span class="page-size">',
-                    $allSelected ? this.options.formatAllRows() : this.options.pageSize,
-                    '</span>',
-                    ' <span class="caret"></span>',
-                    '</button>',
-                    '<ul class="dropdown-menu" role="menu">'
-                ],
-                pageList = this.options.pageList;
+                        'dropdown' : 'dropup'),
+                '<button type="button" class="btn btn-default ' +
+                        sprintf(' btn-%s', this.options.iconSize) +
+                        ' dropdown-toggle" data-toggle="dropdown">',
+                '<span class="page-size">',
+                $allSelected ? this.options.formatAllRows() : this.options.pageSize,
+                '</span>',
+                ' <span class="caret"></span>',
+                '</button>',
+                '<ul class="dropdown-menu" role="menu">'
+            ],
+                    pageList = this.options.pageList;
 
             if (typeof this.options.pageList === 'string') {
                 var list = this.options.pageList.replace('[', '').replace(']', '')
-                    .replace(/ /g, '').split(',');
+                        .replace(/ /g, '').split(',');
 
                 pageList = [];
                 $.each(list, function (i, value) {
                     pageList.push(value.toUpperCase() === that.options.formatAllRows().toUpperCase() ?
-                        that.options.formatAllRows() : +value);
+                            that.options.formatAllRows() : +value);
                 });
             }
 
@@ -1268,9 +1265,9 @@
             html.push('</span>');
 
             html.push('</div>',
-                '<div class="pull-' + this.options.paginationHAlign + ' pagination">',
-                '<ul class="pagination' + sprintf(' pagination-%s', this.options.iconSize) + '">',
-                '<li class="page-pre"><a href="javascript:void(0)">' + this.options.paginationPreText + '</a></li>');
+                    '<div class="pull-' + this.options.paginationHAlign + ' pagination">',
+                    '<ul class="pagination' + sprintf(' pagination-%s', this.options.iconSize) + '">',
+                    '<li class="page-pre"><a href="javascript:void(0)">' + this.options.paginationPreText + '</a></li>');
 
             if (this.totalPages < 5) {
                 from = 1;
@@ -1291,8 +1288,8 @@
             if (this.totalPages >= 6) {
                 if (this.options.pageNumber >= 3) {
                     html.push('<li class="page-first' + (1 === this.options.pageNumber ? ' active' : '') + '">',
-                        '<a href="javascript:void(0)">', 1, '</a>',
-                        '</li>');
+                            '<a href="javascript:void(0)">', 1, '</a>',
+                            '</li>');
 
                     from++;
                 }
@@ -1302,8 +1299,8 @@
                         from--;
                     } else {
                         html.push('<li class="page-first-separator disabled">',
-                            '<a href="javascript:void(0)">...</a>',
-                            '</li>');
+                                '<a href="javascript:void(0)">...</a>',
+                                '</li>');
                     }
 
                     to--;
@@ -1328,30 +1325,30 @@
 
             for (i = from; i <= to; i++) {
                 html.push('<li class="page-number' + (i === this.options.pageNumber ? ' active' : '') + '">',
-                    '<a href="javascript:void(0)">', i, '</a>',
-                    '</li>');
+                        '<a href="javascript:void(0)">', i, '</a>',
+                        '</li>');
             }
 
             if (this.totalPages >= 8) {
                 if (this.options.pageNumber <= (this.totalPages - 4)) {
                     html.push('<li class="page-last-separator disabled">',
-                        '<a href="javascript:void(0)">...</a>',
-                        '</li>');
+                            '<a href="javascript:void(0)">...</a>',
+                            '</li>');
                 }
             }
 
             if (this.totalPages >= 6) {
                 if (this.options.pageNumber <= (this.totalPages - 3)) {
                     html.push('<li class="page-last' + (this.totalPages === this.options.pageNumber ? ' active' : '') + '">',
-                        '<a href="javascript:void(0)">', this.totalPages, '</a>',
-                        '</li>');
+                            '<a href="javascript:void(0)">', this.totalPages, '</a>',
+                            '</li>');
                 }
             }
 
             html.push(
-                '<li class="page-next"><a href="javascript:void(0)">' + this.options.paginationNextText + '</a></li>',
-                '</ul>',
-                '</div>');
+                    '<li class="page-next"><a href="javascript:void(0)">' + this.options.paginationNextText + '</a></li>',
+                    '</ul>',
+                    '</div>');
         }
         this.$pagination.html(html.join(''));
 
@@ -1411,7 +1408,7 @@
 
         $this.parent().addClass('active').siblings().removeClass('active');
         this.options.pageSize = $this.text().toUpperCase() === this.options.formatAllRows().toUpperCase() ?
-            this.options.formatAllRows() : +$this.text();
+                this.options.formatAllRows() : +$this.text();
         this.$toolbar.find('.page-size').text(this.options.pageSize);
 
         this.updatePagination(event);
@@ -1455,8 +1452,8 @@
 
     BootstrapTable.prototype.initBody = function (fixedScroll) {
         var that = this,
-            html = [],
-            data = this.getData();
+                html = [],
+                data = this.getData();
 
         this.trigger('pre-body', data);
 
@@ -1474,12 +1471,12 @@
 
         for (var i = this.pageFrom - 1; i < this.pageTo; i++) {
             var key,
-                item = data[i],
-                style = {},
-                csses = [],
-                data_ = '',
-                attributes = {},
-                htmlAttributes = [];
+                    item = data[i],
+                    style = {},
+                    csses = [],
+                    data_ = '',
+                    attributes = {},
+                    htmlAttributes = [];
 
             style = calculateObjectValue(this.options, this.options.rowStyle, [item, i], style);
 
@@ -1490,7 +1487,7 @@
             }
 
             attributes = calculateObjectValue(this.options,
-                this.options.rowAttributes, [item, i], attributes);
+                    this.options.rowAttributes, [item, i], attributes);
 
             if (attributes) {
                 for (key in attributes) {
@@ -1509,14 +1506,14 @@
             }
 
             html.push('<tr',
-                sprintf(' %s', htmlAttributes.join(' ')),
-                sprintf(' id="%s"', $.isArray(item) ? undefined : item._id),
-                sprintf(' class="%s"', style.classes || ($.isArray(item) ? undefined : item._class)),
-                sprintf(' data-index="%s"', i),
-                sprintf(' data-uniqueid="%s"', item[this.options.uniqueId]),
-                sprintf('%s', data_),
-                '>'
-            );
+                    sprintf(' %s', htmlAttributes.join(' ')),
+                    sprintf(' id="%s"', $.isArray(item) ? undefined : item._id),
+                    sprintf(' class="%s"', style.classes || ($.isArray(item) ? undefined : item._class)),
+                    sprintf(' data-index="%s"', i),
+                    sprintf(' data-uniqueid="%s"', item[this.options.uniqueId]),
+                    sprintf('%s', data_),
+                    '>'
+                    );
 
             if (this.options.cardView) {
                 html.push(sprintf('<td colspan="%s">', this.header.fields.length));
@@ -1524,23 +1521,23 @@
 
             if (!this.options.cardView && this.options.detailView) {
                 html.push('<td>',
-                    '<a class="detail-icon" href="javascript:">',
-                    sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.detailOpen),
-                    '</a>',
-                    '</td>');
+                        '<a class="detail-icon" href="javascript:">',
+                        sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.detailOpen),
+                        '</a>',
+                        '</td>');
             }
 
             $.each(this.header.fields, function (j, field) {
                 var text = '',
-                    value = getItemField(item, field, that.options.escape),
-                    type = '',
-                    cellStyle = {},
-                    id_ = '',
-                    class_ = that.header.classes[j],
-                    data_ = '',
-                    rowspan_ = '',
-                    title_ = '',
-                    column = that.columns[getFieldIndex(that.columns, field)];
+                        value = getItemField(item, field, that.options.escape),
+                        type = '',
+                        cellStyle = {},
+                        id_ = '',
+                        class_ = that.header.classes[j],
+                        data_ = '',
+                        rowspan_ = '',
+                        title_ = '',
+                        column = that.columns[getFieldIndex(that.columns, field)];
 
                 if (!column.visible) {
                     return;
@@ -1549,7 +1546,7 @@
                 style = sprintf('style="%s"', csses.concat(that.header.styles[j]).join('; '));
 
                 value = calculateObjectValue(column,
-                    that.header.formatters[j], [value, item, i], value);
+                        that.header.formatters[j], [value, item, i], value);
 
                 // handle td's id and class
                 if (item['_' + field + '_id']) {
@@ -1565,7 +1562,7 @@
                     title_ = sprintf(' title="%s"', item['_' + field + '_title']);
                 }
                 cellStyle = calculateObjectValue(that.header,
-                    that.header.cellStyles[j], [value, item, i], cellStyle);
+                        that.header.cellStyles[j], [value, item, i], cellStyle);
                 if (cellStyle.classes) {
                     class_ = sprintf(' class="%s"', cellStyle.classes);
                 }
@@ -1592,17 +1589,17 @@
                     type = column.radio ? 'radio' : type;
 
                     text = [sprintf(that.options.cardView ?
-                        '<div class="card-view %s">' : '<td class="bs-checkbox %s">', column['class'] || ''),
+                                '<div class="card-view %s">' : '<td class="bs-checkbox %s">', column['class'] || ''),
                         '<input' +
-                        sprintf(' data-index="%s"', i) +
-                        sprintf(' name="%s"', that.options.selectItemName) +
-                        sprintf(' type="%s"', type) +
-                        sprintf(' value="%s"', item[that.options.idField]) +
-                        sprintf(' checked="%s"', value === true ||
-                        (value && value.checked) ? 'checked' : undefined) +
-                        sprintf(' disabled="%s"', !column.checkboxEnabled ||
-                        (value && value.disabled) ? 'disabled' : undefined) +
-                        ' />',
+                                sprintf(' data-index="%s"', i) +
+                                sprintf(' name="%s"', that.options.selectItemName) +
+                                sprintf(' type="%s"', type) +
+                                sprintf(' value="%s"', item[that.options.idField]) +
+                                sprintf(' checked="%s"', value === true ||
+                                        (value && value.checked) ? 'checked' : undefined) +
+                                sprintf(' disabled="%s"', !column.checkboxEnabled ||
+                                        (value && value.disabled) ? 'disabled' : undefined) +
+                                ' />',
                         that.header.formatters[j] && typeof value === 'string' ? value : '',
                         that.options.cardView ? '</div>' : '</td>'
                     ].join('');
@@ -1610,11 +1607,11 @@
                     item[that.header.stateField] = value === true || (value && value.checked);
                 } else {
                     value = typeof value === 'undefined' || value === null ?
-                        that.options.undefinedText : value;
+                            that.options.undefinedText : value;
 
                     text = that.options.cardView ? ['<div class="card-view">',
                         that.options.showHeader ? sprintf('<span class="title" %s>%s</span>', style,
-                            getPropertyFromOther(that.columns, 'field', 'title', field)) : '',
+                                getPropertyFromOther(that.columns, 'field', 'title', field)) : '',
                         sprintf('<span class="value">%s</span>', value),
                         '</div>'
                     ].join('') : [sprintf('<td%s %s %s %s %s %s>', id_, class_, style, data_, rowspan_, title_),
@@ -1642,9 +1639,9 @@
         // show no records
         if (!html.length) {
             html.push('<tr class="no-records-found">',
-                sprintf('<td colspan="%s">%s</td>',
-                    this.$header.find('th').length, this.options.formatNoMatches()),
-                '</tr>');
+                    sprintf('<td colspan="%s">%s</td>',
+                            this.$header.find('th').length, this.options.formatNoMatches()),
+                    '</tr>');
         }
 
         this.$body.html(html.join(''));
@@ -1656,12 +1653,12 @@
         // click to select by column
         this.$body.find('> tr[data-index] > td').off('click dblclick').on('click dblclick', function (e) {
             var $td = $(this),
-                $tr = $td.parent(),
-                item = that.data[$tr.data('index')],
-                index = $td[0].cellIndex,
-                field = that.header.fields[that.options.detailView && !that.options.cardView ? index - 1 : index],
-                column = that.columns[getFieldIndex(that.columns, field)],
-                value = getItemField(item, field, that.options.escape);
+                    $tr = $td.parent(),
+                    item = that.data[$tr.data('index')],
+                    index = $td[0].cellIndex,
+                    field = that.header.fields[that.options.detailView && !that.options.cardView ? index - 1 : index],
+                    column = that.columns[getFieldIndex(that.columns, field)],
+                    value = getItemField(item, field, that.options.escape);
 
             if ($td.find('.detail-icon').length) {
                 return;
@@ -1681,9 +1678,9 @@
 
         this.$body.find('> tr[data-index] > td > .detail-icon').off('click').on('click', function () {
             var $this = $(this),
-                $tr = $this.parent().parent(),
-                index = $tr.data('index'),
-                row = data[index]; // Fix #980 Detail view, when searching, returns wrong row
+                    $tr = $this.parent().parent(),
+                    index = $tr.data('index'),
+                    row = data[index]; // Fix #980 Detail view, when searching, returns wrong row
 
             // remove and update
             if ($tr.next().is('tr.detail-view')) {
@@ -1695,7 +1692,7 @@
                 $tr.after(sprintf('<tr class="detail-view"><td colspan="%s"></td></tr>', $tr.find('td').length));
                 var $element = $tr.next().find('td');
                 var content = calculateObjectValue(that.options, that.options.detailFormatter, [index, row, $element], '');
-                if($element.length === 1) {
+                if ($element.length === 1) {
                     $element.append(content);
                 }
                 that.trigger('expand-row', index, row, $element);
@@ -1708,8 +1705,8 @@
             event.stopImmediatePropagation();
 
             var $this = $(this),
-                checked = $this.prop('checked'),
-                row = that.data[$this.data('index')];
+                    checked = $this.prop('checked'),
+                    row = that.data[$this.data('index')];
 
             if (that.options.maintainSelected && $(this).is(':radio')) {
                 $.each(that.options.data, function (i, row) {
@@ -1740,7 +1737,7 @@
             }
 
             var field = that.header.fields[i],
-                fieldIndex = $.inArray(field, that.getVisibleFields());
+                    fieldIndex = $.inArray(field, that.getVisibleFields());
 
             if (that.options.detailView && !that.options.cardView) {
                 fieldIndex += 1;
@@ -1749,16 +1746,16 @@
             for (var key in events) {
                 that.$body.find('>tr:not(.no-records-found)').each(function () {
                     var $tr = $(this),
-                        $td = $tr.find(that.options.cardView ? '.card-view' : 'td').eq(fieldIndex),
-                        index = key.indexOf(' '),
-                        name = key.substring(0, index),
-                        el = key.substring(index + 1),
-                        func = events[key];
+                            $td = $tr.find(that.options.cardView ? '.card-view' : 'td').eq(fieldIndex),
+                            index = key.indexOf(' '),
+                            name = key.substring(0, index),
+                            el = key.substring(index + 1),
+                            func = events[key];
 
                     $td.find(el).off(name).on(name, function (e) {
                         var index = $tr.data('index'),
-                            row = that.data[index],
-                            value = row[field];
+                                row = that.data[index],
+                                value = row[field];
 
                         func.apply(this, [e, value, row, index]);
                     });
@@ -1774,17 +1771,17 @@
 
     BootstrapTable.prototype.initServer = function (silent, query) {
         var that = this,
-            data = {},
-            params = {
-                searchText: this.searchText,
-                sortName: this.options.sortName,
-                sortOrder: this.options.sortOrder
-            },
-            request;
+                data = {},
+                params = {
+                    searchText: this.searchText,
+                    sortName: this.options.sortName,
+                    sortOrder: this.options.sortOrder
+                },
+        request;
 
-        if(this.options.pagination) {
+        if (this.options.pagination) {
             params.pageSize = this.options.pageSize === this.options.formatAllRows() ?
-                this.options.totalRows : this.options.pageSize;
+                    this.options.totalRows : this.options.pageSize;
             params.pageNumber = this.options.pageNumber;
         }
 
@@ -1800,9 +1797,9 @@
             };
             if (this.options.pagination) {
                 params.limit = this.options.pageSize === this.options.formatAllRows() ?
-                    this.options.totalRows : this.options.pageSize;
+                        this.options.totalRows : this.options.pageSize;
                 params.offset = this.options.pageSize === this.options.formatAllRows() ?
-                    0 : this.options.pageSize * (this.options.pageNumber - 1);
+                        0 : this.options.pageSize * (this.options.pageNumber - 1);
             }
         }
 
@@ -1826,20 +1823,21 @@
             type: this.options.method,
             url: this.options.url,
             data: this.options.contentType === 'application/json' && this.options.method === 'post' ?
-                JSON.stringify(data) : data,
+                    JSON.stringify(data) : data,
             cache: this.options.cache,
             contentType: this.options.contentType,
             dataType: this.options.dataType,
             success: function (res) {
                 res = calculateObjectValue(that.options, that.options.responseHandler, [res], res);
-
                 that.load(res);
                 that.trigger('load-success', res);
-                if (!silent) that.$tableLoading.hide();
+                if (!silent)
+                    that.$tableLoading.hide();
             },
             error: function (res) {
                 that.trigger('load-error', res.status, res);
-                if (!silent) that.$tableLoading.hide();
+                if (!silent)
+                    that.$tableLoading.hide();
             }
         });
 
@@ -1870,8 +1868,8 @@
 
     BootstrapTable.prototype.updateSelected = function () {
         var checkAll = this.$selectItem.filter(':enabled').length &&
-            this.$selectItem.filter(':enabled').length ===
-            this.$selectItem.filter(':enabled').filter(':checked').length;
+                this.$selectItem.filter(':enabled').length ===
+                this.$selectItem.filter(':enabled').filter(':checked').length;
 
         this.$selectAll.add(this.$selectAll_).prop('checked', checkAll);
 
@@ -1920,10 +1918,10 @@
 
     BootstrapTable.prototype.fitHeader = function () {
         var that = this,
-            fixedBody,
-            scrollWidth,
-            focused,
-            focusedTemp;
+                fixedBody,
+                scrollWidth,
+                focused,
+                focusedTemp;
 
         if (that.$el.is(':hidden')) {
             that.timeoutId_ = setTimeout($.proxy(that.fitHeader, that), 100);
@@ -1932,8 +1930,8 @@
         fixedBody = this.$tableBody.get(0);
 
         scrollWidth = fixedBody.scrollWidth > fixedBody.clientWidth &&
-        fixedBody.scrollHeight > fixedBody.clientHeight + this.$header.outerHeight() ?
-            getScrollBarWidth() : 0;
+                fixedBody.scrollHeight > fixedBody.clientHeight + this.$header.outerHeight() ?
+                getScrollBarWidth() : 0;
 
         this.$el.css('margin-top', -this.$header.outerHeight());
 
@@ -1956,8 +1954,8 @@
         this.$tableHeader.css({
             'margin-right': scrollWidth
         }).find('table').css('width', this.$el.outerWidth())
-            .html('').attr('class', this.$el.attr('class'))
-            .append(this.$header_);
+                .html('').attr('class', this.$el.attr('class'))
+                .append(this.$header_);
 
 
         focusedTemp = $('.focus-temp:visible:eq(0)');
@@ -1975,7 +1973,7 @@
 
         this.$body.find('>tr:first-child:not(.no-records-found) > *').each(function (i) {
             var $this = $(this),
-                index = i;
+                    index = i;
 
             if (that.options.detailView && !that.options.cardView) {
                 if (i === 0) {
@@ -1985,7 +1983,7 @@
             }
 
             that.$header_.find(sprintf('th[data-field="%s"]', visibleFields[index]))
-                .find('.fht-cell').width($this.innerWidth());
+                    .find('.fht-cell').width($this.innerWidth());
         });
         // horizontal scroll event
         // TODO: it's probably better improving the layout than binding to scroll event
@@ -2001,8 +1999,8 @@
 
     BootstrapTable.prototype.resetFooter = function () {
         var that = this,
-            data = that.getData(),
-            html = [];
+                data = that.getData(),
+                html = [];
 
         if (!this.options.showFooter || this.options.cardView) { //do nothing
             return;
@@ -2014,8 +2012,8 @@
 
         $.each(this.columns, function (i, column) {
             var falign = '', // footer align style
-                style = '',
-                class_ = sprintf(' class="%s"', column['class']);
+                    style = '',
+                    class_ = sprintf(' class="%s"', column['class']);
 
             if (!column.visible) {
                 return;
@@ -2042,14 +2040,14 @@
         this.$tableFooter.find('tr').html(html.join(''));
         clearTimeout(this.timeoutFooter_);
         this.timeoutFooter_ = setTimeout($.proxy(this.fitFooter, this),
-            this.$el.is(':hidden') ? 100 : 0);
+                this.$el.is(':hidden') ? 100 : 0);
     };
 
     BootstrapTable.prototype.fitFooter = function () {
         var that = this,
-            $footerTd,
-            elWidth,
-            scrollWidth;
+                $footerTd,
+                elWidth,
+                scrollWidth;
 
         clearTimeout(this.timeoutFooter_);
         if (this.$el.is(':hidden')) {
@@ -2063,7 +2061,7 @@
         this.$tableFooter.css({
             'margin-right': scrollWidth
         }).find('table').css('width', elWidth)
-            .attr('class', this.$el.attr('class'));
+                .attr('class', this.$el.attr('class'));
 
         $footerTd = this.$tableFooter.find('td');
 
@@ -2103,14 +2101,14 @@
         }
 
         this.$body.find(typeof index !== 'undefined' ?
-            sprintf('tr[data-index="%s"]', index) :
-            sprintf('tr[data-uniqueid="%s"]', uniqueId))
-            [visible ? 'show' : 'hide']();
+                sprintf('tr[data-index="%s"]', index) :
+                sprintf('tr[data-uniqueid="%s"]', uniqueId))
+        [visible ? 'show' : 'hide']();
     };
 
     BootstrapTable.prototype.getVisibleFields = function () {
         var that = this,
-            visibleFields = [];
+                visibleFields = [];
 
         $.each(this.header.fields, function (j, field) {
             var column = that.columns[getFieldIndex(that.columns, field)];
@@ -2134,12 +2132,12 @@
         }
 
         this.$selectAll.prop('checked', this.$selectItem.length > 0 &&
-            this.$selectItem.length === this.$selectItem.filter(':checked').length);
+                this.$selectItem.length === this.$selectItem.filter(':checked').length);
 
         if (this.options.height) {
             var toolbarHeight = getRealHeight(this.$toolbar),
-                paginationHeight = getRealHeight(this.$pagination),
-                height = this.options.height - toolbarHeight - paginationHeight;
+                    paginationHeight = getRealHeight(this.$pagination),
+                    height = this.options.height - toolbarHeight - paginationHeight;
 
             this.$tableContainer.css('height', height + 'px');
         }
@@ -2175,16 +2173,22 @@
 
     BootstrapTable.prototype.getData = function (useCurrentPage) {
         return (this.searchText || !$.isEmptyObject(this.filterColumns) || !$.isEmptyObject(this.filterColumnsPartial)) ?
-            (useCurrentPage ? this.data.slice(this.pageFrom - 1, this.pageTo) : this.data) :
-            (useCurrentPage ? this.options.data.slice(this.pageFrom - 1, this.pageTo) : this.options.data);
+                (useCurrentPage ? this.data.slice(this.pageFrom - 1, this.pageTo) : this.data) :
+                (useCurrentPage ? this.options.data.slice(this.pageFrom - 1, this.pageTo) : this.options.data);
     };
 
     BootstrapTable.prototype.load = function (data) {
         var fixedScroll = false;
-
         // #431: support pagination
         if (this.options.sidePagination === 'server') {
-            this.options.totalRows = data.total;
+            var total = data[this.options.dataField].length;
+            if (data.total) {
+                total = data.total;
+            } else if (data.meta) {
+                total = data.meta.pagination.total;
+            }
+            this.options.totalRows = total;
+
             fixedScroll = data.fixedScroll;
             data = data[this.options.dataField];
         } else if (!$.isArray(data)) { // support fixedScroll
@@ -2216,7 +2220,7 @@
 
     BootstrapTable.prototype.remove = function (params) {
         var len = this.options.data.length,
-            i, row;
+                i, row;
 
         if (!params.hasOwnProperty('field') || !params.hasOwnProperty('values')) {
             return;
@@ -2254,16 +2258,16 @@
 
     BootstrapTable.prototype.getRowByUniqueId = function (id) {
         var uniqueId = this.options.uniqueId,
-            len = this.options.data.length,
-            dataRow = null,
-            i, row, rowUniqueId;
+                len = this.options.data.length,
+                dataRow = null,
+                i, row, rowUniqueId;
 
         for (i = len - 1; i >= 0; i--) {
             row = this.options.data[i];
 
             if (row.hasOwnProperty(uniqueId)) { // uniqueId is a column
                 rowUniqueId = row[uniqueId];
-            } else if(row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
+            } else if (row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
                 rowUniqueId = row._data[uniqueId];
             } else {
                 continue;
@@ -2290,7 +2294,7 @@
 
     BootstrapTable.prototype.removeByUniqueId = function (id) {
         var len = this.options.data.length,
-            row = this.getRowByUniqueId(id);
+                row = this.getRowByUniqueId(id);
 
         if (row) {
             this.options.data.splice(this.options.data.indexOf(row), 1);
@@ -2359,7 +2363,7 @@
 
     BootstrapTable.prototype.getRowsHidden = function (show) {
         var rows = $(this.$body[0]).children().filter(':hidden'),
-            i = 0;
+                i = 0;
         if (show) {
             for (; i < rows.length; i++) {
                 $(rows[i]).show();
@@ -2370,12 +2374,12 @@
 
     BootstrapTable.prototype.mergeCells = function (options) {
         var row = options.index,
-            col = $.inArray(options.field, this.getVisibleFields()),
-            rowspan = options.rowspan || 1,
-            colspan = options.colspan || 1,
-            i, j,
-            $tr = this.$body.find('>tr'),
-            $td;
+                col = $.inArray(options.field, this.getVisibleFields()),
+                rowspan = options.rowspan || 1,
+                colspan = options.colspan || 1,
+                i, j,
+                $tr = this.$body.find('>tr'),
+                $td;
 
         if (this.options.detailView && !this.options.cardView) {
             col += 1;
@@ -2398,8 +2402,8 @@
 
     BootstrapTable.prototype.updateCell = function (params) {
         if (!params.hasOwnProperty('index') ||
-            !params.hasOwnProperty('field') ||
-            !params.hasOwnProperty('value')) {
+                !params.hasOwnProperty('field') ||
+                !params.hasOwnProperty('value')) {
             return;
         }
         this.data[params.index][params.field] = params.value;
@@ -2443,7 +2447,7 @@
         var that = this;
         var rows = that.$selectItem.filter(':enabled');
         var checked = rows.filter(':checked');
-        rows.each(function() {
+        rows.each(function () {
             $(this).prop('checked', !$(this).prop('checked'));
         });
         that.updateRows();
@@ -2496,14 +2500,14 @@
         }
 
         var that = this,
-            rows = [];
+                rows = [];
         $.each(this.options.data, function (index, row) {
             if (!row.hasOwnProperty(obj.field)) {
                 return false;
             }
             if ($.inArray(row[obj.field], obj.values) !== -1) {
                 var $el = that.$selectItem.filter(':enabled')
-                    .filter(sprintf('[data-index="%s"]', index)).prop('checked', checked);
+                        .filter(sprintf('[data-index="%s"]', index)).prop('checked', checked);
                 row[that.header.stateField] = checked;
                 rows.push(row);
                 that.trigger(checked ? 'check' : 'uncheck', row, $el);
@@ -2519,8 +2523,8 @@
         this.$container.next().remove();
         this.$container.remove();
         this.$el.html(this.$el_.html())
-            .css('margin-top', '0')
-            .attr('class', this.$el_.attr('class') || ''); // reset the class
+                .css('margin-top', '0')
+                .attr('class', this.$el_.attr('class') || ''); // reset the class
     };
 
     BootstrapTable.prototype.showLoading = function () {
@@ -2661,10 +2665,10 @@
     BootstrapTable.prototype.expandAllRows = function (isSubTable) {
         if (isSubTable) {
             var $tr = this.$body.find(sprintf('> tr[data-index="%s"]', 0)),
-                that = this,
-                detailIcon = null,
-                executeInterval = false,
-                idInterval = -1;
+                    that = this,
+                    detailIcon = null,
+                    executeInterval = false,
+                    idInterval = -1;
 
             if (!$tr.next().is('tr.detail-view')) {
                 $tr.find('> td > .detail-icon').click();
@@ -2755,13 +2759,13 @@
 
     $.fn.bootstrapTable = function (option) {
         var value,
-            args = Array.prototype.slice.call(arguments, 1);
+                args = Array.prototype.slice.call(arguments, 1);
 
         this.each(function () {
             var $this = $(this),
-                data = $this.data('bootstrap.table'),
-                options = $.extend({}, BootstrapTable.DEFAULTS, $this.data(),
-                    typeof option === 'object' && option);
+                    data = $this.data('bootstrap.table'),
+                    options = $.extend({}, BootstrapTable.DEFAULTS, $this.data(),
+                            typeof option === 'object' && option);
 
             if (typeof option === 'string') {
                 if ($.inArray(option, allowedMethods) < 0) {
@@ -2808,1583 +2812,6 @@
 }(jQuery);
 
 /**
- * Bootstrap Table Afrikaans translation
- * Author: Phillip Kruger <phillip.kruger@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['af-ZA'] = {
-        formatLoadingMessage: function () {
-            return 'Besig om te laai, wag asseblief ...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rekords per bladsy';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Resultate ' + pageFrom + ' tot ' + pageTo + ' van ' + totalRows + ' rye';
-        },
-        formatSearch: function () {
-            return 'Soek';
-        },
-        formatNoMatches: function () {
-            return 'Geen rekords gevind nie';
-        },
-        formatPaginationSwitch: function () {
-            return 'Wys/verberg bladsy nummering';
-        },
-        formatRefresh: function () {
-            return 'Herlaai';
-        },
-        formatToggle: function () {
-            return 'Wissel';
-        },
-        formatColumns: function () {
-            return 'Kolomme';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['af-ZA']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table English translation
- * Author: Zhixin Wen<wenzhixin2010@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ar-SA'] = {
-        formatLoadingMessage: function () {
-            return 'جاري التحميل, يرجى الإنتظار...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' سجل لكل صفحة';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'الظاهر ' + pageFrom + ' إلى ' + pageTo + ' من ' + totalRows + ' سجل';
-        },
-        formatSearch: function () {
-            return 'بحث';
-        },
-        formatNoMatches: function () {
-            return 'لا توجد نتائج مطابقة للبحث';
-        },
-        formatPaginationSwitch: function () {
-            return 'إخفاء\إظهار ترقيم الصفحات';
-        },
-        formatRefresh: function () {
-            return 'تحديث';
-        },
-        formatToggle: function () {
-            return 'تغيير';
-        },
-        formatColumns: function () {
-            return 'أعمدة';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ar-SA']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Catalan translation
- * Authors: Marc Pina<iwalkalone69@gmail.com>
- *          Claudi Martinez<claudix.kernel@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ca-ES'] = {
-        formatLoadingMessage: function () {
-            return 'Espereu, si us plau...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' resultats per pàgina';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrant de ' + pageFrom + ' fins ' + pageTo + ' - total ' + totalRows + ' resultats';
-        },
-        formatSearch: function () {
-            return 'Cerca';
-        },
-        formatNoMatches: function () {
-            return 'No s\'han trobat resultats';
-        },
-        formatPaginationSwitch: function () {
-            return 'Amaga/Mostra paginació';
-        },
-        formatRefresh: function () {
-            return 'Refresca';
-        },
-        formatToggle: function () {
-            return 'Alterna formatació';
-        },
-        formatColumns: function () {
-            return 'Columnes';
-        },
-        formatAllRows: function () {
-            return 'Tots';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ca-ES']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Czech translation
- * Author: Lukas Kral (monarcha@seznam.cz)
- * Author: Jakub Svestka <svestka1999@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['cs-CZ'] = {
-        formatLoadingMessage: function () {
-            return 'Čekejte, prosím...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' položek na stránku';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Zobrazena ' + pageFrom + '. - ' + pageTo + '. položka z celkových ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Vyhledávání';
-        },
-        formatNoMatches: function () {
-            return 'Nenalezena žádná vyhovující položka';
-        },
-        formatPaginationSwitch: function () {
-            return 'Skrýt/Zobrazit stránkování';
-        },
-        formatRefresh: function () {
-            return 'Aktualizovat';
-        },
-        formatToggle: function () {
-            return 'Přepni';
-        },
-        formatColumns: function () {
-            return 'Sloupce';
-        },
-        formatAllRows: function () {
-            return 'Vše';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['cs-CZ']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table danish translation
- * Author: Your Name Jan Borup Coyle, github@coyle.dk
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['da-DK'] = {
-        formatLoadingMessage: function () {
-            return 'Indlæser, vent venligst...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' poster pr side';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Viser ' + pageFrom + ' til ' + pageTo + ' af ' + totalRows + ' rækker';
-        },
-        formatSearch: function () {
-            return 'Søg';
-        },
-        formatNoMatches: function () {
-            return 'Ingen poster fundet';
-        },
-        formatRefresh: function () {
-            return 'Opdater';
-        },
-        formatToggle: function () {
-            return 'Skift';
-        },
-        formatColumns: function () {
-            return 'Kolonner';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['da-DK']);
-
-})(jQuery);
-/**
-* Bootstrap Table German translation
-* Author: Paul Mohr - Sopamo<p.mohr@sopamo.de>
-*/
-(function ($) {
-  'use strict';
-
-  $.fn.bootstrapTable.locales['de-DE'] = {
-    formatLoadingMessage: function () {
-      return 'Lade, bitte warten...';
-    },
-    formatRecordsPerPage: function (pageNumber) {
-      return pageNumber + ' Einträge pro Seite';
-    },
-    formatShowingRows: function (pageFrom, pageTo, totalRows) {
-      return 'Zeige ' + pageFrom + ' bis ' + pageTo + ' von ' + totalRows + ' Zeile' + ((totalRows > 1) ? "n" : "");
-    },
-    formatSearch: function () {
-      return 'Suchen';
-    },
-    formatNoMatches: function () {
-      return 'Keine passenden Ergebnisse gefunden';
-    },
-    formatRefresh: function () {
-      return 'Neu laden';
-    },
-    formatToggle: function () {
-      return 'Umschalten';
-    },
-    formatColumns: function () {
-      return 'Spalten';
-    }
-  };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['de-DE']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Greek translation
- * Author: giannisdallas
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['el-GR'] = {
-        formatLoadingMessage: function () {
-            return 'Φορτώνει, παρακαλώ περιμένετε...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' αποτελέσματα ανά σελίδα';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Εμφανίζονται από την ' + pageFrom + ' ως την ' + pageTo + ' από σύνολο ' + totalRows + ' σειρών';
-        },
-        formatSearch: function () {
-            return 'Αναζητήστε';
-        },
-        formatNoMatches: function () {
-            return 'Δεν βρέθηκαν αποτελέσματα';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['el-GR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table English translation
- * Author: Zhixin Wen<wenzhixin2010@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['en-US'] = {
-        formatLoadingMessage: function () {
-            return 'Loading, please wait...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rows per page';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Showing ' + pageFrom + ' to ' + pageTo + ' of ' + totalRows + ' rows';
-        },
-        formatSearch: function () {
-            return 'Search';
-        },
-        formatNoMatches: function () {
-            return 'No matching records found';
-        },
-        formatPaginationSwitch: function () {
-            return 'Hide/Show pagination';
-        },
-        formatRefresh: function () {
-            return 'Refresh';
-        },
-        formatToggle: function () {
-            return 'Toggle';
-        },
-        formatColumns: function () {
-            return 'Columns';
-        },
-        formatAllRows: function () {
-            return 'All';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Spanish (Argentina) translation
- * Author: Felix Vera (felix.vera@gmail.com)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['es-AR'] = {
-        formatLoadingMessage: function () {
-            return 'Cargando, espere por favor...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrando ' + pageFrom + ' a ' + pageTo + ' de ' + totalRows + ' filas';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se encontraron registros';
-        },
-        formatAllRows: function () {
-            return 'Todo';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-AR']);
-
-})(jQuery);
-/**
- * Bootstrap Table Spanish (Costa Rica) translation
- * Author: Dennis Hernández (http://djhvscf.github.io/Blog/)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['es-CR'] = {
-        formatLoadingMessage: function () {
-            return 'Cargando, por favor espere...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrando de ' + pageFrom + ' a ' + pageTo + ' registros de ' + totalRows + ' registros en total';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se encontraron registros';
-        },
-        formatRefresh: function () {
-            return 'Refrescar';
-        },
-        formatToggle: function () {
-            return 'Alternar';
-        },
-        formatColumns: function () {
-            return 'Columnas';
-        },
-        formatAllRows: function () {
-            return 'Todo';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-CR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Spanish Spain translation
- * Author: Marc Pina<iwalkalone69@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['es-ES'] = {
-        formatLoadingMessage: function () {
-            return 'Por favor espere...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' resultados por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrando desde ' + pageFrom + ' hasta ' + pageTo + ' - En total ' + totalRows + ' resultados';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se encontraron resultados';
-        },
-        formatPaginationSwitch: function () {
-            return 'Ocultar/Mostrar paginación';
-        },
-        formatRefresh: function () {
-            return 'Refrescar';
-        },
-        formatToggle: function () {
-            return 'Ocultar/Mostrar';
-        },
-        formatColumns: function () {
-            return 'Columnas';
-        },
-        formatAllRows: function () {
-            return 'Todos';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-ES']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Spanish (México) translation (Obtenido de traducción de Argentina)
- * Author: Felix Vera (felix.vera@gmail.com) 
- * Copiado: Mauricio Vera (mauricioa.vera@gmail.com)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['es-MX'] = {
-        formatLoadingMessage: function () {
-            return 'Cargando, espere por favor...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrando ' + pageFrom + ' a ' + pageTo + ' de ' + totalRows + ' filas';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se encontraron registros';
-        },
-        formatAllRows: function () {
-            return 'Todo';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-MX']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Spanish (Nicaragua) translation
- * Author: Dennis Hernández (http://djhvscf.github.io/Blog/)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['es-NI'] = {
-        formatLoadingMessage: function () {
-            return 'Cargando, por favor espere...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Mostrando de ' + pageFrom + ' a ' + pageTo + ' registros de ' + totalRows + ' registros en total';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se encontraron registros';
-        },
-        formatRefresh: function () {
-            return 'Refrescar';
-        },
-        formatToggle: function () {
-            return 'Alternar';
-        },
-        formatColumns: function () {
-            return 'Columnas';
-        },
-        formatAllRows: function () {
-            return 'Todo';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-NI']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Spanish (España) translation
- * Author: Antonio Pérez <anpegar@gmail.com>
- */
- (function ($) {
-    'use strict';
-    
-    $.fn.bootstrapTable.locales['es-SP'] = {
-        formatLoadingMessage: function () {
-            return 'Cargando, por favor espera...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por p&#225;gina.';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return pageFrom + ' - ' + pageTo + ' de ' + totalRows + ' registros.';
-        },
-        formatSearch: function () {
-            return 'Buscar';
-        },
-        formatNoMatches: function () {
-            return 'No se han encontrado registros.';
-        },
-        formatRefresh: function () {
-            return 'Actualizar';
-        },
-        formatToggle: function () {
-            return 'Alternar';
-        },
-        formatColumns: function () {
-            return 'Columnas';
-        },
-        formatAllRows: function () {
-            return 'Todo';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['es-SP']);
-
-})(jQuery);
-/**
- * Bootstrap Table Estonian translation
- * Author: kristjan@logist.it>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['et-EE'] = {
-        formatLoadingMessage: function () {
-            return 'Päring käib, palun oota...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rida lehe kohta';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Näitan tulemusi ' + pageFrom + ' kuni ' + pageTo + ' - kokku ' + totalRows + ' tulemust';
-        },
-        formatSearch: function () {
-            return 'Otsi';
-        },
-        formatNoMatches: function () {
-            return 'Päringu tingimustele ei vastanud ühtegi tulemust';
-        },
-        formatPaginationSwitch: function () {
-            return 'Näita/Peida lehtedeks jagamine';
-        },
-        formatRefresh: function () {
-            return 'Värskenda';
-        },
-        formatToggle: function () {
-            return 'Lülita';
-        },
-        formatColumns: function () {
-            return 'Veerud';
-        },
-        formatAllRows: function () {
-            return 'Kõik';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['et-EE']);
-
-})(jQuery);
-/**
- * Bootstrap Table Persian translation
- * Author: MJ Vakili <mjv.1989@Gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['fa-IR'] = {
-        formatLoadingMessage: function () {
-            return 'در حال بارگذاری, لطفا صبر کنید...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' رکورد در صفحه';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'نمایش ' + pageFrom + ' تا ' + pageTo + ' از ' + totalRows + ' ردیف';
-        },
-        formatSearch: function () {
-            return 'جستجو';
-        },
-        formatNoMatches: function () {
-            return 'رکوردی یافت نشد.';
-        },
-        formatPaginationSwitch: function () {
-            return 'نمایش/مخفی صفحه بندی';
-        },
-        formatRefresh: function () {
-            return 'به روز رسانی';
-        },
-        formatToggle: function () {
-            return 'تغییر نمایش';
-        },
-        formatColumns: function () {
-            return 'سطر ها';
-        },
-        formatAllRows: function () {
-            return 'همه';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['fa-IR']);
-
-})(jQuery);
-/**
- * Bootstrap Table French (Belgium) translation
- * Author: Julien Bisconti (julien.bisconti@gmail.com)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['fr-BE'] = {
-        formatLoadingMessage: function () {
-            return 'Chargement en cours...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' entrées par page';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Affiche de' + pageFrom + ' à ' + pageTo + ' sur ' + totalRows + ' lignes';
-        },
-        formatSearch: function () {
-            return 'Recherche';
-        },
-        formatNoMatches: function () {
-            return 'Pas de fichiers trouvés';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['fr-BE']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table French (France) translation
- * Author: Dennis Hernández (http://djhvscf.github.io/Blog/)
- * Modification: Tidalf (https://github.com/TidalfFR)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['fr-FR'] = {
-        formatLoadingMessage: function () {
-            return 'Chargement en cours, patientez, s´il vous plaît ...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' lignes par page';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Affichage des lignes ' + pageFrom + ' à ' + pageTo + ' sur ' + totalRows + ' lignes au total';
-        },
-        formatSearch: function () {
-            return 'Rechercher';
-        },
-        formatNoMatches: function () {
-            return 'Aucun résultat trouvé';
-        },
-        formatRefresh: function () {
-            return 'Rafraîchir';
-        },
-        formatToggle: function () {
-            return 'Alterner';
-        },
-        formatColumns: function () {
-            return 'Colonnes';
-        },
-        formatAllRows: function () {
-            return 'Tous';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['fr-FR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Hebrew translation
- * Author: legshooter
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['he-IL'] = {
-        formatLoadingMessage: function () {
-            return 'טוען, נא להמתין...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' שורות בעמוד';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'מציג ' + pageFrom + ' עד ' + pageTo + ' מ-' + totalRows + ' שורות';
-        },
-        formatSearch: function () {
-            return 'חיפוש';
-        },
-        formatNoMatches: function () {
-            return 'לא נמצאו רשומות תואמות';
-        },
-        formatPaginationSwitch: function () {
-            return 'הסתר/הצג מספור דפים';
-        },
-        formatRefresh: function () {
-            return 'רענן';
-        },
-        formatToggle: function () {
-            return 'החלף תצוגה';
-        },
-        formatColumns: function () {
-            return 'עמודות';
-        },
-        formatAllRows: function () {
-            return 'הכל';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['he-IL']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Croatian translation
- * Author: Petra Štrbenac (petra.strbenac@gmail.com)
- * Author: Petra Štrbenac (petra.strbenac@gmail.com)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['hr-HR'] = {
-        formatLoadingMessage: function () {
-            return 'Molimo pričekajte ...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' broj zapisa po stranici';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Prikazujem ' + pageFrom + '. - ' + pageTo + '. od ukupnog broja zapisa ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Pretraži';
-        },
-        formatNoMatches: function () {
-            return 'Nije pronađen niti jedan zapis';
-        },
-        formatPaginationSwitch: function () {
-            return 'Prikaži/sakrij stranice';
-        },
-        formatRefresh: function () {
-            return 'Osvježi';
-        },
-        formatToggle: function () {
-            return 'Promijeni prikaz';
-        },
-        formatColumns: function () {
-            return 'Kolone';
-        },
-        formatAllRows: function () {
-            return 'Sve';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['hr-HR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Hungarian translation
- * Author: Nagy Gergely <info@nagygergely.eu>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['hu-HU'] = {
-        formatLoadingMessage: function () {
-            return 'Betöltés, kérem várjon...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rekord per oldal';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Megjelenítve ' + pageFrom + ' - ' + pageTo + ' / ' + totalRows + ' összesen';
-        },
-        formatSearch: function () {
-            return 'Keresés';
-        },
-        formatNoMatches: function () {
-            return 'Nincs találat';
-        },
-        formatPaginationSwitch: function () {
-            return 'Lapozó elrejtése/megjelenítése';
-        },
-        formatRefresh: function () {
-            return 'Frissítés';
-        },
-        formatToggle: function () {
-            return 'Összecsuk/Kinyit';
-        },
-        formatColumns: function () {
-            return 'Oszlopok';
-        },
-        formatAllRows: function () {
-            return 'Összes';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['hu-HU']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Italian translation
- * Author: Davide Renzi<davide.renzi@gmail.com>
- * Author: Davide Borsatto <davide.borsatto@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['it-IT'] = {
-        formatLoadingMessage: function () {
-            return 'Caricamento in corso...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' elementi per pagina';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Pagina ' + pageFrom + ' di ' + pageTo + ' (' + totalRows + ' records)';
-        },
-        formatSearch: function () {
-            return 'Cerca';
-        },
-        formatNoMatches: function () {
-            return 'Nessun elemento trovato';
-        },
-        formatRefresh: function () {
-            return 'Aggiorna';
-        },
-        formatToggle: function () {
-            return 'Alterna';
-        },
-        formatColumns: function () {
-            return 'Colonne';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['it-IT']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Japanese translation
- * Author: Azamshul Azizy <azamshul@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ja-JP'] = {
-        formatLoadingMessage: function () {
-            return '読み込み中です。少々お待ちください。';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return 'ページ当たり最大' + pageNumber + '件';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return '全' + totalRows + '件から、'+ pageFrom + 'から' + pageTo + '件目まで表示しています';
-        },
-        formatSearch: function () {
-            return '検索';
-        },
-        formatNoMatches: function () {
-            return '該当するレコードが見つかりません';
-        },
-        formatPaginationSwitch: function () {
-            return 'ページ数を表示・非表示';
-        },
-        formatRefresh: function () {
-            return '更新';
-        },
-        formatToggle: function () {
-            return 'トグル';
-        },
-        formatColumns: function () {
-            return '列';
-        },
-        formatAllRows: function () {
-            return 'すべて';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ja-JP']);
-
-})(jQuery);
-/**
- * Bootstrap Table Georgian translation
- * Author: Levan Lotuashvili <l.lotuashvili@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ka-GE'] = {
-        formatLoadingMessage: function() {
-            return 'იტვირთება, გთხოვთ მოიცადოთ...';
-        },
-        formatRecordsPerPage: function(pageNumber) {
-            return pageNumber + ' ჩანაწერი თითო გვერდზე';
-        },
-        formatShowingRows: function(pageFrom, pageTo, totalRows) {
-            return 'ნაჩვენებია ' + pageFrom + '-დან ' + pageTo + '-მდე ჩანაწერი ჯამური ' + totalRows + '-დან';
-        },
-        formatSearch: function() {
-            return 'ძებნა';
-        },
-        formatNoMatches: function() {
-            return 'მონაცემები არ არის';
-        },
-        formatPaginationSwitch: function() {
-            return 'გვერდების გადამრთველის დამალვა/გამოჩენა';
-        },
-        formatRefresh: function() {
-            return 'განახლება';
-        },
-        formatToggle: function() {
-            return 'ჩართვა/გამორთვა';
-        },
-        formatColumns: function() {
-            return 'სვეტები';
-        }
-    };
-    
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ka-GE']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Korean translation
- * Author: Yi Tae-Hyeong (jsonobject@gmail.com)
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ko-KR'] = {
-        formatLoadingMessage: function () {
-            return '데이터를 불러오는 중입니다...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return '페이지 당 ' + pageNumber + '개 데이터 출력';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return '전체 ' + totalRows + '개 중 ' + pageFrom + '~' + pageTo + '번째 데이터 출력,';
-        },
-        formatSearch: function () {
-            return '검색';
-        },
-        formatNoMatches: function () {
-            return '조회된 데이터가 없습니다.';
-        },
-        formatRefresh: function () {
-            return '새로 고침';
-        },
-        formatToggle: function () {
-            return '전환';
-        },
-        formatColumns: function () {
-            return '컬럼 필터링';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ko-KR']);
-
-})(jQuery);
-/**
- * Bootstrap Table Malay translation
- * Author: Azamshul Azizy <azamshul@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ms-MY'] = {
-        formatLoadingMessage: function () {
-            return 'Permintaan sedang dimuatkan. Sila tunggu sebentar...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rekod setiap muka surat';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Sedang memaparkan rekod ' + pageFrom + ' hingga ' + pageTo + ' daripada jumlah ' + totalRows + ' rekod';
-        },
-        formatSearch: function () {
-            return 'Cari';
-        },
-        formatNoMatches: function () {
-            return 'Tiada rekod yang menyamai permintaan';
-        },
-        formatPaginationSwitch: function () {
-            return 'Tunjuk/sembunyi muka surat';
-        },
-        formatRefresh: function () {
-            return 'Muatsemula';
-        },
-        formatToggle: function () {
-            return 'Tukar';
-        },
-        formatColumns: function () {
-            return 'Lajur';
-        },
-        formatAllRows: function () {
-            return 'Semua';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ms-MY']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table norwegian translation
- * Author: Jim Nordbø, jim@nordb.no
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['nb-NO'] = {
-        formatLoadingMessage: function () {
-            return 'Oppdaterer, vennligst vent...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' poster pr side';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Viser ' + pageFrom + ' til ' + pageTo + ' av ' + totalRows + ' rekker';
-        },
-        formatSearch: function () {
-            return 'Søk';
-        },
-        formatNoMatches: function () {
-            return 'Ingen poster funnet';
-        },
-        formatRefresh: function () {
-            return 'Oppdater';
-        },
-        formatToggle: function () {
-            return 'Endre';
-        },
-        formatColumns: function () {
-            return 'Kolonner';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['nb-NO']);
-
-})(jQuery);
-/**
- * Bootstrap Table Dutch translation
- * Author: Your Name <info@a2hankes.nl>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['nl-NL'] = {
-        formatLoadingMessage: function () {
-            return 'Laden, even geduld...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' records per pagina';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Toon ' + pageFrom + ' tot ' + pageTo + ' van ' + totalRows + ' record' + ((totalRows > 1) ? 's' : '');
-        },
-        formatDetailPagination: function (totalRows) {
-            return 'Toon ' + totalRows + ' record' + ((totalRows > 1) ? 's' : '');
-        },
-        formatSearch: function () {
-            return 'Zoeken';
-        },
-        formatNoMatches: function () {
-            return 'Geen resultaten gevonden';
-        },
-        formatRefresh: function () {
-           return 'Vernieuwen';
-        },
-        formatToggle: function () {
-          return 'Omschakelen';
-        },
-        formatColumns: function () {
-          return 'Kolommen';
-        },
-        formatAllRows: function () {
-          return 'Alle';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['nl-NL']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Polish translation
- * Author: zergu <michal.zagdan @ gmail com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['pl-PL'] = {
-        formatLoadingMessage: function () {
-            return 'Ładowanie, proszę czekać...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rekordów na stronę';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Wyświetlanie rekordów od ' + pageFrom + ' do ' + pageTo + ' z ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Szukaj';
-        },
-        formatNoMatches: function () {
-            return 'Niestety, nic nie znaleziono';
-        },
-        formatRefresh: function () {
-            return 'Odśwież';
-        },
-        formatToggle: function () {
-            return 'Przełącz';
-        },
-        formatColumns: function () {
-            return 'Kolumny';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['pl-PL']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Brazilian Portuguese Translation
- * Author: Eduardo Cerqueira<egcerqueira@gmail.com>
- * Update: João Mello<jmello@hotmail.com.br>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['pt-BR'] = {
-        formatLoadingMessage: function () {
-            return 'Carregando, aguarde...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Exibindo ' + pageFrom + ' até ' + pageTo + ' de ' + totalRows + ' linhas';
-        },
-        formatSearch: function () { 
-            return 'Pesquisar';
-        },
-        formatRefresh: function () { 
-            return 'Recarregar';
-        },
-        formatToggle: function () { 
-            return 'Alternar';
-        },
-        formatColumns: function () { 
-            return 'Colunas';
-        },
-        formatPaginationSwitch: function () { 
-            return 'Ocultar/Exibir paginação';
-        },
-        formatNoMatches: function () {
-            return 'Nenhum registro encontrado';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['pt-BR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Portuguese Portugal Translation
- * Author: Burnspirit<burnspirit@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['pt-PT'] = {
-        formatLoadingMessage: function () {
-            return 'A carregar, aguarde...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registos por página';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'A mostrar ' + pageFrom + ' até ' + pageTo + ' de ' + totalRows + ' linhas';
-        },
-        formatSearch: function () {
-            return 'Pesquisa';
-        },
-        formatNoMatches: function () {
-            return 'Nenhum registo encontrado';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['pt-PT']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Romanian translation
- * Author: cristake <cristianiosif@me.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ro-RO'] = {
-        formatLoadingMessage: function () {
-            return 'Se incarca, va rugam asteptati...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' inregistrari pe pagina';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Arata de la ' + pageFrom + ' pana la ' + pageTo + ' din ' + totalRows + ' randuri';
-        },
-        formatSearch: function () {
-            return 'Cauta';
-        },
-        formatNoMatches: function () {
-            return 'Nu au fost gasite inregistrari';
-        },
-        formatPaginationSwitch: function () {
-            return 'Ascunde/Arata paginatia';
-        },
-        formatRefresh: function () {
-            return 'Reincarca';
-        },
-        formatToggle: function () {
-            return 'Comuta';
-        },
-        formatColumns: function () {
-            return 'Coloane';
-        },
-        formatAllRows: function () {
-            return 'Toate';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ro-RO']);
-
-})(jQuery);
-/**
- * Bootstrap Table Russian translation
- * Author: Dunaevsky Maxim <dunmaksim@yandex.ru>
- */
-(function ($) {
-    'use strict';
-    $.fn.bootstrapTable.locales['ru-RU'] = {
-        formatLoadingMessage: function () {
-            return 'Пожалуйста, подождите, идёт загрузка...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' записей на страницу';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Записи с ' + pageFrom + ' по ' + pageTo + ' из ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Поиск';
-        },
-        formatNoMatches: function () {
-            return 'Ничего не найдено';
-        },
-        formatRefresh: function () {
-            return 'Обновить';
-        },
-        formatToggle: function () {
-            return 'Переключить';
-        },
-        formatColumns: function () {
-            return 'Колонки';
-        },
-        formatClearFilters: function () {
-            return 'Очистить фильтры';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ru-RU']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Slovak translation
- * Author: Jozef Dúc<jozef.d13@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['sk-SK'] = {
-        formatLoadingMessage: function () {
-            return 'Prosím čakajte ...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' záznamov na stranu';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Zobrazená ' + pageFrom + '. - ' + pageTo + '. položka z celkových ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Vyhľadávanie';
-        },
-        formatNoMatches: function () {
-            return 'Nenájdená žiadna vyhovujúca položka';
-        },
-        formatRefresh: function () {
-            return 'Obnoviť';
-        },
-        formatToggle: function () {
-            return 'Prepni';
-        },
-        formatColumns: function () {
-            return 'Stĺpce';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['sk-SK']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Swedish translation
- * Author: C Bratt <bratt@inix.se>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['sv-SE'] = {
-        formatLoadingMessage: function () {
-            return 'Laddar, vänligen vänta...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' rader per sida';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Visa ' + pageFrom + ' till ' + pageTo + ' av ' + totalRows + ' rader';
-        },
-        formatSearch: function () {
-            return 'Sök';
-        },
-        formatNoMatches: function () {
-            return 'Inga matchande resultat funna.';
-        },
-        formatRefresh: function () {
-            return 'Uppdatera';
-        },
-        formatToggle: function () {
-            return 'Skifta';
-        },
-        formatColumns: function () {
-            return 'kolumn';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['sv-SE']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Thai translation
- * Author: Monchai S.<monchais@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['th-TH'] = {
-        formatLoadingMessage: function () {
-            return 'กำลังโหลดข้อมูล, กรุณารอสักครู่...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' รายการต่อหน้า';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'รายการที่ ' + pageFrom + ' ถึง ' + pageTo + ' จากทั้งหมด ' + totalRows + ' รายการ';
-        },
-        formatSearch: function () {
-            return 'ค้นหา';
-        },
-        formatNoMatches: function () {
-            return 'ไม่พบรายการที่ค้นหา !';
-        },
-        formatRefresh: function () {
-            return 'รีเฟรส';
-        },
-        formatToggle: function () {
-            return 'สลับมุมมอง';
-        },
-        formatColumns: function () {
-            return 'คอลัมน์';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['th-TH']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Turkish translation
- * Author: Emin Şen
- * Author: Sercan Cakir <srcnckr@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['tr-TR'] = {
-        formatLoadingMessage: function () {
-            return 'Yükleniyor, lütfen bekleyin...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return 'Sayfa başına ' + pageNumber + ' kayıt.';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return totalRows + ' kayıttan ' + pageFrom + '-' + pageTo + ' arası gösteriliyor.';
-        },
-        formatSearch: function () {
-            return 'Ara';
-        },
-        formatNoMatches: function () {
-            return 'Eşleşen kayıt bulunamadı.';
-        },
-        formatRefresh: function () {
-            return 'Yenile';
-        },
-        formatToggle: function () {
-            return 'Değiştir';
-        },
-        formatColumns: function () {
-            return 'Sütunlar';
-        },
-        formatAllRows: function () {
-            return 'Tüm Satırlar';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['tr-TR']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Ukrainian translation
- * Author: Vitaliy Timchenko <vitaliy.timchenko@gmail.com>
- */
- (function ($) {
-    'use strict';
-    
-    $.fn.bootstrapTable.locales['uk-UA'] = {
-        formatLoadingMessage: function () {
-            return 'Завантаження, будь ласка, зачекайте...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' записів на сторінку';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Показано з ' + pageFrom + ' по ' + pageTo + '. Всього: ' + totalRows;
-        },
-        formatSearch: function () {
-            return 'Пошук';
-        },
-        formatNoMatches: function () {
-            return 'Не знайдено жодного запису';
-        },
-        formatRefresh: function () {
-            return 'Оновити';
-        },
-        formatToggle: function () {
-            return 'Змінити';
-        },
-        formatColumns: function () {
-            return 'Стовпці';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['uk-UA']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Urdu translation
- * Author: Malik <me@malikrizwan.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['ur-PK'] = {
-        formatLoadingMessage: function () {
-            return 'براۓ مہربانی انتظار کیجئے';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' ریکارڈز فی صفہ ';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'دیکھیں ' + pageFrom + ' سے ' + pageTo + ' کے ' +  totalRows + 'ریکارڈز';
-        },
-        formatSearch: function () {
-            return 'تلاش';
-        },
-        formatNoMatches: function () {
-            return 'کوئی ریکارڈ نہیں ملا';
-        },
-        formatRefresh: function () {
-            return 'تازہ کریں';
-        },
-        formatToggle: function () {
-            return 'تبدیل کریں';
-        },
-        formatColumns: function () {
-            return 'کالم';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['ur-PK']);
-
-})(jQuery);
-
-/**
- * Bootstrap Table Vietnamese translation
- * Author: Duc N. PHAM <pngduc@gmail.com>
- */
-(function ($) {
-    'use strict';
-
-    $.fn.bootstrapTable.locales['vi-VN'] = {
-        formatLoadingMessage: function () {
-            return 'Đang tải...';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' bản ghi mỗi trang';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Hiển thị từ trang ' + pageFrom + ' đến ' + pageTo + ' của ' + totalRows + ' bảng ghi';
-        },
-        formatSearch: function () {
-            return 'Tìm kiếm';
-        },
-        formatNoMatches: function () {
-            return 'Không có dữ liệu';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['vi-VN']);
-
-})(jQuery);
-/**
  * Bootstrap Table Chinese translation
  * Author: Zhixin Wen<wenzhixin2010@gmail.com>
  */
@@ -4424,46 +2851,7 @@
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
 
 })(jQuery);
-/**
- * Bootstrap Table Chinese translation
- * Author: Zhixin Wen<wenzhixin2010@gmail.com>
- */
-(function ($) {
-    'use strict';
 
-    $.fn.bootstrapTable.locales['zh-TW'] = {
-        formatLoadingMessage: function () {
-            return '正在努力地載入資料，請稍候……';
-        },
-        formatRecordsPerPage: function (pageNumber) {
-            return '每頁顯示 ' + pageNumber + ' 項記錄';
-        },
-        formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return '顯示第 ' + pageFrom + ' 到第 ' + pageTo + ' 項記錄，總共 ' + totalRows + ' 項記錄';
-        },
-        formatSearch: function () {
-            return '搜尋';
-        },
-        formatNoMatches: function () {
-            return '沒有找到符合的結果';
-        },
-        formatPaginationSwitch: function () {
-            return '隱藏/顯示分頁';
-        },
-        formatRefresh: function () {
-            return '重新整理';
-        },
-        formatToggle: function () {
-            return '切換';
-        },
-        formatColumns: function () {
-            return '列';
-        }
-    };
-
-    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-TW']);
-
-})(jQuery);
 
 /**
  * @author: Dennis Hernández
@@ -4476,7 +2864,7 @@
     'use strict';
 
     var showHideColumns = function (that, checked) {
-        if (that.options.columnsHidden.length > 0 ) {
+        if (that.options.columnsHidden.length > 0) {
             $.each(that.columns, function (i, column) {
                 if (that.options.columnsHidden.indexOf(column.field) !== -1) {
                     if (column.visible !== checked) {
@@ -4489,7 +2877,7 @@
 
     var resetView = function (that) {
         if (that.options.height || that.options.showFooter) {
-            setTimeout(function(){
+            setTimeout(function () {
                 that.resetView.call(that);
             }, 1);
         }
@@ -4528,14 +2916,14 @@
         that.toggleView();
     };
 
-    var debounce = function(func,wait) {
+    var debounce = function (func, wait) {
         var timeout;
-        return function() {
+        return function () {
             var context = this,
-                args = arguments;
-            var later = function() {
+                    args = arguments;
+            var later = function () {
                 timeout = null;
-                func.apply(context,args);
+                func.apply(context, args);
             };
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
@@ -4552,7 +2940,7 @@
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _init = BootstrapTable.prototype.init;
+            _init = BootstrapTable.prototype.init;
 
     BootstrapTable.prototype.init = function () {
         _init.apply(this, Array.prototype.slice.apply(arguments));
@@ -4571,15 +2959,15 @@
         }
 
         var that = this,
-            old = {
-                width: $(window).width(),
-                height: $(window).height()
-            };
+                old = {
+                    width: $(window).width(),
+                    height: $(window).height()
+                };
 
-        $(window).on('resize orientationchange',debounce(function (evt) {
+        $(window).on('resize orientationchange', debounce(function (evt) {
             // reset view if height has only changed by at least the threshold.
             var height = $(this).height(),
-                width = $(this).width();
+                    width = $(this).width();
 
             if (Math.abs(old.height - height) > that.options.heightThreshold || old.width != width) {
                 changeView(that, width, height);
@@ -4588,11 +2976,11 @@
                     height: height
                 };
             }
-        },200));
+        }, 200));
 
         if (this.options.checkOnInit) {
             var height = $(window).height(),
-                width = $(window).width();
+                    width = $(window).width();
             changeView(this, width, height);
             old = {
                 width: width,
@@ -4635,8 +3023,8 @@
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _initTable = BootstrapTable.prototype.initTable,
-        _initBody = BootstrapTable.prototype.initBody;
+            _initTable = BootstrapTable.prototype.initTable,
+            _initBody = BootstrapTable.prototype.initBody;
 
     BootstrapTable.prototype.initTable = function () {
         var that = this;
@@ -4653,13 +3041,15 @@
 
             var editableOptions = {}, editableDataMarkup = [], editableDataPrefix = 'editable-';
 
-            var processDataOptions = function(key, value) {
-              // Replace camel case with dashes.
-              var dashKey = key.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
-              if (dashKey.slice(0, editableDataPrefix.length) == editableDataPrefix) {
-                var dataKey = dashKey.replace(editableDataPrefix, 'data-');
-                editableOptions[dataKey] = value;
-              }
+            var processDataOptions = function (key, value) {
+                // Replace camel case with dashes.
+                var dashKey = key.replace(/([A-Z])/g, function ($1) {
+                    return "-" + $1.toLowerCase();
+                });
+                if (dashKey.slice(0, editableDataPrefix.length) == editableDataPrefix) {
+                    var dataKey = dashKey.replace(editableDataPrefix, 'data-');
+                    editableOptions[dataKey] = value;
+                }
             };
 
             $.each(that.options, processDataOptions);
@@ -4699,32 +3089,32 @@
             }
 
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('save').on('save', function (e, params) {
-                    var data = that.getData(),
+                    .off('save').on('save', function (e, params) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index],
                         oldValue = row[column.field];
 
-                    $(this).data('value', params.submitValue);
-                    row[column.field] = params.submitValue;
-                    that.trigger('editable-save', column.field, row, oldValue, $(this));
-                });
+                $(this).data('value', params.submitValue);
+                row[column.field] = params.submitValue;
+                that.trigger('editable-save', column.field, row, oldValue, $(this));
+            });
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('shown').on('shown', function (e, editable) {
-                    var data = that.getData(),
+                    .off('shown').on('shown', function (e, editable) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index];
-                    
-                    that.trigger('editable-shown', column.field, row, $(this), editable);
-                });
+
+                that.trigger('editable-shown', column.field, row, $(this), editable);
+            });
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('hidden').on('hidden', function (e, reason) {
-                    var data = that.getData(),
+                    .off('hidden').on('hidden', function (e, reason) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index];
-                    
-                    that.trigger('editable-hidden', column.field, row, $(this), reason);
-                });
+
+                that.trigger('editable-hidden', column.field, row, $(this), reason);
+            });
         });
         this.trigger('editable-init');
     };
@@ -4764,8 +3154,8 @@
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _initTable = BootstrapTable.prototype.initTable,
-        _initBody = BootstrapTable.prototype.initBody;
+            _initTable = BootstrapTable.prototype.initTable,
+            _initBody = BootstrapTable.prototype.initBody;
 
     BootstrapTable.prototype.initTable = function () {
         var that = this;
@@ -4782,13 +3172,15 @@
 
             var editableOptions = {}, editableDataMarkup = [], editableDataPrefix = 'editable-';
 
-            var processDataOptions = function(key, value) {
-              // Replace camel case with dashes.
-              var dashKey = key.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
-              if (dashKey.slice(0, editableDataPrefix.length) == editableDataPrefix) {
-                var dataKey = dashKey.replace(editableDataPrefix, 'data-');
-                editableOptions[dataKey] = value;
-              }
+            var processDataOptions = function (key, value) {
+                // Replace camel case with dashes.
+                var dashKey = key.replace(/([A-Z])/g, function ($1) {
+                    return "-" + $1.toLowerCase();
+                });
+                if (dashKey.slice(0, editableDataPrefix.length) == editableDataPrefix) {
+                    var dataKey = dashKey.replace(editableDataPrefix, 'data-');
+                    editableOptions[dataKey] = value;
+                }
             };
 
             $.each(that.options, processDataOptions);
@@ -4828,32 +3220,32 @@
             }
 
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('save').on('save', function (e, params) {
-                    var data = that.getData(),
+                    .off('save').on('save', function (e, params) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index],
                         oldValue = row[column.field];
 
-                    $(this).data('value', params.submitValue);
-                    row[column.field] = params.submitValue;
-                    that.trigger('editable-save', column.field, row, oldValue, $(this));
-                });
+                $(this).data('value', params.submitValue);
+                row[column.field] = params.submitValue;
+                that.trigger('editable-save', column.field, row, oldValue, $(this));
+            });
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('shown').on('shown', function (e, editable) {
-                    var data = that.getData(),
+                    .off('shown').on('shown', function (e, editable) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index];
-                    
-                    that.trigger('editable-shown', column.field, row, $(this), editable);
-                });
+
+                that.trigger('editable-shown', column.field, row, $(this), editable);
+            });
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
-                .off('hidden').on('hidden', function (e, reason) {
-                    var data = that.getData(),
+                    .off('hidden').on('hidden', function (e, reason) {
+                var data = that.getData(),
                         index = $(this).parents('tr[data-index]').data('index'),
                         row = data[index];
-                    
-                    that.trigger('editable-hidden', column.field, row, $(this), reason);
-                });
+
+                that.trigger('editable-hidden', column.field, row, $(this), reason);
+            });
         });
         this.trigger('editable-init');
     };
@@ -4891,11 +3283,11 @@
     });
 
     $.extend($.fn.bootstrapTable.defaults.icons, {
-        export: 'glyphicon-export icon-share'
+        "export": "glyphicon-export icon-share"
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _initToolbar = BootstrapTable.prototype.initToolbar;
+            _initToolbar = BootstrapTable.prototype.initToolbar;
 
     BootstrapTable.prototype.initToolbar = function () {
         this.showToolbar = this.options.showExport;
@@ -4904,25 +3296,25 @@
 
         if (this.options.showExport) {
             var that = this,
-                $btnGroup = this.$toolbar.find('>.btn-group'),
-                $export = $btnGroup.find('div.export');
+                    $btnGroup = this.$toolbar.find('>.btn-group'),
+                    $export = $btnGroup.find('div.export');
 
             if (!$export.length) {
                 $export = $([
                     '<div class="export btn-group">',
-                        '<button class="btn btn-default' +
+                    '<button class="btn btn-default' +
                             sprintf(' btn-%s', this.options.iconSize) +
                             ' dropdown-toggle" ' +
                             'data-toggle="dropdown" type="button">',
-                            sprintf('<i class="%s %s"></i> ', this.options.iconsPrefix, this.options.icons.export),
-                            '<span class="caret"></span>',
-                        '</button>',
-                        '<ul class="dropdown-menu" role="menu">',
-                        '</ul>',
+                    sprintf('<i class="%s %s"></i> ', this.options.iconsPrefix, this.options.icons['export']),
+                    '<span class="caret"></span>',
+                    '</button>',
+                    '<ul class="dropdown-menu" role="menu">',
+                    '</ul>',
                     '</div>'].join('')).appendTo($btnGroup);
 
                 var $menu = $export.find('.dropdown-menu'),
-                    exportTypes = this.options.exportTypes;
+                        exportTypes = this.options.exportTypes;
 
                 if (typeof this.options.exportTypes === 'string') {
                     var types = this.options.exportTypes.slice(1, -1).replace(/ /g, '').split(',');
@@ -4935,21 +3327,21 @@
                 $.each(exportTypes, function (i, type) {
                     if (TYPE_NAME.hasOwnProperty(type)) {
                         $menu.append(['<li data-type="' + type + '">',
-                                '<a href="javascript:void(0)">',
-                                    TYPE_NAME[type],
-                                '</a>',
+                            '<a href="javascript:void(0)">',
+                            TYPE_NAME[type],
+                            '</a>',
                             '</li>'].join(''));
                     }
                 });
 
                 $menu.find('li').click(function () {
                     var type = $(this).data('type'),
-                        doExport = function () {
-                            that.$el.tableExport($.extend({}, that.options.exportOptions, {
-                                type: type,
-                                escape: false
-                            }));
-                        };
+                            doExport = function () {
+                                that.$el.tableExport($.extend({}, that.options.exportOptions, {
+                                    type: type,
+                                    escape: false
+                                }));
+                            };
 
                     if (that.options.exportDataType === 'all' && that.options.pagination) {
                         that.$el.one('load-success.bs.table page-change.bs.table', function () {
@@ -4959,7 +3351,7 @@
                         that.togglePagination();
                     } else if (that.options.exportDataType === 'selected') {
                         var data = that.getData(),
-                            selectedData = that.getAllSelections();
+                                selectedData = that.getAllSelections();
 
                         that.load(selectedData);
                         doExport();
@@ -4989,7 +3381,7 @@
 
     var searchClear = function (that) {
         var mid = that.options.searchModalId;
-        var $form = $('#form_' + mid);        
+        var $form = $('#form_' + mid);
         if ($form.length) {
             $form[0].reset();
 //            $('a[data-toggle="dropdown"]', $form).dropdown("choose", 'like');
@@ -5196,9 +3588,9 @@
                     }
                 }
             }
-        }        
+        }
         this.filterColumnsPartial = filter;
-        this.options.pageNumber = 1;        
+        this.options.pageNumber = 1;
         this.updatePagination();
         this.trigger('column-advanced-search', filter);
     };
@@ -5206,107 +3598,151 @@
 
 // JavaScript source code
 (function () {
-  if (typeof angular === 'undefined') {
-    return;
-  }
-  angular.module('bsTable', []).directive('bsTableControl', function () {
-    var CONTAINER_SELECTOR = '.bootstrap-table';
-    var SCROLLABLE_SELECTOR = '.fixed-table-body';
-    var SEARCH_SELECTOR = '.search input';
-    var bsTables = {};
-    function getBsTable (el) {
-      var result;
-      $.each(bsTables, function (id, bsTable) {
-        if (!bsTable.$el.closest(CONTAINER_SELECTOR).has(el).length) return;
-        result = bsTable;
-        return true;
-      });
-      return result;
+    if (typeof angular === 'undefined') {
+        return;
     }
+    angular.module('bsTable', []).directive('bsTableControl', function ($timeout) {
+        var CONTAINER_SELECTOR = '.bootstrap-table';
+        var SCROLLABLE_SELECTOR = '.fixed-table-body';
+        var SEARCH_SELECTOR = '.search input';
+        var bsTables = {};
+        function getBsTable(el) {
+            var result;
+            $.each(bsTables, function (id, bsTable) {
+                if (!bsTable.$el.closest(CONTAINER_SELECTOR).has(el).length)
+                    return;
+                result = bsTable;
+                return true;
+            });
+            return result;
+        }
 
-    $(window).resize(function () {
-      $.each(bsTables, function (id, bsTable) {
-        bsTable.$el.bootstrapTable('resetView');
-      });
-    });
-    function onScroll () {
-      var bsTable = this;
-      var state = bsTable.$s.bsTableControl.state;
-      bsTable.$s.$applyAsync(function () {
-        state.scroll = bsTable.$el.bootstrapTable('getScrollPosition');
-      });
-    }
-    $(document)
-      .on('post-header.bs.table', CONTAINER_SELECTOR+' table', function (evt) { // bootstrap-table calls .off('scroll') in initHeader so reattach here
-        var bsTable = getBsTable(evt.target);
-        if (!bsTable) return;
-        bsTable.$el
-          .closest(CONTAINER_SELECTOR)
-          .find(SCROLLABLE_SELECTOR)
-          .on('scroll', onScroll.bind(bsTable));
-      })
-      .on('sort.bs.table', CONTAINER_SELECTOR+' table', function (evt, sortName, sortOrder) {
-        var bsTable = getBsTable(evt.target);
-        if (!bsTable) return;
-        var state = bsTable.$s.bsTableControl.state;
-        bsTable.$s.$applyAsync(function () {
-          state.sortName = sortName;
-          state.sortOrder = sortOrder;
+        $(window).resize(function () {
+            $.each(bsTables, function (id, bsTable) {
+                bsTable.$el.bootstrapTable('resetView');
+            });
         });
-      })
-      .on('page-change.bs.table', CONTAINER_SELECTOR+' table', function (evt, pageNumber, pageSize) {
-        var bsTable = getBsTable(evt.target);
-        if (!bsTable) return;
-        var state = bsTable.$s.bsTableControl.state;
-        bsTable.$s.$applyAsync(function () {
-          state.pageNumber = pageNumber;
-          state.pageSize = pageSize;
-        });
-      })
-      .on('search.bs.table', CONTAINER_SELECTOR+' table', function (evt, searchText) {
-        var bsTable = getBsTable(evt.target);
-        if (!bsTable) return;
-        var state = bsTable.$s.bsTableControl.state;
-        bsTable.$s.$applyAsync(function () {
-          state.searchText = searchText;
-        });
-      })
-      .on('focus blur', CONTAINER_SELECTOR+' '+SEARCH_SELECTOR, function (evt) {
-        var bsTable = getBsTable(evt.target);
-        if (!bsTable) return;
-        var state = bsTable.$s.bsTableControl.state;
-        bsTable.$s.$applyAsync(function () {
-          state.searchHasFocus = $(evt.target).is(':focus');
-        });
-      });
+        $(document)
+                .on('post-header.bs.table', CONTAINER_SELECTOR + ' table', function (evt) { // bootstrap-table calls .off('scroll') in initHeader so reattach here
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    bsTable.$el
+                            .closest(CONTAINER_SELECTOR)
+                            .find(SCROLLABLE_SELECTOR)
+                            .on('scroll', function () {
+                                var state = bsTable.$s.bsTableControl.state;
+                                bsTable.$s.$applyAsync(function () {
+                                    state.scroll = bsTable.$el.bootstrapTable('getScrollPosition');
+                                });
+                            });
+                })
+                .on('sort.bs.table', CONTAINER_SELECTOR + ' table', function (evt, sortName, sortOrder) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    bsTable.$s.$applyAsync(function () {
+                        state.sortName = sortName;
+                        state.sortOrder = sortOrder;
+                    });
+                })
+                .on('page-change.bs.table', CONTAINER_SELECTOR + ' table', function (evt, pageNumber, pageSize) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    bsTable.$s.$applyAsync(function () {
+                        state.pageNumber = pageNumber;
+                        state.pageSize = pageSize;
+                    });
+                })
+                .on('search.bs.table', CONTAINER_SELECTOR + ' table', function (evt, searchText) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    bsTable.$s.$applyAsync(function () {
+                        state.searchText = searchText;
+                    });
+                })
+                .on('load-success.bs.table load-error.bs.table', CONTAINER_SELECTOR + ' table', function (evt) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    bsTable.$s.$applyAsync(function () {
+                        state.selected = [];
+                    });
+                })
+                .on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', CONTAINER_SELECTOR + ' table', function (evt) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    var selected = [];
+                    $.map(bsTable.$el.bootstrapTable('getSelections'), function (row) {
+                        selected.push(row.id);
+                    });
+                    bsTable.$s.$applyAsync(function () {
+                        state.selected = selected;
+                    });
+                })
+                .on('focus blur', CONTAINER_SELECTOR + ' ' + SEARCH_SELECTOR, function (evt) {
+                    var bsTable = getBsTable(evt.target);
+                    if (!bsTable)
+                        return;
+                    var state = bsTable.$s.bsTableControl.state;
+                    bsTable.$s.$applyAsync(function () {
+                        state.searchHasFocus = $(evt.target).is(':focus');
+                    });
+                });
 
-    return {
-      restrict: 'EA',
-      scope: {bsTableControl: '='},
-      link: function ($s, $el) {
-        var bsTable = bsTables[$s.$id] = {$s: $s, $el: $el};
-        $s.instantiated = false;
-        $s.$watch('bsTableControl.options', function (options) {
-          if (!options) options = $s.bsTableControl.options = {};
-          var state = $s.bsTableControl.state || {};
+        return {
+            restrict: 'EA',
+            scope: {bsTableControl: '='},
+            link: function ($s, $el) {
+                $el = $($el);
+                if (!$s.$applyAsync) {
+                    $s.$applyAsync = function (expr) {
+                        var scope = this;
+                        $timeout(function () {
+                            scope.$eval(expr);
+                        }, 20);
+                    }
+                }
+                $s.bsTableControl.$el = $el;
+                $s.bsTableControl.call = function (method, params) {
+                    $el.bootstrapTable(method, params);
+                }
+                var bsTable = bsTables[$s.$id] = {$s: $s, $el: $el};
+                $s.instantiated = false;
+                $s.$watch('bsTableControl.options', function (options) {
+                    if (!options)
+                        options = $s.bsTableControl.options = {};
+                    var state = $s.bsTableControl.state || {};
 
-          if ($s.instantiated) $el.bootstrapTable('destroy');
-          $el.bootstrapTable(angular.extend(angular.copy(options), state));
-          $s.instantiated = true;
+                    if ($s.instantiated)
+                        $el.bootstrapTable('destroy');
+                    $el.bootstrapTable(angular.extend(angular.copy(options), state));
+                    $s.instantiated = true;
 
-          // Update the UI for state that isn't settable via options
-          if ('scroll' in state) $el.bootstrapTable('scrollTo', state.scroll);
-          if ('searchHasFocus' in state) $el.closest(CONTAINER_SELECTOR).find(SEARCH_SELECTOR).focus(); // $el gets detached so have to recompute whole chain
-        }, true);
-        $s.$watch('bsTableControl.state', function (state) {
-          if (!state) state = $s.bsTableControl.state = {};
-          $el.trigger('directive-updated.bs.table', [state]);
-        }, true);
-        $s.$on('$destroy', function () {
-          delete bsTables[$s.$id];
-        });
-      }
-    };
-  })
+                    // Update the UI for state that isn't settable via options
+                    if ('scroll' in state)
+                        $el.bootstrapTable('scrollTo', state.scroll);
+                    if ('searchHasFocus' in state)
+                        $el.closest(CONTAINER_SELECTOR).find(SEARCH_SELECTOR).focus(); // $el gets detached so have to recompute whole chain
+                }, true);
+                $s.$watch('bsTableControl.state', function (state) {
+                    if (!state)
+                        state = $s.bsTableControl.state = {};
+                    $el.trigger('directive-updated.bs.table', [state]);
+                }, true);
+                $s.$on('$destroy', function () {
+                    delete bsTables[$s.$id];
+                });
+            }
+        };
+    })
 })();
 
