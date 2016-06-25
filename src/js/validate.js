@@ -236,7 +236,7 @@
   $.fn.validate.Constructor = Validate
 
   $.fn.validate.defaults = {
-    errorTpl: '<div class="alert alert-danger alert-inline "><i class="glyphicon glyphicon-remove-sign"></i> $errorMsg</div>',
+    errorTpl: '<div class="alert alert-danger alert-inline msg-naked"><i class="glyphicon glyphicon-remove-sign"></i> $errorMsg</div>',
     inputErrorClass: 'input-error',
     placeError: function($input, $error) {
       $input = $($input);
