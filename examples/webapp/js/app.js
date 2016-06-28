@@ -51,7 +51,7 @@ define(function () {
                     resolve: load(['../services/userService', '../views/form/create'])
                 })
                 .state('form_edit', {
-                    url: '/form/edit',
+                    url: '/form/edit/{id}',
                     views: {
                         "content": {
                             controller: 'formEditCtrl',
@@ -104,7 +104,7 @@ define(function () {
                             pageList: [10, 50, 100],
                             search: true,                            
                             minimumCountColumns: 2,
-                            clickToSelect: true,
+                            clickToSelect: false,
                             maintainSelected: true,
                             //tools
                             showColumns: true,
