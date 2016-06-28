@@ -2144,8 +2144,7 @@
 
         if (this.options.cardView) {
             // remove the element css
-            this.$el.css('margin-top', '0');
-            this.$tableContainer.css('padding-bottom', '0');
+            this.$el.css('margin-top', '0');            
             return;
         }
 
@@ -2166,8 +2165,7 @@
         }
 
         // Assign the correct sortable arrow
-        this.getCaret();
-        this.$tableContainer.css('padding-bottom', padding + 'px');
+        this.getCaret();        
         this.trigger('reset-view');
     };
 
