@@ -177,6 +177,10 @@
         font-weight: normal;
         line-height: 1.428571429;
     }
+    
+    .bars > div{
+        height:28px;
+    }
 
     .bars,
     .search,
@@ -184,6 +188,8 @@
         position: relative;
         line-height: 34px;
         vertical-align: top;
+        margin-top:2px;
+        margin-bottom:2px;
     }
     .btn{
         vertical-align: top;
