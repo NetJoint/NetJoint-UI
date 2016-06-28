@@ -2,6 +2,13 @@
 
 .alert.alert-inline{
     display:inline-block;
-    padding: 5px;
-    margin: 5px 0 ;
+    padding: 5px 10px;
+    margin: 5px 0;
+    vertical-align: top;
+}
+.form-inline{
+    .alert.alert-inline{
+        margin: 1px 0 0 0;
+        padding: 3px 10px;
+    }
 }

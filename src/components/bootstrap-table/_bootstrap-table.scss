@@ -6,9 +6,9 @@
 
 .bootstrap-table .table {
     margin-bottom: 0 !important;
-    border-bottom: 1px solid #dddddd;
+    border: 1px solid $panel-default-border;
     border-collapse: collapse !important;
-    border-radius: 1px;
+    border-radius: $panel-border-radius;
 }
 
 .bootstrap-table .table:not(.table-condensed),
@@ -142,69 +142,95 @@
     text-align: center;
 }
 
-.fixed-table-pagination div.pagination,
-.fixed-table-pagination .pagination-detail {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.fixed-table-toolbar,
+.fixed-table-container,
+.fixed-table-header,
+.fixed-table-body,
+.fixed-table-footer,
+.fixed-table-pagination{
+    float:left;
+    width:100%;
+}
+.fixed-table-toolbar,
+.fixed-table-container{
+    background-color: $panel-bg;
+    margin-bottom: 15px;
+    border: 1px solid $panel-default-border;
+    border-radius: $panel-border-radius;
+    padding: $panel-heading-padding;
 }
 
-.fixed-table-pagination div.pagination .pagination {
-    margin: 0;
+
+.fixed-table-toolbar{    
+    .columns-left {
+        margin-right: 5px;
+    }
+
+    .columns-right {
+        margin-left: 5px;
+    }
+
+    .columns label {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+    }
+
+    .bars,
+    .search,
+    .columns {
+        position: relative;
+        line-height: 34px;
+        vertical-align: top;
+    }
+    .btn{
+        vertical-align: top;
+    }
+}
+.fixed-table-pagination{    
+    div.pagination,
+    .pagination-detail {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    div.pagination .pagination {
+        margin: 0;
+    }
+
+    .pagination a {
+        padding: 6px 12px;
+        line-height: 1.428571429;
+    }
+
+    .pagination-info {
+        line-height: 34px;
+        margin-right: 5px;
+    }
+
+    .btn-group {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .dropup .dropdown-menu {
+        margin-bottom: 0;
+    }
+
+    .page-list {
+        display: inline-block;
+    }
+
+    li.disabled a {
+        pointer-events: none;
+        cursor: default;
+    }
+
 }
 
-.fixed-table-pagination .pagination a {
-    padding: 6px 12px;
-    line-height: 1.428571429;
-}
-
-.fixed-table-pagination .pagination-info {
-    line-height: 34px;
-    margin-right: 5px;
-}
-
-.fixed-table-pagination .btn-group {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.fixed-table-pagination .dropup .dropdown-menu {
-    margin-bottom: 0;
-}
-
-.fixed-table-pagination .page-list {
-    display: inline-block;
-}
-
-.fixed-table-toolbar .columns-left {
-    margin-right: 5px;
-}
-
-.fixed-table-toolbar .columns-right {
-    margin-left: 5px;
-}
-
-.fixed-table-toolbar .columns label {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: 1.428571429;
-}
-
-.fixed-table-toolbar .bars,
-.fixed-table-toolbar .search,
-.fixed-table-toolbar .columns {
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 34px;
-}
-
-.fixed-table-pagination li.disabled a {
-    pointer-events: none;
-    cursor: default;
-}
 
 .fixed-table-loading {
     display: none;

@@ -14,3 +14,23 @@
 .xlarge{
     width:500px;
 }
+.mini,.small,.medium,.large,.xlarge{
+    max-width: 100%;
+}
+.form-inline .form-control{
+    &.mini{
+        width:60px;
+    }
+    &.small{
+        width:94px;
+    }
+    &.medium{
+        width:148px;
+    }
+    &.large{
+        width:360px;
+    }
+    &.xlarge{
+        width:500px;
+    }
+}
