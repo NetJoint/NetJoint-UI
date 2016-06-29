@@ -22,6 +22,7 @@ define(function () {
         $stateProvider
                 .state('dashboard', {
                     url: '/',
+                    title:'控制面板',
                     views: {
                         "content": {
                             controller: 'dashboardCtrl',
@@ -31,7 +32,8 @@ define(function () {
                     resolve: load(['../services/userService', '../views/dashboard/dashboard'])
                 })
                 .state('table', {
-                    url: '/table/table',
+                    url: '/table',
+                    title:'用户列表',
                     views: {
                         "content": {
                             controller: 'tableCtrl',
@@ -40,8 +42,29 @@ define(function () {
                     },
                     resolve: load(['../services/userService', '../views/table/table'])
                 })
+                .state('table.create', {
+                    parene: 'table',
+                    url: '/create',
+                    title:'添加用户',
+                    params: {
+                        subtitle: '',
+                        user: {}
+                    },
+                    views: {
+                        "content": {
+                            controller: 'formCreateCtrl',
+                            templateUrl: 'views/form/create.html'
+                        }
+                    },
+                    resolve: load(['../services/userService', '../views/form/create'])
+                })
                 .state('form_create', {
                     url: '/form/create',
+                    title:'添加表单示例',
+                    params: {
+                        subtitle: '',
+                        user: {}
+                    },
                     views: {
                         "content": {
                             controller: 'formCreateCtrl',
@@ -52,6 +75,7 @@ define(function () {
                 })
                 .state('form_edit', {
                     url: '/form/edit/{id}',
+                    title:'修改表单示例',
                     views: {
                         "content": {
                             controller: 'formEditCtrl',
@@ -88,21 +112,25 @@ define(function () {
                 // 回退按钮
                 $rootScope.goBack = function () {
                     window.history.back();
-                };
+                };                
                 $rootScope.notify = function (message, type) {
                     //type: error, success, info
                     var humane = require('humane');
-                    humane.log(message, { timeout: 3000, clickToClose: true, addnCls: 'humane-' + type });
-                };                
+                    humane.log(message, {timeout: 3000, clickToClose: true, addnCls: 'humane-' + type});
+                };
+                $rootScope.$on('$stateChangeSuccess',
+                        function (event, toState, toParams, fromState, fromParams) {                            
+                            $rootScope.title = toState.title;
+                        });
                 $rootScope.setTable = function (url, columns, toolbar) {
                     return {
-                        options: {                            
-                            cache: false,                            
-                            striped: true,                            
-                            mobileResponsive:true,
+                        options: {
+                            cache: false,
+                            striped: true,
+                            mobileResponsive: true,
                             pageSize: 10,
                             pageList: [10, 50, 100],
-                            search: true,                            
+                            search: true,
                             minimumCountColumns: 2,
                             clickToSelect: false,
                             maintainSelected: true,
@@ -113,11 +141,11 @@ define(function () {
                             showToggle: true,
                             //page
                             pagination: true,
-                            sidePagination: 'server',                            
-                            dataField: 'data',                            
-                            sortName:"id",
-                            sortOrder:"desc",
-                            url:url,
+                            sidePagination: 'server',
+                            dataField: 'data',
+                            sortName: "id",
+                            sortOrder: "desc",
+                            url: url,
                             columns: columns,
                             toolbar: toolbar,
                         }

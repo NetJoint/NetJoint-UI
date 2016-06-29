@@ -1,7 +1,6 @@
 define(['app'], function (app) {
     app.register
             .controller('dashboardCtrl', function ($scope, $rootScope, userService, $timeout) {
-                $rootScope.title = '控制面板';
                 $scope.loaded = {
                     users: false
                 }
