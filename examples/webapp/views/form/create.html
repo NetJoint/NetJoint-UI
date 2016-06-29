@@ -1,1 +1,54 @@
-create
+<div class="panel panel-default"> 
+    <div class="panel-body">
+        <a ui-sref="table" class="btn btn-default"><i class="fa fa-reply"></i> <span>返回</span></a>
+    </div>
+</div>    
+<div class="panel panel-default">    
+    <div class="panel-body">
+        <form id="userForm" class="form-horizontal validate" ng-submit="submit()">
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label for="number" class="col-sm-3 control-label"><i class="required"></i> 编号：</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.number" type="text" name="number" class="form-control medium" value="" placeholder="用户的工号等唯一编号" data-rules="required" data-empty-msg="请输入唯一编号" />
+                    </div>
+                </div>
+                <div class="col-md-6 form-group form-inline">
+                    <label for="name" class="col-sm-3 control-label"><i class="required"></i> 姓名：</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.name" type="text" name="name" class="form-control medium" value="" placeholder="用户姓名" data-rules="required" data-empty-msg="请输入姓名" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label for="mobile" class="col-sm-3 control-label"><i class="required"></i> 手机号：</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.mobile" type="text" name="mobile" class="form-control medium" value="" placeholder="用户手机号" data-rules="required" data-empty-msg="使用手机号登录" />
+                    </div>
+                </div>
+                <div class="col-md-6 form-group form-inline">
+                    <label for="email" class="col-sm-3 control-label">邮箱：</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.email" type="text" name="email" class="form-control large" value="" placeholder="用户邮箱"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label for="password" class="col-sm-3 control-label"><i class="required"></i>初始密码：</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.password" type="text" name="password" class="form-control medium" value="" placeholder="初始密码默认为工号"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" class="btn btn-primary" value="提 交"/>
+                    </div>
+                </div>                
+            </div>            
+        </form>
+    </div>
+</div>

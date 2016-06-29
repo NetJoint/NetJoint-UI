@@ -4,6 +4,7 @@ define(['app'], function (app) {
                 var columns = [
                     {
                         field: 'checked',
+                        valign: 'middle',
                         checkbox: true
                     },
                     {
@@ -16,16 +17,18 @@ define(['app'], function (app) {
                     {
                         field: 'name',
                         title: '姓名',
+                        valign: 'middle',
                         sortable: true
                     }, {
                         field: 'mobile',
                         title: '手机号',
+                        valign: 'middle',
                         sortable: true
                     }, {
                         field: 'id',
                         title: '操作',
                         formatter: function (value, row) {
-                            return '<a href="#/form/edit/' + row.id + '" class="btn btn-success">编辑</a>'
+                            return '<a href="#/table/edit/' + row.id + '" class="btn btn-success btn-sm">编 辑</a>'
                         }
                     }
 

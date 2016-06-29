@@ -1,4 +1,4 @@
-!function ($) {
++function ($) {
     'use strict';
     var Validate = function (form, options) {
         var self = this;
@@ -240,14 +240,30 @@
     $.fn.extend({
         validate: function (options) {
             var args = arguments;
-            return this.each(function () {
+            if (options == 'checkAll') {
+                var hasError = false;
+                this.each(function () {
+                    var $this = $(this),
+                            data = $this.data("validate")
+                    if (!data)
+                        $this.data('validate', (data = new Validate(this, options)))
+                        var ok = data[options].apply(data, Array.prototype.slice.call(args, 1)); 
+                        if(!ok){
+                            hasError = true;
+                        }
+                })
+                return !hasError;
+            }
+            var els = this.each(function () {
                 var $this = $(this),
                         data = $this.data("validate")
                 if (!data)
                     $this.data('validate', (data = new Validate(this, options)))
-                if (typeof options == 'string')
+                if (typeof options == 'string') {
                     data[options].apply(data, Array.prototype.slice.call(args, 1));
+                }
             })
+            return els;
         }
     })
     $.fn.validate.Constructor = Validate

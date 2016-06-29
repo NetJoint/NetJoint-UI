@@ -45,7 +45,7 @@ define(function () {
                 .state('table.create', {
                     parene: 'table',
                     url: '/create',
-                    title:'添加用户',
+                    title:'添加新用户',
                     params: {
                         subtitle: '',
                         user: {}
@@ -57,6 +57,26 @@ define(function () {
                         }
                     },
                     resolve: load(['../services/userService', '../views/form/create'])
+                })
+                .state('table.edit', {
+                    parene: 'table',
+                    url: '/edit/{id}',
+                    title:'编辑用户信息',
+                    params: {
+                        subtitle: '',
+                        user: {
+                            number:'111111',
+                            name:'张一',
+                            mobile:'13485728901'
+                        }
+                    },
+                    views: {
+                        "content": {
+                            controller: 'formEditCtrl',
+                            templateUrl: 'views/form/edit.html'
+                        }
+                    },
+                    resolve: load(['../services/userService', '../views/form/edit'])
                 })
                 .state('form_create', {
                     url: '/form/create',
