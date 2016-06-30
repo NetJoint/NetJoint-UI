@@ -25,7 +25,6 @@ define(['app'], function (app) {
                         valign: 'middle',
                         sortable: true
                     }, {
-                        field: 'id',
                         title: '操作',
                         formatter: function (value, row) {
                             return '<a href="#/table/edit/' + row.id + '" class="btn btn-success btn-sm">编 辑</a>'
