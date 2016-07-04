@@ -545,7 +545,7 @@
             '<div class="fixed-table-container">',
             '<div class="fixed-table-header"><table></table></div>',
             '<div class="fixed-table-body">',
-            '<div class="fixed-table-loading">',
+            '<div class="fixed-table-loading"><i class="fa fa-spinner fa-spin"></i> ',
             this.options.formatLoadingMessage(),
             '</div>',
             '</div>',
@@ -786,7 +786,7 @@
         if (!this.options.showHeader || this.options.cardView) {
             this.$header.hide();
             this.$tableHeader.hide();
-            this.$tableLoading.css('top', 0);
+            this.$tableLoading.css('top', 1);
         } else {
             this.$header.show();
             this.$tableHeader.show();
@@ -1827,7 +1827,7 @@
             cache: this.options.cache,
             contentType: this.options.contentType,
             dataType: this.options.dataType,
-            success: function (res) {
+            success: function (res) {                
                 res = calculateObjectValue(that.options, that.options.responseHandler, [res], res);
                 that.load(res);
                 that.trigger('load-success', res);
@@ -2818,19 +2818,19 @@
 
     $.fn.bootstrapTable.locales['zh-CN'] = {
         formatLoadingMessage: function () {
-            return '正在努力地加载数据中，请稍候……';
+            return '正在加载数据，请稍候……';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return '每页显示 ' + pageNumber + ' 条记录';
+            return '每页 ' + pageNumber + ' 条';
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return '显示第 ' + pageFrom + ' 到第 ' + pageTo + ' 条记录，总共 ' + totalRows + ' 条记录';
+            return '第 ' + pageFrom + ' 到第 ' + pageTo + ' 条，共 ' + totalRows + ' 条记录';
         },
         formatSearch: function () {
             return '搜索';
         },
         formatNoMatches: function () {
-            return '没有找到匹配的记录';
+            return '没有找到匹配记录';
         },
         formatPaginationSwitch: function () {
             return '隐藏/显示分页';
