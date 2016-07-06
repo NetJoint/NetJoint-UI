@@ -1,1 +1,14 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+
+.modal{
+    &.bootbox-confirm,
+    &.bootbox-alert{
+        .bootbox-body{
+            text-align: center;
+            font-size:14px;
+        }
+        .modal-footer{
+            text-align: center;
+        }
+    }
+}

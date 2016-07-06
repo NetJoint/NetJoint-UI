@@ -33,21 +33,25 @@ define(['app'], function (app) {
 
                 ];
                 $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');
+                
                 $scope.removeUsers = function () {
                     var selected = $scope.userTableCtrl.state.selected;
                     if (selected.length == 0) {
                         return false;
-                    }
-                    if (confirm('确定要删除所选项吗？')) {
-                        userService.remove(selected)
+                    }                    
+                    $rootScope.confirm('确定要删除所选项吗？', function (rs) {
+                        if(rs){
+                            userService.remove(selected)
                                 .then(function (rs) {
                                     $rootScope.notify('删除成功', 'success');
                                     $scope.userTableCtrl.call('refresh');
                                 }, function (error) {
                                     $rootScope.notify(error.message, 'error');
                                 });
-                    }
+                        }                        
+                    })
+                        ;
                 }
-                
+
             })
 })

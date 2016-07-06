@@ -34,7 +34,8 @@ gulp.task('jsbuild', function () {
                 paths: {
                     "jquery": "../../node_modules/jquery/dist/jquery",
                     "select2": "../../node_modules/select2/dist/js/select2.full",
-                    "humane": "../../node_modules/humane-js/humane"
+                    "humane": "../../node_modules/humane-js/humane",
+                    "bootbox": "bootbox"
                 },
                 shim: {
                     'affix': {

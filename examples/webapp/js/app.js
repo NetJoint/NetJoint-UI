@@ -22,7 +22,7 @@ define(function () {
         $stateProvider
                 .state('dashboard', {
                     url: '/',
-                    title:'控制面板',
+                    title: '控制面板',
                     views: {
                         "content": {
                             controller: 'dashboardCtrl',
@@ -33,7 +33,7 @@ define(function () {
                 })
                 .state('table', {
                     url: '/table',
-                    title:'用户列表',
+                    title: '用户列表',
                     views: {
                         "content": {
                             controller: 'tableCtrl',
@@ -45,7 +45,7 @@ define(function () {
                 .state('table.create', {
                     parene: 'table',
                     url: '/create',
-                    title:'添加新用户',
+                    title: '添加新用户',
                     params: {
                         subtitle: '',
                         user: {}
@@ -61,13 +61,13 @@ define(function () {
                 .state('table.edit', {
                     parene: 'table',
                     url: '/edit/{id}',
-                    title:'编辑用户信息',
+                    title: '编辑用户信息',
                     params: {
                         subtitle: '',
                         user: {
-                            number:'111111',
-                            name:'张一',
-                            mobile:'13485728901'
+                            number: '111111',
+                            name: '张一',
+                            mobile: '13485728901'
                         }
                     },
                     views: {
@@ -80,7 +80,7 @@ define(function () {
                 })
                 .state('form_create', {
                     url: '/form/create',
-                    title:'添加表单示例',
+                    title: '添加表单示例',
                     params: {
                         subtitle: '',
                         user: {}
@@ -95,7 +95,7 @@ define(function () {
                 })
                 .state('form_edit', {
                     url: '/form/edit/{id}',
-                    title:'修改表单示例',
+                    title: '修改表单示例',
                     views: {
                         "content": {
                             controller: 'formEditCtrl',
@@ -132,14 +132,48 @@ define(function () {
                 // 回退按钮
                 $rootScope.goBack = function () {
                     window.history.back();
-                };                
+                };
+                // 消息通知
                 $rootScope.notify = function (message, type) {
                     //type: error, success, info
                     var humane = require('humane');
                     humane.log(message, {timeout: 3000, clickToClose: true, addnCls: 'humane-' + type});
                 };
+                $rootScope.alert = function (message) {
+                    var bootbox = require('bootbox');
+                    bootbox.alert(
+                            {
+                                size: 'small',
+                                message: message
+                            }
+                    );
+                };
+                $rootScope.prompt = function (message, callback) {
+                    var bootbox = require('bootbox');
+                    bootbox.prompt(
+                            {
+                                size: 'small',
+                                message: message,
+                                callback: callback
+                            }
+                    );
+                };
+                $rootScope.confirm = function (message, callback) {
+                    var bootbox = require('bootbox');
+                    bootbox.confirm(
+                            {
+                                size: 'small',
+                                message: message,
+                                callback: callback
+                            }
+                    );
+                };
+                $rootScope.dialog = function (options) {
+                    var bootbox = require('bootbox');
+                    bootbox.dialog(options);
+                };
                 $rootScope.$on('$stateChangeSuccess',
-                        function (event, toState, toParams, fromState, fromParams) {                            
+                        function (event, toState, toParams, fromState, fromParams) {
                             $rootScope.title = toState.title;
                         });
                 $rootScope.setTable = function (url, columns, toolbar) {
