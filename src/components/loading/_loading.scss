@@ -1,0 +1,27 @@
+.relative{
+    position: relative;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: $zindex-modal-background;
+    background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0;
+    overflow:hidden;
+    > .loading{
+        color: #000;
+        font-size: 20px;
+        left: 50%;
+        margin-left: -500px;
+        margin-top: -15px;
+        position: absolute;
+        top: 50%;
+        text-align: center;
+        width:1000px;
+        height:30px;
+    }
+}

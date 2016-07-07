@@ -517,10 +517,10 @@
 			var formatted = this.getFormattedDate();
 			if (!this.isInput) {
 				if (this.component) {
-					this.element.find('input').val(formatted).change();
+					this.element.find('input').val(formatted).change().trigger('input');
 				}
 			} else {
-				this.element.val(formatted).change();
+				this.element.val(formatted).change().trigger('input');
 			}
 		},
 
@@ -1064,7 +1064,7 @@
 								else if (this.component)
 									element = this.element.find('input');
 								if (element)
-									element.val("").change();
+									element.val("").change().trigger('input');
 								this.update();
 								this._trigger('changeDate');
 								if (this.o.autoclose)
@@ -1160,7 +1160,7 @@
 				element = this.element.find('input');
 			}
 			if (element) {
-				element.change();
+				element.change().trigger('input');
 			}
 			if (this.o.autoclose && (!which || which === 'date')) {
 				this.hide();
@@ -1332,7 +1332,7 @@
 					element = this.element.find('input');
 				}
 				if (element) {
-					element.change();
+					element.change().trigger('input');
 				}
 			}
 		},

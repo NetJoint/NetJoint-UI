@@ -439,7 +439,7 @@
         element = this.element.find('input');
       }
       if (element){
-        element.change();
+        element.change().trigger('input');
         element.val(timeStr);
       }else if(this.isInDatepicker){
         this.element.data("time",timeStr);

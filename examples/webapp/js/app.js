@@ -138,7 +138,7 @@ define(function () {
                     //type: error, success, info
                     var humane = require('humane');
                     humane.log(message, {timeout: 3000, clickToClose: true, addnCls: 'humane-' + type});
-                };
+                };                
                 $rootScope.alert = function (message) {
                     var bootbox = require('bootbox');
                     bootbox.alert(
