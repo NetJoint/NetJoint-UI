@@ -36,12 +36,18 @@
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
+                    <label for="birthday" class="col-sm-3 control-label"><i class="required"></i> 出生日期</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.birthday" type="text" data-toggle="datepicker" id="birthday" name="birthday" class="form-control medium" value="" placeholder="出生日期" data-rules="required" ng-input/>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group form-inline">
                     <label for="password" class="col-sm-3 control-label"><i class="required"></i>初始密码：</label>
                     <div class="col-sm-9">
                         <input ng-model="form.user.password" type="text" name="password" class="form-control medium" value="" placeholder="初始密码默认为工号"/>
                     </div>
                 </div>
-            </div>
+            </div>          
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
                     <div class="col-sm-offset-3 col-sm-9">

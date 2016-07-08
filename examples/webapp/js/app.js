@@ -107,23 +107,14 @@ define(function () {
 
         $urlRouterProvider.otherwise('/');
     })
-            .directive('ngFocus', function () {
-                var FOCUS_CLASS = "ng-focused";
+            .directive('ngInput', function () {
                 return {
                     restrict: 'A',
                     require: 'ngModel',
                     link: function (scope, element, attrs, ctrl) {
-                        ctrl.$focused = false;
-                        element.bind('focus', function (evt) {
-                            element.addClass(FOCUS_CLASS);
-                            scope.$apply(function () {
-                                ctrl.$focused = true;
-                            });
-                        }).bind('blur', function (evt) {
-                            element.removeClass(FOCUS_CLASS);
-                            scope.$apply(function () {
-                                ctrl.$focused = false;
-                            });
+                        var el = $(element);
+                        el.bind('change', function () {
+                            element.triggerHandler('input');
                         });
                     }
                 }
@@ -138,7 +129,7 @@ define(function () {
                     //type: error, success, info
                     var humane = require('humane');
                     humane.log(message, {timeout: 3000, clickToClose: true, addnCls: 'humane-' + type});
-                };                
+                };
                 $rootScope.alert = function (message) {
                     var bootbox = require('bootbox');
                     bootbox.alert(
