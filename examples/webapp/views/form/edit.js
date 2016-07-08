@@ -4,7 +4,7 @@ define(['app'], function (app) {
                 $('#userForm').validate();
                 $scope.form = {
                     user: $stateParams.user
-                }
+                }                
                 $scope.submit = function () {
                     //表单校验                    
                     if(!$('#userForm').validate('checkAll')){
@@ -16,6 +16,9 @@ define(['app'], function (app) {
                             }, function (error) {
                                 $rootScope.notify(error.message, 'error');
                             });
+                };
+                $scope.check =  function (obj, value) {
+                    console.log(this);
                 };
             })
 })

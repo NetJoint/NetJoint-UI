@@ -67,7 +67,10 @@ define(function () {
                         user: {
                             number: '111111',
                             name: '张一',
-                            mobile: '13485728901'
+                            mobile: '13485728901',
+                            gender:1,
+                            birthday: '2000-7-7',
+                            like: {football:true, pingpong:true}
                         }
                     },
                     views: {

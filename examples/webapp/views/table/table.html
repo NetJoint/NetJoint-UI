@@ -1,5 +1,5 @@
 <div ui-view="content" class="relative">
-    <div class="overlay">
+    <div class="overlay" ng-if="loading.user">
         <div class="loading"><i class="fa fa-spinner fa-spin"></i></div>
     </div>
     <div id="Toolbar">

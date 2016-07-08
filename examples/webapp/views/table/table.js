@@ -1,6 +1,9 @@
 define(['app'], function (app) {
     app.register
             .controller('tableCtrl', function ($scope, $rootScope, userService) {
+                $scope.loading = {
+                    user: false
+                }
                 var columns = [
                     {
                         field: 'checked',
@@ -32,8 +35,7 @@ define(['app'], function (app) {
                     }
 
                 ];
-                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');
-                
+                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');                
                 $scope.removeUsers = function () {
                     var selected = $scope.userTableCtrl.state.selected;
                     if (selected.length == 0) {

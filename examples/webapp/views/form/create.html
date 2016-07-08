@@ -36,18 +36,50 @@
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
-                    <label for="birthday" class="col-sm-3 control-label"><i class="required"></i> 出生日期</label>
+                    <label for="gender" class="col-sm-3 control-label"><i class="required"></i> 性别：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.birthday" type="text" data-toggle="datepicker" id="birthday" name="birthday" class="form-control medium" value="" placeholder="出生日期" data-rules="required" ng-input/>
+                        <label class="radio inline" ng-class="{checked:form.user.gender == 1}">
+                            <input type="radio" name="gender" value="1" ng-model="form.user.gender"><span>男</span>
+                        </label>
+                        <label class="radio inline" ng-class="{checked:form.user.gender == 2}">
+                            <input type="radio" name="gender" value="2" ng-model="form.user.gender"><span>女</span>
+                        </label>
                     </div>
                 </div>
                 <div class="col-md-6 form-group form-inline">
-                    <label for="password" class="col-sm-3 control-label"><i class="required"></i>初始密码：</label>
+                    <label for="birthday" class="col-sm-3 control-label"><i class="required"></i> 出生日期</label>
+                    <div class="col-sm-9">
+                        <input ng-model="form.user.birthday" type="text" id="birthday" name="birthday" class="form-control medium" value="" placeholder="出生日期" data-rules="required" data-toggle="datepicker" ng-input/>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label class="col-sm-3 control-label"><i class="required"></i> 爱好：</label>
+                    <div class="col-sm-9">
+                        <label class="checkbox inline" ng-class="{checked:form.user.like.run}">
+                            <input type="checkbox" name="like[]" value="run" ng-model="form.user.like.run"><span>跑步</span>
+                        </label>
+                        <label class="checkbox inline" ng-class="{checked:form.user.like.football}">
+                            <input type="checkbox" name="like[]" value="football" ng-model="form.user.like.football"><span>足球</span>
+                        </label>
+                        <label class="checkbox inline" ng-class="{checked:form.user.like.basketball}">
+                            <input type="checkbox" name="like[]" value="basketball" ng-model="form.user.like.basketball"><span>篮球</span>
+                        </label>
+                        <label class="checkbox inline" ng-class="{checked:form.user.like.pingpong}">
+                            <input type="checkbox" name="like[]" value="pingpong" ng-model="form.user.like.pingpong"><span>乒乓球</span>
+                        </label>
+                    </div>                    
+                </div>                               
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label for="password" class="col-sm-3 control-label"><i class="required"></i> 初始密码：</label>
                     <div class="col-sm-9">
                         <input ng-model="form.user.password" type="text" name="password" class="form-control medium" value="" placeholder="初始密码默认为工号"/>
                     </div>
                 </div>
-            </div>          
+            </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
                     <div class="col-sm-offset-3 col-sm-9">
@@ -56,5 +88,9 @@
                 </div>                
             </div>            
         </form>
+        <div>
+            <h5>form.user:</h5>
+            <p>{{form.user}}</p>
+        </div>
     </div>
 </div>
