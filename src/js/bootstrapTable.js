@@ -3051,7 +3051,7 @@
             if (!column.editable) {
                 return;
             }
-
+            
             var editableOptions = {}, editableDataMarkup = [], editableDataPrefix = 'editable-';
 
             var processDataOptions = function (key, value) {
@@ -3076,11 +3076,12 @@
                 $.each(editableOptions, function (key, value) {
                     editableDataMarkup.push(' ' + key + '="' + value + '"');
                 });
-
                 return ['<a href="javascript:void(0)"',
                     ' data-name="' + column.field + '"',
+//                    ' data-type="' + type + '"',
                     ' data-pk="' + row[that.options.idField] + '"',
                     ' data-value="' + result + '"',
+                    
                     editableDataMarkup.join(''),
                     '>' + '</a>'
                 ].join('');

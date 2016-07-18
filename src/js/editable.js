@@ -785,11 +785,10 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
        /*
         returns array items from sourceData having value property equal or inArray of 'value'
        */
-       itemsByValue: function(value, sourceData, valueProp) {
+       itemsByValue: function(value, sourceData, valueProp) {           
            if(!sourceData || value === null) {
                return [];
-           }
-           
+           }           
            if (typeof(valueProp) !== "function") {
                var idKey = valueProp || 'value';
                valueProp = function (e) { return e[idKey]; };
@@ -1640,8 +1639,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             //do not display anything
             if(this.options.display === false) {
                 return;
-            }
-            
+            }            
             //if input has `value2htmlFinal` method, we pass callback in third param to be called when source is loaded
             if(this.input.value2htmlFinal) {
                 return this.input.value2html(this.value, this.$element[0], this.options.display, response); 
@@ -2769,8 +2767,10 @@ List - abstract class for inputs that have source option loaded from js array or
             var count, obj, result = [], item, iterateItem;
             if(!data || typeof data === 'string') {
                 return null; 
+            }            
+            if(data.data){
+                data = data.data;
             }
-
             if($.isArray(data)) { //array
                 /* 
                    function to iterate inside item of array if item is object.
@@ -2788,9 +2788,9 @@ List - abstract class for inputs that have source option loaded from js array or
                     if(typeof item === 'object') {
                         count = 0; //count of keys inside item
                         $.each(item, iterateItem);
-                        //case: [{val1: 'text1'}, {val2: 'text2} ...]
+                        //case: [{val1: 'text1'}, {val2: 'text2'} ...]
                         if(count === 1) { 
-                            result.push(obj); 
+                            result.push(obj);
                             //case: [{value: 1, text: 'text1'}, {value: 2, text: 'text2'}, ...]
                         } else if(count > 1) {
                             //removed check of existance: item.hasOwnProperty('value') && item.hasOwnProperty('text')
@@ -2804,7 +2804,7 @@ List - abstract class for inputs that have source option loaded from js array or
                         result.push({value: item, text: item}); 
                     }
                 }
-            } else {  //case: {val1: 'text1', val2: 'text2, ...}
+            } else {  //case: {val1: 'text1', val2: 'text2, ...}                                
                 $.each(data, function (k, v) {
                     result.push({value: k, text: v});
                 });  
@@ -3888,7 +3888,7 @@ $(function(){
         Converts source from x-editable format: {value: 1, text: "1"} to
         select2 format: {id: 1, text: "1"}
         */
-        convertSource: function(source) {
+        convertSource: function(source) {            
             if($.isArray(source) && source.length && source[0].value !== undefined) {
                 for(var i = 0; i<source.length; i++) {
                     if(source[i].value !== undefined) {

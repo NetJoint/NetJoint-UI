@@ -27,7 +27,22 @@ define(['app'], function (app) {
                         field: 'mobile',
                         title: '手机号',
                         valign: 'middle',
-                        sortable: true
+                        sortable: true,
+                        editable:true
+                    }, {
+                        field: 'birthday',
+                        title: '出生日期',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: true
+                    }, {
+                        field: 'state',
+                        title: '状态',
+                        valign: 'middle',
+                        sortable: true,
+                        editable: true,
+                        editableType: 'select',
+                        editableSource: 'json/select.json',
                     }, {
                         title: '操作',
                         formatter: function (value, row) {
