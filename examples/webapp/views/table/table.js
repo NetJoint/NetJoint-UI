@@ -21,7 +21,8 @@ define(['app'], function (app) {
                         field: 'name',
                         title: '姓名',
                         valign: 'middle',
-                        sortable: true
+                        sortable: true,
+                        editable:true
                     }, {
                         field: 'mobile',
                         title: '手机号',

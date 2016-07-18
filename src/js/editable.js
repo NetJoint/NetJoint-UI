@@ -317,11 +317,18 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 this.showLoading();
 
                 //standard params
-                params = {
-                    name: this.options.name || '',
-                    value: submitValue,
-                    pk: pk 
-                };
+                var method = this.options.method || 'POST';
+                var field_name = this.options.name || '';
+                if(method == 'PUT'){
+                    params = {};
+                    params[field_name] = submitValue;                    
+                }else{
+                    params = {
+                        name: field_name,
+                        value: submitValue,
+                        pk: pk 
+                    };
+                }
 
                 //additional params
                 if(typeof this.options.params === 'function') {
@@ -330,16 +337,20 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                     //try parse json in single quotes (from data-params attribute)
                     this.options.params = $.fn.editableutils.tryParseJson(this.options.params, true);   
                     $.extend(params, this.options.params);
-                }
+                }                
 
                 if(typeof this.options.url === 'function') { //user's function
                     return this.options.url.call(this.options.scope, params);
-                } else {  
+                } else {
+                    var url = this.options.url;
+                    if(method == 'PUT'){
+                       url += '/' + pk
+                    }
                     //send ajax to server and return deferred object
                     return $.ajax($.extend({
-                        url     : this.options.url,
+                        url     : url,
                         data    : params,
-                        type    : 'POST'
+                        type    : method
                     }, this.options.ajaxOptions));
                 }
             }

@@ -170,9 +170,8 @@ define(function () {
                         function (event, toState, toParams, fromState, fromParams) {
                             $rootScope.title = toState.title;
                         });
-                $rootScope.setTable = function (url, columns, toolbar) {
-                    return {
-                        options: {
+                $rootScope.setTable = function (url, columns, toolbar, options) {
+                    var defaults = {
                             cache: false,
                             striped: true,
                             mobileResponsive: true,
@@ -190,13 +189,22 @@ define(function () {
                             //page
                             pagination: true,
                             sidePagination: 'server',
+                            idField:'id',
                             dataField: 'data',
                             sortName: "id",
                             sortOrder: "desc",
                             url: url,
                             columns: columns,
                             toolbar: toolbar,
-                        }
+                            //
+                            editableEmptytext : '未填写',
+                            editableMethod:  "PUT",
+                            editableUrl: url
+                        }                            
+                    options = $.extend({}, defaults, options);
+                    
+                    return {
+                        options: options
                     }
                 }
             })
