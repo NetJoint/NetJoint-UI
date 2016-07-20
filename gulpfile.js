@@ -35,7 +35,8 @@ gulp.task('jsbuild', function () {
                     "jquery": "../../node_modules/jquery/dist/jquery",
                     "select2": "../../node_modules/select2/dist/js/select2.full",
                     "humane": "../../node_modules/humane-js/humane",
-                    "bootbox": "bootbox"
+                    "bootbox": "bootbox",
+                    "moment" : "../../node_modules/moment/min/moment-with-locales"
                 },
                 shim: {
                     'affix': {

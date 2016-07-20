@@ -166,10 +166,12 @@ define(function () {
                     var bootbox = require('bootbox');
                     bootbox.dialog(options);
                 };
+                // 状态变化时刷新title
                 $rootScope.$on('$stateChangeSuccess',
                         function (event, toState, toParams, fromState, fromParams) {
                             $rootScope.title = toState.title;
-                        });
+                        });                
+                // bootstrap-table初始化设置        
                 $rootScope.setTable = function (url, columns, toolbar, options) {
                     var defaults = {
                             cache: false,
@@ -196,13 +198,12 @@ define(function () {
                             url: url,
                             columns: columns,
                             toolbar: toolbar,
-                            //
+                            //editable
                             editableEmptytext : '未填写',
                             editableMethod:  "PUT",
                             editableUrl: url
                         }                            
-                    options = $.extend({}, defaults, options);
-                    
+                    options = $.extend({}, defaults, options);                    
                     return {
                         options: options
                     }

@@ -21,7 +21,8 @@ define(['jquery',
     'tableExport',
     'bootstrapTable',
     'humane',
-    'bootbox'
+    'bootbox',
+    'moment'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

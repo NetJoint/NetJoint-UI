@@ -49,6 +49,7 @@
     "tableexport": "^3.2.5",
     "bootstrap-table": "^1.10.1",
     "humane-js":"^3.2.2",
-    "bootbox": "^4.4.0"
+    "bootbox": "^4.4.0",
+    "moment": "^2.14.1"
   }
 }
