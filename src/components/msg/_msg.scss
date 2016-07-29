@@ -1,0 +1,201 @@
+.msg {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    position: relative;
+    color: $text-color;
+
+    > .msg-icon {
+        font-size: 14px;
+        font-family: 'icon-pc';
+        font-style: normal;
+        text-decoration: none;
+    }
+    &.msg-error > .msg-icon {
+        &:before {
+            content: "\c60d";
+        }
+    }
+    &.msg-stop > .msg-icon {
+        &:before {
+            content: "\c60b";
+        }
+    }
+    &.msg-success > .msg-icon {
+        &:before {
+            content: "\e601";
+        }
+    }
+    &.msg-warning > .msg-icon {
+        &:before {
+            content: "\c612";
+        }
+    }
+    &.msg-notice > .msg-icon {
+        &:before {
+            content: "\c601";
+        }
+    }
+    &.msg-tips > .msg-icon {
+        &:before {
+            content: "\c609";
+        }
+    }
+    &.msg-info > .msg-icon {
+        &:before {
+            content: "\c60a";
+        }
+    }
+    &.msg-question > .msg-icon {
+        &:before {
+            content: "\c605";
+        }
+    }
+
+
+    > .msg-con {
+        border-radius: $alert-border-radius;
+        p {
+            font-weight: normal;
+            margin-bottom: 0;
+            margin-top: $line-height-base*6px;
+        }
+        .close {
+            float: none;
+            position: absolute;
+            top: 11px;
+            right: 11px;
+        }
+    }
+    > .msg-icon {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        position: absolute;
+    }
+
+}
+
+// 小尺寸（默认尺寸）
+.msg {
+    font-size: $font-size-base;
+    line-height: $line-height-base*$font-size-base;
+    vertical-align: middle;
+    > .msg-con { padding: 2px 10px 2px 23px; }
+    > .msg-icon {
+        top: 3px;
+        left: 6px;
+    }
+    .close {
+        font-size: 18px;
+        font-weight: normal;
+        color: inherit;
+    }
+
+    // 大尺寸
+    &.msg-large {
+        font-size: $font-size-large;
+        line-height: $line-height-base*$font-size-large;
+        font-weight: bold;
+        .close {
+            font-size: 24px;
+        }
+        > .msg-con { padding: 11px 28px 11px 44px; }
+        > .msg-icon {
+            top: 12px;
+            left: 11px;
+            font-size: 24px;
+        }
+    }
+
+    // Msgs类型
+    &.msg-error {
+        color: #ea4a36;
+        > .msg-con {
+            border: 1px solid #ffe3e0;
+            background-color: #fff2f2;
+        }
+    }
+    &.msg-stop {
+        color: #ea4a36;
+        > .msg-con {
+            border: 1px solid #ffe3e0;
+            background-color: #fff2f2;
+        }
+    }
+    &.msg-success {
+        color: #4ab933;
+        > .msg-con {
+            border: 1px solid #dcf9d6;
+            background-color: #edffe9;
+        }
+    }
+    &.msg-warning {
+        color: #cf700b;
+        > .msg-con {
+            border: 1px solid #fee8d7;
+            background-color: #fef1e3;
+        }
+    }
+    &.msg-notice {
+        color: #ee9f28;
+        > .msg-con {
+            border: 1px solid #faf1d7;
+            background-color: #fffff1;
+        }
+    }
+    &.msg-tips {
+        color: #ee9f28;
+        > .msg-con {
+            border: 1px solid #faf1d7;
+            background-color: #fffff1;
+        }
+    }
+    &.msg-info {
+        color: #3a9ed5;
+        > .msg-con {
+            border: 1px solid #e4f3fd;
+            background-color: #f2faff;
+        }
+    }
+    &.msg-question {
+        color: #333;
+        > .msg-con {
+            border: 1px solid #eaeaea;
+            background-color: #f7f7f7;
+        }
+    }
+
+    // 成块级
+    &.msg-block {
+        display: block;
+        margin-bottom: $line-height-base*12px;
+    }
+
+    // 清除模式
+    &.msg-clear {
+        display: block;
+        > .msg-con {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+        }
+    }
+
+    // 默认字体颜色(icon仍保留彩色)
+    &.msg-default {
+        .msg-con {
+            color: $text-color;
+        }
+    }
+
+    // 去边框和底色
+    &.msg-naked {
+        padding: 1px;
+        > .msg-con {
+            border: none;
+            background-color: transparent;
+        }
+    }
+
+}

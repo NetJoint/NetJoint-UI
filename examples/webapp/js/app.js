@@ -1,6 +1,6 @@
 define(function () {
     var service_debug = true;
-    var app = angular.module('webApp', ['ui.router', 'bsTable']);
+    var app = angular.module('webApp', ['ui.router']);
     var load = function (files) {
         return {
             load: ["$q", function ($q) {
@@ -68,9 +68,9 @@ define(function () {
                             number: '111111',
                             name: '张一',
                             mobile: '13485728901',
-                            gender:1,
+                            gender: 1,
                             birthday: '2000-7-7',
-                            like: {football:true, pingpong:true}
+                            like: {football: true, pingpong: true}
                         }
                     },
                     views: {
@@ -110,18 +110,6 @@ define(function () {
 
         $urlRouterProvider.otherwise('/');
     })
-            .directive('ngInput', function () {
-                return {
-                    restrict: 'A',
-                    require: 'ngModel',
-                    link: function (scope, element, attrs, ctrl) {
-                        var el = $(element);
-                        el.bind('change', function () {
-                            element.triggerHandler('input');
-                        });
-                    }
-                }
-            })
             .run(function ($rootScope) {
                 // 回退按钮
                 $rootScope.goBack = function () {
@@ -170,40 +158,40 @@ define(function () {
                 $rootScope.$on('$stateChangeSuccess',
                         function (event, toState, toParams, fromState, fromParams) {
                             $rootScope.title = toState.title;
-                        });                
+                        });
                 // bootstrap-table初始化设置        
                 $rootScope.setTable = function (url, columns, toolbar, options) {
                     var defaults = {
-                            cache: false,
-                            striped: true,
-                            mobileResponsive: true,
-                            pageSize: 10,
-                            pageList: [10, 50, 100],
-                            search: true,
-                            minimumCountColumns: 2,
-                            clickToSelect: false,
-                            maintainSelected: true,
-                            //tools
-                            showColumns: true,
-                            showRefresh: true,
-                            showExport: true,
-                            showToggle: true,
-                            //page
-                            pagination: true,
-                            sidePagination: 'server',
-                            idField:'id',
-                            dataField: 'data',
-                            sortName: "id",
-                            sortOrder: "desc",
-                            url: url,
-                            columns: columns,
-                            toolbar: toolbar,
-                            //editable
-                            editableEmptytext : '未填写',
-                            editableMethod:  "PUT",
-                            editableUrl: url
-                        }                            
-                    options = $.extend({}, defaults, options);                    
+                        cache: false,
+                        striped: true,
+                        mobileResponsive: true,
+                        pageSize: 10,
+                        pageList: [10, 50, 100],
+                        search: true,
+                        minimumCountColumns: 2,
+                        clickToSelect: false,
+                        maintainSelected: true,
+                        //tools
+                        showColumns: true,
+                        showRefresh: true,
+                        showExport: true,
+                        showToggle: true,
+                        //page
+                        pagination: true,
+                        sidePagination: 'server',
+                        idField: 'id',
+                        dataField: 'data',
+                        sortName: "id",
+                        sortOrder: "desc",
+                        url: url,
+                        columns: columns,
+                        toolbar: toolbar,
+                        //editable
+                        editableEmptytext: '未填写',
+                        editableMethod: "PUT",
+                        editableUrl: url
+                    }
+                    options = $.extend({}, defaults, options);
                     return {
                         options: options
                     }
@@ -320,6 +308,161 @@ define(function () {
                                     delay.reject(that.errorMsg(error));
                                 });
                         return delay.promise;
+                    }
+                };
+            })
+            .directive('ngInput', function () {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function (scope, element, attrs, ctrl) {
+                        var el = $(element);
+                        el.bind('change', function () {
+                            element.triggerHandler('input');
+                        });
+                    }
+                }
+            })
+            .directive('bsTableControl', function ($timeout) {
+                var CONTAINER_SELECTOR = '.bootstrap-table';
+                var SCROLLABLE_SELECTOR = '.fixed-table-body';
+                var SEARCH_SELECTOR = '.search input';
+                var bsTables = {};
+                function getBsTable(el) {
+                    var result;
+                    $.each(bsTables, function (id, bsTable) {
+                        if (!bsTable.$el.closest(CONTAINER_SELECTOR).has(el).length)
+                            return;
+                        result = bsTable;
+                        return true;
+                    });
+                    return result;
+                }
+
+                $(window).resize(function () {
+                    $.each(bsTables, function (id, bsTable) {
+                        bsTable.$el.bootstrapTable('resetView');
+                    });
+                });
+                $(document)
+                        .on('post-header.bs.table', CONTAINER_SELECTOR + ' table', function (evt) { // bootstrap-table calls .off('scroll') in initHeader so reattach here
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            bsTable.$el
+                                    .closest(CONTAINER_SELECTOR)
+                                    .find(SCROLLABLE_SELECTOR)
+                                    .on('scroll', function () {
+                                        var state = bsTable.$s.bsTableControl.state;
+                                        bsTable.$s.$applyAsync(function () {
+                                            state.scroll = bsTable.$el.bootstrapTable('getScrollPosition');
+                                        });
+                                    });
+                        })
+                        .on('sort.bs.table', CONTAINER_SELECTOR + ' table', function (evt, sortName, sortOrder) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            bsTable.$s.$applyAsync(function () {
+                                state.sortName = sortName;
+                                state.sortOrder = sortOrder;
+                            });
+                        })
+                        .on('page-change.bs.table', CONTAINER_SELECTOR + ' table', function (evt, pageNumber, pageSize) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            bsTable.$s.$applyAsync(function () {
+                                state.pageNumber = pageNumber;
+                                state.pageSize = pageSize;
+                            });
+                        })
+                        .on('search.bs.table', CONTAINER_SELECTOR + ' table', function (evt, searchText) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            bsTable.$s.$applyAsync(function () {
+                                state.searchText = searchText;
+                            });
+                        })
+                        .on('load-success.bs.table load-error.bs.table', CONTAINER_SELECTOR + ' table', function (evt) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            bsTable.$s.$applyAsync(function () {
+                                state.selected = [];
+                            });
+                        })
+                        .on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', CONTAINER_SELECTOR + ' table', function (evt) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            var selected = [];
+                            $.map(bsTable.$el.bootstrapTable('getSelections'), function (row) {
+                                selected.push(row.id);
+                            });
+                            bsTable.$s.$applyAsync(function () {
+                                state.selected = selected;
+                            });
+                        })
+                        .on('focus blur', CONTAINER_SELECTOR + ' ' + SEARCH_SELECTOR, function (evt) {
+                            var bsTable = getBsTable(evt.target);
+                            if (!bsTable)
+                                return;
+                            var state = bsTable.$s.bsTableControl.state;
+                            bsTable.$s.$applyAsync(function () {
+                                state.searchHasFocus = $(evt.target).is(':focus');
+                            });
+                        });
+
+                return {
+                    restrict: 'EA',
+                    scope: {bsTableControl: '='},
+                    link: function ($s, el) {
+                        $el = $(el);
+                        if (!$s.$applyAsync) {
+                            $s.$applyAsync = function (expr) {
+                                var scope = this;
+                                $timeout(function () {
+                                    scope.$eval(expr);
+                                }, 20);
+                            }
+                        }
+                        $s.bsTableControl.$el = $el;
+                        $s.bsTableControl.call = function (method, params) {
+                            $el.bootstrapTable(method, params);
+                        }
+                        var bsTable = bsTables[$s.$id] = {$s: $s, $el: $el};
+                        $s.instantiated = false;
+                        $s.$watch('bsTableControl.options', function (options) {
+                            if (!options)
+                                options = $s.bsTableControl.options = {};
+                            var state = $s.bsTableControl.state || {};
+
+                            if ($s.instantiated)
+                                $el.bootstrapTable('destroy');
+                            $el.bootstrapTable(angular.extend(angular.copy(options), state));
+                            $s.instantiated = true;
+
+                            // Update the UI for state that isn't settable via options
+                            if ('scroll' in state)
+                                $el.bootstrapTable('scrollTo', state.scroll);
+                            if ('searchHasFocus' in state)
+                                $el.closest(CONTAINER_SELECTOR).find(SEARCH_SELECTOR).focus(); // $el gets detached so have to recompute whole chain
+                        }, true);
+                        $s.$watch('bsTableControl.state', function (state) {
+                            if (!state)
+                                state = $s.bsTableControl.state = {};
+                            $el.trigger('directive-updated.bs.table', [state]);
+                        }, true);
+                        $s.$on('$destroy', function () {
+                            delete bsTables[$s.$id];
+                        });
                     }
                 };
             });
