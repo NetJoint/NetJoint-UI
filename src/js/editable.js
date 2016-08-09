@@ -184,6 +184,11 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 $block.removeClass($.fn.editableform.errorBlockClass).empty().hide(); 
             } else {
                 //convert newline to <br> for more pretty error display
+                try {
+                    var json = $.parseJSON(msg);
+                    msg = json.message;
+                 } catch(e) {                     
+                 }
                 if(msg) {
                     lines = (''+msg).split('\n');
                     for (var i = 0; i < lines.length; i++) {
@@ -3690,6 +3695,7 @@ $(function(){
     "use strict";
     
     var Constructor = function (options) {
+        console.log(options);
         this.init('select2', options, Constructor.defaults);
 
         options.select2 = options.select2 || {};
@@ -3709,7 +3715,7 @@ $(function(){
                 source = options.source.call(options.scope);
             }               
 
-            if (typeof source === 'string') {
+            if (typeof source === 'string') {                
                 options.select2.ajax = options.select2.ajax || {};
                 //some default ajax params
                 if(!options.select2.ajax.data) {

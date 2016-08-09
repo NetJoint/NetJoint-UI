@@ -3003,21 +3003,6 @@
             return false;
         },
         onEditableSave: function (field, row, oldValue, $el) {
-            
-//            var that = this, data = $el.data();
-//            if (typeof(data.method) != 'undefined' && typeof(this.url)!='undefined') {               
-//                var params = {};
-//                    params[field] = row[field];
-//                    $.ajax({
-//                        type: data.method,
-//                        url: this.url + '/' + row.id,
-//                        data: params,
-//                        dataType: 'json',
-//                        error: function (rs) {
-//                            alert(rs.responseJSON.message);
-//                        },
-//                    });
-//            }
             return false;
         },
         onEditableShown: function (field, row, $el, editable) {
@@ -3096,7 +3081,7 @@
         if (!this.options.editable) {
             return;
         }
-
+        $.fn.editable.defaults.mode = 'inline';
         $.each(this.columns, function (i, column) {
             if (!column.editable) {
                 return;

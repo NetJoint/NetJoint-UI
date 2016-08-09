@@ -184,8 +184,7 @@
     -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
     margin-left: $main-sidebar-width;
-    min-height: 100%;
-    min-height: 500px;    
+    min-height: 640px;    
     z-index: 2;
     padding:10px;
 }

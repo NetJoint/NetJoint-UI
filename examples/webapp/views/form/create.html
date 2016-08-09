@@ -49,7 +49,7 @@
                 <div class="col-md-6 form-group form-inline">
                     <label for="birthday" class="col-sm-3 control-label"><i class="required"></i> 出生日期</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.birthday" type="text" id="birthday" name="birthday" class="form-control medium" value="" placeholder="出生日期" data-rules="required" data-toggle="datepicker" ng-input/>
+                        <input ng-model="form.user.birthday" type="text" id="birthday" name="birthday" class="form-control medium" value="" placeholder="出生日期" data-rules="required" data-toggle="datepicker" data-date-timepicker="true" ng-input/>
                     </div>
                 </div>                
             </div>
@@ -89,6 +89,8 @@
             </div>            
         </form>
         <div>
+            <i class="round round-primary">1</i> 111111
+            <i class="round round-danger">11</i>
             <h5>form.user:</h5>
             <p>{{form.user}}</p>
         </div>

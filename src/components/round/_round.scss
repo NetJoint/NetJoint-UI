@@ -1,0 +1,61 @@
+//
+// Round
+// --------------------------------------------------
+
+.round {
+  display: inline-block;
+  padding: .3em .3em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 1;
+  color: $label-color;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 1em;
+  min-width:1.6em;
+
+  // Empty rounds collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+
+  .btn & {
+    position: relative;
+    top: -1px;
+  }
+}
+
+a.round {
+  &:hover,
+  &:focus {
+    color: $label-link-hover-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.round-default {
+  @include label-variant($label-default-bg);
+}
+
+.round-primary {
+  @include label-variant($label-primary-bg);
+}
+
+.round-success {
+  @include label-variant($label-success-bg);
+}
+
+.round-info {
+  @include label-variant($label-info-bg);
+}
+
+.round-warning {
+  @include label-variant($label-warning-bg);
+}
+
+.round-danger {
+  @include label-variant($label-danger-bg);
+}

@@ -42,7 +42,33 @@ define(['app'], function (app) {
                         sortable: true,
                         editable: true,
                         editableType: 'select',
+                        editableMode: 'popover',
                         editableSource: 'json/select.json',
+                    }, {
+                        field: 'like',
+                        title: '喜欢',
+                        valign: 'middle',
+                        editable: true,
+                        editableType: 'select2',
+                        editableMode: 'popover',
+                        editableSource: 'json/select2.json',
+//                        editableSelect2: {
+//                            width: 200,
+//                            placeholder: 'Select country',
+//                            allowClear: true,
+//                            ajax: {
+//                                url: 'json/select2.json',
+//                                dataType: 'json',
+//                                data: function (term, page) {
+//                                    console.log(term);
+//                                    return { query: term };
+//                                },
+//                                results: function (data, page) {
+//                                    console.log(data);
+//                                    return { results: data };
+//                                }
+//                            },
+//                        }
                     }, {
                         title: '操作',
                         formatter: function (value, row) {

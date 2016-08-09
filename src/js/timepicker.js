@@ -126,7 +126,7 @@
         windowHeight = $window.height(),
         scrollTop = $window.scrollTop();
 
-        var zIndex = parseInt(this.element.parents().filter(function(){
+        var zIndex = 2000+parseInt(this.element.parents().filter(function(){
             return $(this).css('z-index') !== 'auto';
           }).first().css('z-index'))+10;
         var offset = this.component ? this.component.parent().offset() : this.element.offset();
@@ -624,11 +624,11 @@
 
       if ($.support.transition) {
         node.css({
-          'top': dur + 'px',
+          'top': dur + 10 + 'px',
         });
       }else{
         node.animate({
-          top: dur + 'px',
+          top: dur + 10 + 'px',
         },300);
       }
       
