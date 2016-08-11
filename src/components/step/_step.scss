@@ -38,12 +38,8 @@
     }
 
     .round {
-        display: inline-block;
         width: $font-size-base + 4;  
         height: $font-size-base + 4;
-        border-radius:(($font-size-base + 4) / 2);
-        text-align: center;
-        line-height: $font-size-base + 4;
         .icon {
             vertical-align: -1px;
         }
@@ -183,7 +179,6 @@
             vertical-align: middle;
             font-size: $font-size-base;
             color: #FFF;
-            line-height: 22px;
             text-align: center;
             float: left;
         }
