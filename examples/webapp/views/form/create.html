@@ -74,12 +74,12 @@
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
-                    <label for="password" class="col-sm-3 control-label"><i class="required"></i> 初始密码：</label>
+                    <label for="password" class="col-sm-3 control-label"><i class="required"></i> 头像：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.password" type="text" name="password" class="form-control medium" value="" placeholder="初始密码默认为工号"/>
+                        <input type="text" ng-input ng-model="form.user.avatar" data-toggle="cropupload" data-multiple="1" data-height="80"   data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="thumb">
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
                     <div class="col-sm-offset-3 col-sm-9">
@@ -89,8 +89,6 @@
             </div>            
         </form>
         <div>
-            <i class="round round-primary">1</i> 111111
-            <i class="round round-danger">11</i>
             <h5>form.user:</h5>
             <p>{{form.user}}</p>
         </div>

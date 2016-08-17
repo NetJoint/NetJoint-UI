@@ -1,10 +1,14 @@
 define(['app'], function (app) {
     app.register
-            .controller('formCreateCtrl', function ($scope, $rootScope, $state, $stateParams, userService) {
-                $('#userForm').validate();
+            .controller('formCreateCtrl', function ($scope, $rootScope, $state, $stateParams, userService,$timeout) {
                 $scope.form = {
                     user: $stateParams.user
                 }
+                $scope.form.user.avatar = 'img/no_avatar.png,img/no_avatar.png';
+                $timeout(function(){
+                    $("[data-toggle='cropupload']").cropupload();
+                },1000);
+                $('#userForm').validate();
                 $scope.submit = function () {                   
                     //表单校验                    
                     if(!$('#userForm').validate('checkAll')){

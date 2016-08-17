@@ -22,7 +22,9 @@ define(['jquery',
     'bootstrapTable',
     'humane',
     'bootbox',
-    'moment'
+    'moment',
+    'cropper',
+    'cropupload'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

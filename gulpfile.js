@@ -36,7 +36,8 @@ gulp.task('jsbuild', function () {
                     "select2": "../../node_modules/select2/dist/js/select2.full",
                     "humane": "../../node_modules/humane-js/humane",
                     "bootbox": "bootbox",
-                    "moment" : "../../node_modules/moment/min/moment-with-locales"
+                    "moment" : "../../node_modules/moment/min/moment-with-locales",
+                    "cropper" : "../../node_modules/cropper/dist/cropper"
                 },
                 shim: {
                     'affix': {
@@ -118,7 +119,11 @@ gulp.task('jsbuild', function () {
                     'bootstrapTable': {
                         deps: ['jquery','editable','tableExport'],
                         exports: '$.fn.bootstrapTable'
-                    }
+                    },
+                    'cropupload':{
+                        deps: ['jquery','cropper'],
+                        exports: '$.fn.cropupload'
+                    },
                 }
             }))
             .pipe(concat('netjoint-ui.js'))
