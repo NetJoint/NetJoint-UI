@@ -297,9 +297,16 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 if(typeof this.options.error === 'function') {
                     msg = this.options.error.call(this.options.scope, xhr, newValue);
                 } else {
-                    msg = typeof xhr === 'string' ? xhr : xhr.responseText || xhr.statusText || 'Unknown error!';
+                    if(xhr.responseJSON){
+                        if(xhr.responseJSON.errors){
+                            msg = xhr.responseJSON.errors.name.join(',');
+                        }else{
+                            msg = xhr.responseJSON.message;
+                        }                        
+                    }else{
+                        msg = typeof xhr === 'string' ? xhr : xhr.responseText || xhr.statusText || 'Unknown error!';
+                    }                    
                 }
-
                 this.error(msg);
                 this.showForm();
             }, this));
@@ -3695,7 +3702,6 @@ $(function(){
     "use strict";
     
     var Constructor = function (options) {
-        console.log(options);
         this.init('select2', options, Constructor.defaults);
 
         options.select2 = options.select2 || {};

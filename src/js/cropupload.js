@@ -77,7 +77,7 @@
             this.$thumbUpload.on('click', $.proxy(this.directUpload, this));
             this.$thumbInput.on('change', $.proxy(this.change, this));
             this.$thumbForm.on('submit', $.proxy(this.submit, this));
-//            this.$el.on('change', $.proxy(this.thumbView, this));
+            this.$el.on('change', $.proxy(this.thumbView, this));
             this.initButtons();
             this.thumbView();
         },
@@ -407,6 +407,7 @@
     $.fn.cropupload.defaults = {
         url: null,
         multiple: false,
+        hideInput: true,
         zindex: 99999,
         height: 80,
         aspectRatio: 1.33,
