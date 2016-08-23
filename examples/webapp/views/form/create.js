@@ -21,5 +21,33 @@ define(['app'], function (app) {
                                 $rootScope.notify(error.message, 'error');
                             });
                 };
+                $('#good_at').select2({
+                    ajax: {
+                        url: "json/select2.json",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                query: params.term,
+                                page: params.page,
+                                per_page: 20
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data,
+                                pagination: {
+                                    more: (params.page * 20) < data.total_count
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }, 
+                    minimumInputLength: 0
+                });
             })
 })

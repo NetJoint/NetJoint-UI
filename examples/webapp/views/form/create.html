@@ -70,7 +70,15 @@
                             <input type="checkbox" name="like[]" value="pingpong" ng-model="form.user.like.pingpong"><span>乒乓球</span>
                         </label>
                     </div>                    
-                </div>                               
+                </div>    
+                <div class="col-md-6 form-group form-inline">
+                    <label for="good_at" class="col-sm-3 control-label"><i class="required"></i> 特长：</label>
+                    <div class="col-sm-9">
+                        <select id="good_at" class="medium" ng-input ng-model="form.user.good_at">
+                            <option value="">请选择特长</option>
+                        </select>
+                    </div>
+                </div>   
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">

@@ -1048,7 +1048,7 @@ S2.define('select2/results',[
       $highlighted.trigger('mouseup');
     });
 
-    container.on('results:select', function () {
+    container.on('results:select', function () {      
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
@@ -4406,7 +4406,7 @@ S2.define('select2/i18n/en',[],function () {
       return message;
     },
     loadingMore: function () {
-      return 'Loading more results…';
+      return 'Loading more results...';
     },
     maximumSelected: function (args) {
       var message = 'You can only select ' + args.maximum + ' item';
@@ -4421,11 +4421,21 @@ S2.define('select2/i18n/en',[],function () {
       return 'No results found';
     },
     searching: function () {
-      return 'Searching…';
+      return 'Searching...';
     }
   };
 });
-
+S2.define("select2/i18n/zh-CN",[],function(){
+    return{
+        errorLoading:function(){return"无法载入结果。"},
+        inputTooLong:function(e){var t=e.input.length-e.maximum,n="请删除"+t+"个字符";return n},
+        inputTooShort:function(e){var t=e.minimum-e.input.length,n="请再输入至少"+t+"个字符";return n},
+        loadingMore:function(){return"载入更多结果..."},
+        maximumSelected:function(e){var t="最多只能选择"+e.maximum+"项";return t},
+        noResults:function(){return"未找到结果"},
+        searching:function(){return"搜索中..."}
+    }
+});
 S2.define('select2/defaults',[
   'jquery',
   'require',
@@ -4673,8 +4683,9 @@ S2.define('select2/defaults',[
       }
     }
 
-    if ($.isArray(options.language)) {
+    if ($.isArray(options.language)) {        
       var languages = new Translation();
+      options.language.push('zh-CN');
       options.language.push('en');
 
       var languageNames = options.language;
@@ -4712,7 +4723,7 @@ S2.define('select2/defaults',[
       options.translations = languages;
     } else {
       var baseTranslation = Translation.loadPath(
-        this.defaults.amdLanguageBase + 'en'
+        this.defaults.amdLanguageBase + 'zh-CN'
       );
       var customTranslation = new Translation(options.language);
 
@@ -4786,7 +4797,7 @@ S2.define('select2/defaults',[
       debug: false,
       dropdownAutoWidth: false,
       escapeMarkup: Utils.escapeMarkup,
-      language: EnglishTranslation,
+      language: 'zh-CN',
       matcher: matcher,
       minimumInputLength: 0,
       maximumInputLength: 0,
@@ -4945,7 +4956,6 @@ S2.define('select2/options',[
 
   return Options;
 });
-
 S2.define('select2/core',[
   'jquery',
   './options',

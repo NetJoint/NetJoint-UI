@@ -315,11 +315,15 @@ define(function () {
                 return {
                     restrict: 'A',
                     require: 'ngModel',
-                    link: function (scope, element, attrs, ctrl) {
+                    link: function (scope, element, attrs, ngModel) {
                         var el = $(element);
                         el.bind('change', function () {
-                            element.triggerHandler('input');
+                            scope.$apply(changeModel);
                         });
+                        function changeModel() {
+                            ngModel.$setViewValue(el.val());                            
+                            ngModel.$render();
+                        }
                     }
                 }
             })
