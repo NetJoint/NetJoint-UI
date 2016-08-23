@@ -196,6 +196,36 @@ define(function () {
                         options: options
                     }
                 }
+                //select2设置
+                $rootScope.setSelect = function ($el, url, options) {
+                    var defaults = {
+                        ajax: {
+                            url: url,
+                            dataType: 'json',
+                            delay: 250,
+                            data: function (params) {
+                                return {
+                                    query: params.term,
+                                    page: params.page,
+                                    per_page: 10
+                                };
+                            },
+                            processResults: function (data, params) {
+                                params.page = params.page || 1;
+                                return {
+                                    results: data.data,
+                                    pagination: {
+                                        more: (params.page * 10) < data.total_count
+                                    }
+                                };
+                            },
+                            cache: true
+                        },
+                        minimumInputLength: 0
+                    },
+                    options = $.extend({}, defaults, options);
+                    $el.select2(options);
+                }
             })
             .factory('baseService', function ($http, $q) {
                 return {
