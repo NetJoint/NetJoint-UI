@@ -197,32 +197,40 @@ define(function () {
                     }
                 }
                 //select2设置
-                $rootScope.setSelect = function ($el, url, options) {
-                    var defaults = {
-                        ajax: {
-                            url: url,
-                            dataType: 'json',
-                            delay: 250,
-                            data: function (params) {
-                                return {
-                                    query: params.term,
-                                    page: params.page,
-                                    per_page: 10
-                                };
+                $rootScope.setSelect = function ($el, resource, options) {
+                    var defaults;
+                    if (typeof (resource) == 'string') {
+                        defaults = {
+                            ajax: {
+                                url: resource,
+                                dataType: 'json',
+                                delay: 250,
+                                data: function (params) {
+                                    return {
+                                        query: params.term,
+                                        page: params.page,
+                                        per_page: 10
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    params.page = params.page || 1;
+                                    return {
+                                        results: data.data,
+                                        pagination: {
+                                            more: (params.page * 10) < data.total_count
+                                        }
+                                    };
+                                },
+                                cache: true
                             },
-                            processResults: function (data, params) {
-                                params.page = params.page || 1;
-                                return {
-                                    results: data.data,
-                                    pagination: {
-                                        more: (params.page * 10) < data.total_count
-                                    }
-                                };
-                            },
-                            cache: true
-                        },
-                        minimumInputLength: 0
-                    },
+                            minimumInputLength: 0
+                        };
+                    }else{
+                        defaults = {
+                            data: resource
+                        }
+                    }
+
                     options = $.extend({}, defaults, options);
                     $el.select2(options);
                 }
@@ -351,7 +359,7 @@ define(function () {
                             scope.$apply(changeModel);
                         });
                         function changeModel() {
-                            ngModel.$setViewValue(el.val());                            
+                            ngModel.$setViewValue(el.val());
                             ngModel.$render();
                         }
                     }

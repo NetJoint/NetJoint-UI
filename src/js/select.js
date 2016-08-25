@@ -819,15 +819,13 @@ S2.define('select2/results',[
     }
 
     data.results = this.sort(data.results);
-
     for (var d = 0; d < data.results.length; d++) {
       var item = data.results[d];
-
       var $option = this.option(item);
-
-      $options.push($option);
+      if($option!=''){
+          $options.push($option);
+      }
     }
-
     this.$results.append($options);
   };
 
@@ -847,7 +845,14 @@ S2.define('select2/results',[
 
     this.data.current(function (selected) {
       var selectedIds = $.map(selected, function (s) {
-        return s.id.toString();
+        if(s.element!= null){
+            var re = /\? string:(\S) \?/ig;        
+            var result = re.exec(s.element.value);
+            if(result){
+            return result[1].toString();
+        }
+        }
+        return s.id.toString();     
       });
 
       var $options = self.$results
@@ -862,7 +867,7 @@ S2.define('select2/results',[
         var id = '' + item.id;
 
         if ((item.element != null && item.element.selected) ||
-            (item.element == null && $.inArray(id, selectedIds) > -1)) {
+            ($.inArray(id, selectedIds) > -1)) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
@@ -906,7 +911,9 @@ S2.define('select2/results',[
   Results.prototype.option = function (data) {
     var option = document.createElement('li');
     option.className = 'select2-results__option';
-
+    if(data.text==''){
+        return '';
+    }
     var attrs = {
       'role': 'treeitem',
       'aria-selected': 'false'
@@ -1181,7 +1188,6 @@ S2.define('select2/results',[
 
         return;
       }
-
       self.trigger('select', {
         originalEvent: evt,
         data: data
@@ -1191,10 +1197,8 @@ S2.define('select2/results',[
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
       function (evt) {
       var data = $(this).data('data');
-
       self.getHighlightedResults()
           .removeClass('select2-results__option--highlighted');
-
       self.trigger('results:focus', {
         data: data,
         element: $(this)
@@ -3005,7 +3009,6 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.current = function (callback) {
     var data = [];
     var self = this;
-
     this.$element.find(':selected').each(function () {
       var $option = $(this);
 
@@ -3146,7 +3149,6 @@ S2.define('select2/data/select',[
 
   SelectAdapter.prototype.option = function (data) {
     var option;
-
     if (data.children) {
       option = document.createElement('optgroup');
       option.label = data.text;
@@ -5235,7 +5237,6 @@ S2.define('select2/core',[
       if (!self.isOpen()) {
         self.trigger('open', {});
       }
-
       this.dataAdapter.query(params, function (data) {
         self.trigger('results:all', {
           data: data,
@@ -5726,6 +5727,7 @@ S2.define('select2/compat/inputData',[
 
   InputData.prototype.current = function (_, callback) {
     function getSelected (data, selectedIds) {
+     
       var selected = [];
 
       if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
@@ -5827,6 +5829,7 @@ S2.define('select2/compat/inputData',[
     });
 
     this._currentData.push.apply(this._currentData, options);
+
   };
 
   return InputData;
