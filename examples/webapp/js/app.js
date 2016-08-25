@@ -110,7 +110,7 @@ define(function () {
 
         $urlRouterProvider.otherwise('/');
     })
-            .run(function ($rootScope) {
+            .run(function ($rootScope,$timeout) {
                 // 回退按钮
                 $rootScope.goBack = function () {
                     window.history.back();
@@ -232,7 +232,9 @@ define(function () {
                     }
 
                     options = $.extend({}, defaults, options);
-                    $el.select2(options);
+                    $timeout(function () {
+                        $el.select2(options);
+                    }, 50);
                 }
             })
             .factory('baseService', function ($http, $q) {
