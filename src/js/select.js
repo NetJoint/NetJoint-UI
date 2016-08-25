@@ -846,7 +846,7 @@ S2.define('select2/results',[
     this.data.current(function (selected) {
       var selectedIds = $.map(selected, function (s) {
         if(s.element!= null){
-            var re = /\? string:(\S) \?/ig;        
+            var re = /\? \S:(\S) \?/ig;        
             var result = re.exec(s.element.value);
             if(result){
             return result[1].toString();
