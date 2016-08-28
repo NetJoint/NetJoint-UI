@@ -846,11 +846,11 @@ S2.define('select2/results',[
     this.data.current(function (selected) {
       var selectedIds = $.map(selected, function (s) {
         if(s.element!= null){
-            var re = /\? \S:(\S) \?/ig;        
+            var re = /\? [\S]*:([\S]*) \?/ig;        
             var result = re.exec(s.element.value);
             if(result){
-            return result[1].toString();
-        }
+                return result[1].toString();
+            }
         }
         return s.id.toString();     
       });
@@ -1510,7 +1510,7 @@ S2.define('select2/selection/single',[
     this.$selection.find('.select2-selection__rendered').empty();
   };
 
-  SingleSelection.prototype.display = function (data, container) {
+  SingleSelection.prototype.display = function (data, container) {   
     var template = this.options.get('templateSelection');
     var escapeMarkup = this.options.get('escapeMarkup');
 
@@ -1526,7 +1526,6 @@ S2.define('select2/selection/single',[
       this.clear();
       return;
     }
-
     var selection = data[0];
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
@@ -3008,15 +3007,32 @@ S2.define('select2/data/select',[
 
   SelectAdapter.prototype.current = function (callback) {
     var data = [];
-    var self = this;
-    this.$element.find(':selected').each(function () {
-      var $option = $(this);
+    var self = this;    
+    if (this.$element.prop('multiple')) {
+        this.$element.find(':selected').each(function () {
+        var $option = $(this);
 
-      var option = self.item($option);
+        var option = self.item($option);
 
-      data.push(option);
-    });
-
+        data.push(option);
+      });
+    }else{
+        //fix angular bug
+        var val = this.$element.val();        
+        var re = /\? [\S]*:([\S]*) \?/ig;        
+        var result = re.exec(val);        
+        if(result){
+            val = result[1].toString();
+        }
+        this.$element.find('option').each(function () {
+            if($(this).val()==val){
+                var $option = $(this);
+                var option = self.item($option);
+                data.push(option);
+            }
+        });
+    }
+    
     callback(data);
   };
 
@@ -5727,7 +5743,7 @@ S2.define('select2/compat/inputData',[
 
   InputData.prototype.current = function (_, callback) {
     function getSelected (data, selectedIds) {
-     
+
       var selected = [];
 
       if (data.selected || $.inArray(data.id, selectedIds) !== -1) {

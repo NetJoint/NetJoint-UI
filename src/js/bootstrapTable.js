@@ -312,6 +312,7 @@
         maintainSelected: false,
         searchTimeOut: 500,
         searchText: '',
+        filters:'',
         iconSize: undefined,
         iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
         icons: {
@@ -1767,8 +1768,7 @@
         this.resetView();
 
         this.trigger('post-body');
-    };
-
+    };    
     BootstrapTable.prototype.initServer = function (silent, query) {
         var that = this,
                 data = {},
@@ -1790,7 +1790,7 @@
         }
 
         if (this.options.queryParamsType === 'limit') {
-            params = {
+            params = {                
                 search: params.searchText,
                 sort: params.sortName,
                 order: params.sortOrder
@@ -1806,7 +1806,10 @@
         if (!($.isEmptyObject(this.filterColumnsPartial))) {
             params['filter'] = JSON.stringify(this.filterColumnsPartial, null);
         }
-
+        if(this.filters){
+            params['filters'] = this.filters;
+        }
+        
         data = calculateObjectValue(this.options, this.options.queryParams, [params], data);
 
         $.extend(data, query || {});
@@ -2751,6 +2754,7 @@
         'toggleView',
         'refreshOptions',
         'resetSearch',
+        'setFilters',
         'expandRow', 'collapseRow', 'expandAllRows', 'collapseAllRows',
         'updateFormatText'
     ];
@@ -3063,10 +3067,8 @@
                 });
                 return ['<a href="javascript:void(0)"',
                     ' data-name="' + column.field + '"',
-//                    ' data-type="' + type + '"',
                     ' data-pk="' + row[that.options.idField] + '"',
-                    ' data-value="' + result + '"',
-                    
+                    ' data-value="' + result + '"',                    
                     editableDataMarkup.join(''),
                     '>' + '</a>'
                 ].join('');
@@ -3437,6 +3439,21 @@
         if (!this.options.advancedSearch) {
             return;
         }
+    };
+    
+    BootstrapTable.prototype.setFilters = function (filters) {
+        var f = [];
+        for (var key in filters) {
+            if (filters[key] != '') {
+                f.push(key + ',' + filters[key]);
+            }
+        }
+        if (f.length) {
+            this.filters = f.join('&');
+        }else{
+            this.filters = ''
+        }
+        this.updatePagination();
     };
 
     BootstrapTable.prototype.onColumnAdvancedSearch = function () {
