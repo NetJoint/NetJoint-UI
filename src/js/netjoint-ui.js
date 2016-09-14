@@ -24,7 +24,8 @@ define(['jquery',
     'bootbox',
     'moment',
     'cropper',
-    'cropupload'
+    'cropupload',
+    'videoupload'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

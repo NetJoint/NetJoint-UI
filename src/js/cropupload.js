@@ -22,7 +22,7 @@
         thumbModal += '<input type="hidden" class="thumb-data" name="crop">';
         thumbModal += '<div class="row"><div class="col-sm-6"><input type="file" class="thumb-input" name="' + this.options.field + '">';
         thumbModal += '<a href="javascript:void(0);" class="btn btn-xlarge btn-success">' + this.lang.choose_image + '</a> <span class="thumb-name text-large text-info">' + this.lang.choose_none + '</span></div>';
-        thumbModal += '<div class="col-sm-6"><a href="javascript:void(0);" class="btn btn-xlarge btn-primary thumb-upload">' + this.lang.direct_upload + '</a></div></div>';
+        thumbModal += '<div class="col-sm-6"><a href="javascript:void(0);" class="btn btn-xlarge btn-primary thumb-upload" autocomplate="off" data-loading-text="' + this.lang.uploading + '">' + this.lang.direct_upload + '</a></div></div>';
         thumbModal += '<div class="row"><div class="col-md-9"><div class="thumb-wrapper"></div></div>';
         thumbModal += '<div class="col-md-3"><div class="thumb-preview preview-lg"></div><div class="thumb-preview preview-md"></div><div class="thumb-preview preview-sm"></div></div></div>';
         thumbModal += '<div class="row"><div class="col-md-12 btn-toolbar thumb-btns">';

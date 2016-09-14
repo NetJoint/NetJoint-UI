@@ -7,7 +7,8 @@ define(['app'], function (app) {
                 $scope.form.user.avatar = 'img/no_avatar.png,img/no_avatar.png';
                 $timeout(function () {
                     $("[data-toggle='cropupload']").cropupload();
-                }, 1000);
+                    $("[data-toggle='videoupload']").videoupload();
+                }, 500);
                 $('#userForm').validate();
                 $scope.submit = function () {
                     //表单校验                    
