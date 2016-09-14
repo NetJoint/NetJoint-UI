@@ -114,6 +114,7 @@
                 },
                 complete: function () {
                     that.$videoUpload.button('reset');
+                    that.$videoModal.modal('hide');
                 }
             });
             return false;

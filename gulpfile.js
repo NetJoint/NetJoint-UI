@@ -121,11 +121,11 @@ gulp.task('jsbuild', function () {
                         exports: '$.fn.bootstrapTable'
                     },
                     'cropupload':{
-                        deps: ['jquery','cropper','button'],
+                        deps: ['jquery','cropper','button','modal'],
                         exports: '$.fn.cropupload'
                     },
                     'videoupload':{
-                        deps: ['jquery','button'],
+                        deps: ['jquery','button','modal'],
                         exports: '$.fn.videoupload'
                     },
                 }
