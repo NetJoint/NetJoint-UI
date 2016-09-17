@@ -312,7 +312,7 @@
         maintainSelected: false,
         searchTimeOut: 500,
         searchText: '',
-        filters:'',
+        filters: '',
         iconSize: undefined,
         iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
         icons: {
@@ -1768,7 +1768,7 @@
         this.resetView();
 
         this.trigger('post-body');
-    };    
+    };
     BootstrapTable.prototype.initServer = function (silent, query) {
         var that = this,
                 data = {},
@@ -1790,7 +1790,7 @@
         }
 
         if (this.options.queryParamsType === 'limit') {
-            params = {                
+            params = {
                 search: params.searchText,
                 sort: params.sortName,
                 order: params.sortOrder
@@ -1806,10 +1806,12 @@
         if (!($.isEmptyObject(this.filterColumnsPartial))) {
             params['filter'] = JSON.stringify(this.filterColumnsPartial, null);
         }
-        if(this.filters){
+        if(this.options.filters){
+            params['filters'] = this.options.filters;
+        }
+        if (this.filters) {
             params['filters'] = this.filters;
         }
-        
         data = calculateObjectValue(this.options, this.options.queryParams, [params], data);
 
         $.extend(data, query || {});
@@ -3040,7 +3042,7 @@
             if (!column.editable) {
                 return;
             }
-            
+
             var editableOptions = {}, editableDataMarkup = [], editableDataPrefix = 'editable-';
 
             var processDataOptions = function (key, value) {
@@ -3068,7 +3070,7 @@
                 return ['<a href="javascript:void(0)"',
                     ' data-name="' + column.field + '"',
                     ' data-pk="' + row[that.options.idField] + '"',
-                    ' data-value="' + result + '"',                    
+                    ' data-value="' + result + '"',
                     editableDataMarkup.join(''),
                     '>' + '</a>'
                 ].join('');
@@ -3440,18 +3442,33 @@
             return;
         }
     };
-    
+
     BootstrapTable.prototype.setFilters = function (filters) {
-        var f = [];
-        for (var key in filters) {
-            if (filters[key] != '') {
-                f.push(key + ',' + filters[key]);
+        if (typeof (filters) == 'string') {
+             this.filters = filters;
+        } else {
+            var f = [];
+            for (var key in filters) {
+                if (filters[key] != '') {
+                    if (typeof (filters[key]) == 'object') {
+                        var filters2 = filters[key];
+                        var f2 = [];
+                        for (var k2 in filters[key]) {
+                            f2.push(key + ',' + filters2[k2]);
+                        }
+                        if (f2.length) {
+                            f.push('[' + f2.join('|') + ']');
+                        }
+                    } else {
+                        f.push(key + ',' + filters[key]);
+                    }
+                }
             }
-        }
-        if (f.length) {
-            this.filters = f.join('&');
-        }else{
-            this.filters = ''
+            if (f.length) {
+                this.filters = f.join('&');
+            } else {
+                this.filters = ''
+            }
         }
         this.updatePagination();
     };

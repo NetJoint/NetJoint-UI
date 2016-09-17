@@ -77,7 +77,7 @@ define(['app'], function (app) {
                     }
 
                 ];
-                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar');                
+                $scope.userTableCtrl = $rootScope.setTable('json/list.json', columns, '#Toolbar',{filters:'id,>,1&id,<,4'});                
                 $scope.removeUsers = function () {
                     var selected = $scope.userTableCtrl.state.selected;
                     if (selected.length == 0) {
