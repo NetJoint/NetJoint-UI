@@ -316,6 +316,9 @@
     var trim = function (v) {
         if (!v)
             return v;
+        if(typeof(v)!='string'){
+            return v;
+        }
         return v.replace(/^\s+/g, '').replace(/\s+$/g, '')
     };
     var required = function (value, element, param) {
