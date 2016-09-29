@@ -3,10 +3,13 @@
     width:60px;
 }
 .small{
-    width:94px;
+    width:100px;
 }
 .medium{
-    width:148px;
+    width:160px;
+}
+.long{
+    width:240px;
 }
 .large{
     width:360px;
@@ -22,10 +25,13 @@
         width:60px;
     }
     &.small{
-        width:94px;
+        width:100px;
     }
     &.medium{
-        width:148px;
+        width:160px;
+    }
+    .long{
+        width:240px;
     }
     &.large{
         width:360px;

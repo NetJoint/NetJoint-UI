@@ -1058,7 +1058,7 @@
             var placeholder = that.options.searchPlaceholder?that.options.searchPlaceholder:this.options.formatSearch();
             html.push(
                     '<div class="pull-' + this.options.searchAlign + ' search">',
-                    sprintf('<input class="form-control' +
+                    sprintf('<input class="form-control long' +
                             sprintf(' input-%s', this.options.iconSize) +
                             '" type="text" placeholder="%s">',
                             placeholder),
