@@ -312,6 +312,7 @@
         maintainSelected: false,
         searchTimeOut: 500,
         searchText: '',
+        searchPlaceholder: '',
         filters: '',
         iconSize: undefined,
         iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
@@ -1054,12 +1055,13 @@
 
         if (this.options.search) {
             html = [];
+            var placeholder = that.options.searchPlaceholder?that.options.searchPlaceholder:this.options.formatSearch();
             html.push(
                     '<div class="pull-' + this.options.searchAlign + ' search">',
                     sprintf('<input class="form-control' +
                             sprintf(' input-%s', this.options.iconSize) +
                             '" type="text" placeholder="%s">',
-                            this.options.formatSearch()),
+                            placeholder),
                     '</div>');
 
             this.$toolbar.append(html.join(''));
