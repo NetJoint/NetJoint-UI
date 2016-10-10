@@ -1536,8 +1536,13 @@ S2.define('select2/selection/single',[
     var selection = data[0];
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
+    var $empty = this.$selection.find('.select2-selection__empty');
     var formatted = this.display(selection, $rendered);
-
+    if(selection.title==''){
+        $empty.addClass('hidden');
+    }else{
+        $empty.removeClass('hidden');
+    }
     $rendered.empty().append(formatted);
     $rendered.prop('title', selection.title || selection.text);
   };
