@@ -176,6 +176,7 @@ define(function () {
                         showRefresh: true,
                         showExport: true,
                         showToggle: true,
+                        searchPlaceholder:'搜索',
                         //page
                         pagination: true,
                         sidePagination: 'server',

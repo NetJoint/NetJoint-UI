@@ -1,1 +1,19 @@
 @import "../../../node_modules/select2/src/scss/core";
+
+.select2-selection__empty {    
+    position: absolute;
+    font-size:12px;
+    line-height:14px;
+    font-weight: bold;
+    top: 8px;
+    right: 18px;
+    width: 12px;
+    height: 12px;
+    color: #999;    
+    border-radius: 6px;
+    text-align: center;
+}
+.select2-selection__empty:hover{
+    color: #fff;
+    background-color: #999;
+}

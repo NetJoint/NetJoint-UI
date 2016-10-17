@@ -1464,8 +1464,9 @@ S2.define('select2/selection/single',[
 
     $selection.html(
       '<span class="select2-selection__rendered"></span>' +
+      '<span class="select2-selection__empty" role="presentation">×</span>' +
       '<span class="select2-selection__arrow" role="presentation">' +
-        '<b role="presentation"></b>' +
+        '<b role="presentation"></b>' +        
       '</span>'
     );
 
@@ -1504,6 +1505,12 @@ S2.define('select2/selection/single',[
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
+    
+    this.$selection.find('.select2-selection__empty').on('mousedown', function (evt) {
+      evt.stopPropagation();
+      self.$element.val('').trigger('change');
+      return false;
+    });
   };
 
   SingleSelection.prototype.clear = function () {
@@ -1529,8 +1536,13 @@ S2.define('select2/selection/single',[
     var selection = data[0];
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
+    var $empty = this.$selection.find('.select2-selection__empty');
     var formatted = this.display(selection, $rendered);
-
+    if(selection.title==''){
+        $empty.addClass('hidden');
+    }else{
+        $empty.removeClass('hidden');
+    }
     $rendered.empty().append(formatted);
     $rendered.prop('title', selection.title || selection.text);
   };
