@@ -79,7 +79,7 @@
                 parent_li.removeClass("actived");
                 if(parent_id){
                     //cookie 记录展开的菜单
-                    $.cookie('open_'+parent_id, 0);
+                    $.cookie('open_'+parent_id, 0, { expires: 365 });
                 }
             });
         } else if ((checkElement.is('.child-menu')) && (!checkElement.is(':visible'))) {            
@@ -88,7 +88,7 @@
                 parent_li.addClass('actived');
                 if(parent_id){
                     //cookie 记录展开的菜单
-                    $.cookie('open_'+parent_id, 1);
+                    $.cookie('open_'+parent_id, 1, { expires: 365 });
                 }
             });
         }
