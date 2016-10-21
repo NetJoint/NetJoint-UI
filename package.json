@@ -51,6 +51,7 @@
     "humane-js":"^3.2.2",
     "bootbox": "^4.4.0",
     "moment": "^2.14.1",
-    "cropper": "^2.3.3"
+    "cropper": "^2.3.3",
+    "jquery.cookie": "^1.4.1"
   }
 }

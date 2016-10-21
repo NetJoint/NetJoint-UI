@@ -37,7 +37,8 @@ gulp.task('jsbuild', function () {
                     "humane": "../../node_modules/humane-js/humane",
                     "bootbox": "bootbox",
                     "moment" : "../../node_modules/moment/min/moment-with-locales",
-                    "cropper" : "../../node_modules/cropper/dist/cropper"
+                    "cropper" : "../../node_modules/cropper/dist/cropper",
+                    "jquery.cookie" : "../../node_modules/jquery.cookie/jquery.cookie",
                 },
                 shim: {
                     'affix': {
@@ -93,7 +94,7 @@ gulp.task('jsbuild', function () {
                         exports: '$.fn.checkbox'
                     },
                     'layout': {
-                        deps: ['jquery'],
+                        deps: ['jquery','jquery.cookie'],
                         exports: '$.fn.layout'
                     },
                     'datepicker': {

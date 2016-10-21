@@ -71,27 +71,42 @@
         var $this = $(this),
                 $layout = $this.parents(layout_toggle);
         var checkElement = $this.next();
-        var parent_li = $this.parent("li");
+        var parent_li = $this.parent("li");  
+        var parent_id = parent_li.attr('id');
         if ((checkElement.is('.child-menu')) && (checkElement.is(':visible')) && (!$layout.hasClass('sidebar-collapse'))) {            
             checkElement.slideUp(300, function () {
                 checkElement.removeClass('menu-open');
                 parent_li.removeClass("actived");
+                if(parent_id){
+                    //cookie 记录展开的菜单
+                    $.cookie('open_'+parent_id, 0);
+                }
             });
-        } else if ((checkElement.is('.child-menu')) && (!checkElement.is(':visible'))) {
-            var parent = $this.parents('ul').first();
-            var ul = parent.find('ul:visible').slideUp(300);
-            ul.removeClass('menu-open');
+        } else if ((checkElement.is('.child-menu')) && (!checkElement.is(':visible'))) {            
             checkElement.slideDown(300, function () {
                 checkElement.addClass('menu-open');
                 parent_li.addClass('actived');
+                if(parent_id){
+                    //cookie 记录展开的菜单
+                    $.cookie('open_'+parent_id, 1);
+                }
             });
         }
     }
 
-    Layout.prototype.fix = function () {
+    Layout.prototype.fix = function () {        
         var neg = $('.layout-nav').outerHeight();
         var window_height = $(window).height();
         var sidebar_height = $(".main_sidebar").height();
+        $.each($('.sidebar-menu .child'),function(idx,obj){
+            //cookie 记录展开的菜单
+            var id = $(obj).attr('id');            
+            if(id){
+                if($.cookie('open_'+id)==1){
+                    $(obj).addClass('actived');
+                }
+            }
+        });
         if (this.$element.hasClass("fixed")) {
             $(".layout-content").css('min-height', window_height);
         } else {

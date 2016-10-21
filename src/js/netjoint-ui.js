@@ -1,4 +1,5 @@
 define(['jquery',
+    'jquery.cookie',
     'affix',
     'alert',
     'button',
