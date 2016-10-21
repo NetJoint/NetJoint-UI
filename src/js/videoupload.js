@@ -55,7 +55,7 @@
         },
         initButton: function () {
             this.$container = this.$el.parent();            
-            var $addButton = $('<button type="button" class="btn btn-success btn-add">上传视频</button>');
+            var $addButton = $('<button type="button" class="btn btn-success btn-add">上传文件</button>');
             $addButton.on('click', $.proxy(this.click, this));
             $addButton.appendTo(this.$container);
         },       
@@ -174,15 +174,15 @@
 
     $.fn.videoupload.locales = {
         'zh-CN': {
-            upload_video: '上传视频',
-            change_video: '点击更换视频',
-            choose_video: '选择视频',
+            upload_video: '上传文件',
+            change_video: '点击更换文件',
+            choose_video: '选择文件',
             choose_none: '未选择',
             uploading: '正在上传...',
             direct_upload: '开始上传',
             save: '上传裁剪结果',
-            upload_error: '视频上传失败',
-            upload_forbidden: '无权上传视频'
+            upload_error: '文件上传失败',
+            upload_forbidden: '无权上传文件'
         }
     }
 
