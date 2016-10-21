@@ -71,16 +71,16 @@
         var $this = $(this),
                 $layout = $this.parents(layout_toggle);
         var checkElement = $this.next();
-        if ((checkElement.is('.child-menu')) && (checkElement.is(':visible')) && (!$layout.hasClass('sidebar-collapse'))) {
+        var parent_li = $this.parent("li");
+        if ((checkElement.is('.child-menu')) && (checkElement.is(':visible')) && (!$layout.hasClass('sidebar-collapse'))) {            
             checkElement.slideUp(300, function () {
                 checkElement.removeClass('menu-open');
+                parent_li.removeClass("actived");
             });
-            checkElement.parent("li").removeClass("actived");
         } else if ((checkElement.is('.child-menu')) && (!checkElement.is(':visible'))) {
             var parent = $this.parents('ul').first();
             var ul = parent.find('ul:visible').slideUp(300);
             ul.removeClass('menu-open');
-            var parent_li = $this.parent("li");
             checkElement.slideDown(300, function () {
                 checkElement.addClass('menu-open');
                 parent_li.addClass('actived');

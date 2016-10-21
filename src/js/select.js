@@ -1508,7 +1508,8 @@ S2.define('select2/selection/single',[
     
     this.$selection.find('.select2-selection__empty').on('mousedown', function (evt) {
       evt.stopPropagation();
-      self.$element.val('').trigger('change');
+      self.$element.val('');
+      self.$element.trigger('change');
       return false;
     });
   };
@@ -1538,7 +1539,7 @@ S2.define('select2/selection/single',[
     var $rendered = this.$selection.find('.select2-selection__rendered');
     var $empty = this.$selection.find('.select2-selection__empty');
     var formatted = this.display(selection, $rendered);
-    if(selection.title==''){
+    if(selection.id==''){
         $empty.addClass('hidden');
     }else{
         $empty.removeClass('hidden');

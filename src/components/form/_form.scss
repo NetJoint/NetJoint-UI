@@ -18,6 +18,7 @@
     width:500px;
 }
 .mini,.small,.medium,.large,.xlarge{
+    display: inline-block;
     max-width: 100%;
 }
 .form-inline .form-control{
