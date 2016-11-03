@@ -361,7 +361,13 @@
                         }
                     } else {
                         //单图上传
-                        this.$el.val(rs.url).trigger('change');
+                        if(rs.width){
+                            this.$el.attr('data-width',rs.width);
+                        }
+                        if(rs.height){
+                            this.$el.attr('data-height',rs.height);
+                        }
+                        this.$el.val(rs.url).trigger('change');                        
                     }
                     this.cropDone();
                 } else {

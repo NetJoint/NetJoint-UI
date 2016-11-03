@@ -92,6 +92,10 @@
 
     tbody td {
         border-left: 1px solid #dddddd;
+        h1,h2,h3,h4,h5,h6,p{
+            margin-top:0px;
+            margin-bottom:5px;
+        }
     }
 
     tbody tr:first-child td {
