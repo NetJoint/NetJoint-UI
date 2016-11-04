@@ -362,10 +362,10 @@
                     } else {
                         //单图上传
                         if(rs.width){
-                            this.$el.attr('data-width',rs.width);
+                            this.$el.attr('data-raw-width',rs.width);
                         }
                         if(rs.height){
-                            this.$el.attr('data-height',rs.height);
+                            this.$el.attr('data-raw-height',rs.height);
                         }
                         this.$el.val(rs.url).trigger('change');                        
                     }
