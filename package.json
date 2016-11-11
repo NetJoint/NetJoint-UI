@@ -34,7 +34,7 @@
     "angular": "~1.2.29",
     "angular-ui-router": "~0.3.0",
     "bootstrap-sass": "^3.3.6",
-    "font-awesome": "^4.6.1",
+    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "*",
     "gulp-clean-css": "*",
