@@ -129,6 +129,10 @@ gulp.task('jsbuild', function () {
                         deps: ['jquery','button','modal'],
                         exports: '$.fn.videoupload'
                     },
+                    'fontIconPicker':{
+                        deps: ['jquery'],
+                        exports: '$.fn.fontIconPicker'
+                    }
                 }
             }))
             .pipe(concat('netjoint-ui.js'))

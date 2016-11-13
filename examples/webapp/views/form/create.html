@@ -10,13 +10,13 @@
                 <div class="col-md-6 form-group form-inline">
                     <label for="number" class="col-sm-3 control-label"><i class="required"></i> 编号：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.number" type="text" name="number" class="form-control medium" value="" placeholder="用户的工号等唯一编号" data-rules="required" data-empty-msg="请输入唯一编号" />
+                        <input id="number" name="number" ng-model="form.user.number" type="text" class="form-control medium" value="" placeholder="用户的工号等唯一编号" data-rules="required" data-empty-msg="请输入唯一编号" />
                     </div>
                 </div>
                 <div class="col-md-6 form-group form-inline">
                     <label for="name" class="col-sm-3 control-label"><i class="required"></i> 姓名：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.name" type="text" name="name" class="form-control medium" value="" placeholder="用户姓名" data-rules="required" data-empty-msg="请输入姓名" />
+                        <input id="name" name="name" ng-model="form.user.name" type="text" class="form-control medium" value="" placeholder="用户姓名" data-rules="required" data-empty-msg="请输入姓名" />
                     </div>
                 </div>
             </div>
@@ -24,25 +24,25 @@
                 <div class="col-md-6 form-group form-inline">
                     <label for="mobile" class="col-sm-3 control-label"><i class="required"></i> 手机号：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.mobile" type="text" name="mobile" class="form-control medium" value="" placeholder="用户手机号" data-rules="required" data-empty-msg="使用手机号登录" />
+                        <input id="mobile" name="mobile" ng-model="form.user.mobile" type="text"  class="form-control medium" value="" placeholder="用户手机号" data-rules="required" data-empty-msg="使用手机号登录" />
                     </div>
                 </div>
                 <div class="col-md-6 form-group form-inline">
                     <label for="email" class="col-sm-3 control-label">邮箱：</label>
                     <div class="col-sm-9">
-                        <input ng-model="form.user.email" type="text" name="email" class="form-control large" value="" placeholder="用户邮箱"/>
+                        <input id="email" name="email" ng-model="form.user.email" type="text" class="form-control large" value="" placeholder="用户邮箱"/>
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
-                    <label for="gender" class="col-sm-3 control-label"><i class="required"></i> 性别：</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-3 control-label"><i class="required"></i> 性别：</label>
+                    <div class="col-sm-9" >
                         <label class="radio inline" ng-class="{checked:form.user.gender == 1}">
-                            <input type="radio" name="gender" value="1" ng-model="form.user.gender"><span>男</span>
+                            <input name="gender" type="radio"  value="1" ng-model="form.user.gender"><span>男</span>
                         </label>
                         <label class="radio inline" ng-class="{checked:form.user.gender == 2}">
-                            <input type="radio" name="gender" value="2" ng-model="form.user.gender"><span>女</span>
+                            <input name="gender" type="radio"  value="2" ng-model="form.user.gender"><span>女</span>
                         </label>
                     </div>
                 </div>
@@ -82,17 +82,25 @@
             </div>
             <div class="col-md-12">
                 <div class="col-md-6 form-group form-inline">
-                    <label for="password" class="col-sm-3 control-label"><i class="required"></i> 头像：</label>
+                    <label for="thumb" class="col-sm-3 control-label"><i class="required"></i> 头像：</label>
                     <div class="col-sm-9">
-                        <input type="text" ng-input ng-model="form.user.avatar" data-toggle="cropupload" data-multiple="1" data-height="80"   data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="thumb">
-                        <!--<input type="text" ng-input ng-model="form.user.avatar" data-toggle="cropupload" data-height="80" data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="thumb">-->
+                        <input id="thumb" name="thumb" type="text" ng-input ng-model="form.user.thumb" data-toggle="cropupload" data-multiple="1" data-height="80"   data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="">
+                        <!--<input type="text" ng-input ng-model="form.user.thumb" data-toggle="cropupload" data-height="80" data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="thumb">-->
                         
                     </div>
                 </div>
                 <div class="col-md-6 form-group form-inline">
-                    <label for="password" class="col-sm-3 control-label"><i class="required"></i> 视频：</label>
+                    <label for="video" class="col-sm-3 control-label"><i class="required"></i> 视频：</label>
                     <div class="col-sm-9">
-                        <input class="form-control medium" type="text" ng-input ng-model="form.user.video" data-toggle="videoupload" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="video">                            
+                        <input id="video" name="video" class="form-control medium" type="text" ng-input ng-model="form.user.video" data-toggle="videoupload" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" >                             
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 form-group form-inline">
+                    <label for="icon" class="col-sm-3 control-label"><i class="required"></i> 图标：</label>
+                    <div class="col-sm-9">
+                        <input id="icon" name="icon"  type="text" ng-input ng-model="form.user.icon" value="" >                       
                     </div>
                 </div>
             </div>            

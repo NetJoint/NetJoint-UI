@@ -10,6 +10,10 @@ define(['app'], function (app) {
                     $("[data-toggle='videoupload']").videoupload();
                 }, 500);
                 $('#userForm').validate();
+                $('#icon').fontIconPicker({
+                    source:    'json/icon.json',                 
+                    hasSearch: true
+                });
                 $scope.submit = function () {
                     //表单校验                    
                     if (!$('#userForm').validate('checkAll')) {
