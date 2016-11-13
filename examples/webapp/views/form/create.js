@@ -11,7 +11,7 @@ define(['app'], function (app) {
                 }, 500);
                 $('#userForm').validate();
                 $('#icon').fontIconPicker({
-                    source:    'json/icon.json',                 
+                    source:    'json/icons.json',                 
                     hasSearch: true
                 });
                 $scope.submit = function () {
