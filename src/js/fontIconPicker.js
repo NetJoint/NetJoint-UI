@@ -21,7 +21,7 @@
         source: false, // Icons source (array|false|object)
         emptyIcon: true, // Empty icon should be shown?
         emptyIconValue: '', // The value of the empty icon, change if you select has something else, say "none"
-        iconsPerPage: 40, // Number of icons per page
+        iconsPerPage: 50, // Number of icons per page
         hasSearch: true, // Is search enabled?
         searchSource: false, // Give a manual search values. If using attributes then for proper search feature we also need to pass icon names under the same order of source
         useAttribute: false, // Whether to use attribute selector for printing icons
