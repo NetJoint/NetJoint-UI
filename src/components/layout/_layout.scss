@@ -252,6 +252,12 @@
         > a {
             padding: 12px 5px 12px 15px;
             display: block;
+            .notice{
+                    position:absolute;
+                    top: 9px;
+                    right: 24px;
+                    font-size: 16px;
+                }
             > .fa,
             > .glyphicon,
             > .ion {
@@ -329,6 +335,10 @@
             }
             > a {
                 margin-right: 0;
+                .notice{
+                    top: 0;
+                    right:10px;
+                }
                 > span {
                     border-top-right-radius: 4px;                    
                 }
