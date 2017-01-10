@@ -1808,11 +1808,11 @@
         if (!($.isEmptyObject(this.filterColumnsPartial))) {
             params['filter'] = JSON.stringify(this.filterColumnsPartial, null);
         }
-        if(this.options.filters){
-            params['filters'] = this.options.filters;
+        if(this.options.filters !== ''){
+            params['filters'] = this.options.filters;            
         }
-        if (this.filters) {
-            params['filters'] = this.filters;
+        if (typeof(this.filters) !== 'undefined') {
+            params['filters'] = this.filters;           
         }
         data = calculateObjectValue(this.options, this.options.queryParams, [params], data);
 
@@ -3469,7 +3469,7 @@
             if (f.length) {
                 this.filters = f.join('&');
             } else {
-                this.filters = ''
+                this.filters = '';
             }
         }
         this.updatePagination();
