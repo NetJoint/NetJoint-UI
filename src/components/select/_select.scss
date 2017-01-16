@@ -17,3 +17,8 @@
     color: #fff;
     background-color: #999;
 }
+.select2-container--disabled {
+    .select2-selection__empty,select2-selection__arrow{
+        display:none;
+    }
+}
