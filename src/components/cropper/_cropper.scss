@@ -4,7 +4,11 @@
 .cropupload{
 
     &.thumb {
+        .views{
+            display:inline-block;
+        }
         .view{
+            min-width: 60px;
             display:inline-block;
             position: relative;
             margin-bottom: 5px;
@@ -19,17 +23,27 @@
                 width: 100%;
                 color:#fff;
                 font-size:14px;
-                text-align:right;
+                text-align:left;
                 padding:3px 5px;
                 i{
                     cursor:pointer;
                 }
-            }            
+                .fa-chevron-left, .fa-chevron-right{
+                    float:left;
+                    margin-right: 5px;
+                }                
+                .fa-trash{
+                    float:right;
+                }
+            }
+            &:first-child .fa-chevron-left, &:last-child .fa-chevron-right{
+               display: none;
+            }
         }
         .view:hover .tools{
             display: block;
         }        
-        img{
+        img{            
             border: 1px solid #eeeeee;
             border-radius: 4px;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -94,7 +108,13 @@
             padding-top: 2px;
         }
     }
+    &.single{
+        .fa-chevron-left, .fa-chevron-right{
+            display:none;
+        }
+    } 
 }
+
 @media (min-width: 992px) {
     .cropupload .thumb-preview {
         float: none;

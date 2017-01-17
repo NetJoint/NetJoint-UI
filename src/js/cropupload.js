@@ -15,14 +15,19 @@
         this.setOptions(options);
         this.setLocale();
         this.$el.hide();
+        var multiple_flag = '';
+        if(this.options.multiple){
+            multiple_flag = 'multiple="true"';
+            this.options.field = this.options.field + '[]';
+        }        
         var thumbModal = '<div class="cropupload modal fade" id="thumb-modal" aria-hidden="true" role="dialog" tabindex="-1" style="z-index: 99999;">';
         thumbModal += '<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><a class="close" data-dismiss="modal">&times;</a>';
         thumbModal += '<h4 class="modal-title">' + this.lang.upload_image + '</h4></div><div class="modal-body">';
         thumbModal += '<form class="form thumb-form" action="' + this.options.url + '" enctype="multipart/form-data" method="post">';
         thumbModal += '<input type="hidden" class="thumb-data" name="crop">';
-        thumbModal += '<div class="row"><div class="col-sm-6"><input type="file" class="thumb-input" name="' + this.options.field + '">';
-        thumbModal += '<a href="javascript:void(0);" class="btn btn-xlarge btn-success">' + this.lang.choose_image + '</a> <span class="thumb-name text-large text-info">' + this.lang.choose_none + '</span></div>';
-        thumbModal += '<div class="col-sm-6"><a href="javascript:void(0);" class="btn btn-xlarge btn-primary thumb-upload" autocomplate="off" data-loading-text="' + this.lang.uploading + '">' + this.lang.direct_upload + '</a></div></div>';
+        thumbModal += '<div class="row"><div class="col-sm-6"><input type="file" class="thumb-input" name="' + this.options.field + '" '+ multiple_flag +'>';
+        thumbModal += '<button type="button" class="btn btn-xlarge btn-success thumb-input-btn" autocomplate="off" data-loading-text="' + this.lang.uploading + '">' + this.lang.choose_image + '</button> <span class="thumb-name text-large text-info">' + this.lang.choose_none + '</span></div>';
+        thumbModal += '<div class="col-sm-6"><button type="submit" class="btn btn-xlarge btn-primary thumb-upload" autocomplate="off" data-loading-text="' + this.lang.uploading + '">' + this.lang.direct_upload + '</button></div></div>';
         thumbModal += '<div class="row"><div class="col-md-9"><div class="thumb-wrapper"></div></div>';
         thumbModal += '<div class="col-md-3"><div class="thumb-preview preview-lg"></div><div class="thumb-preview preview-md"></div><div class="thumb-preview preview-sm"></div></div></div>';
         thumbModal += '<div class="row"><div class="col-md-12 btn-toolbar thumb-btns">';
@@ -43,6 +48,7 @@
         this.$thumbForm = this.$thumbModal.find('.thumb-form');
         this.$thumbData = this.$thumbForm.find('.thumb-data');
         this.$thumbInput = this.$thumbForm.find('.thumb-input');
+        this.$thumbInputBtn = this.$thumbForm.find('.thumb-input-btn');
         this.$thumbName = this.$thumbForm.find('.thumb-name');
         this.$thumbSave = this.$thumbForm.find('.thumb-save');
         this.$thumbUpload = this.$thumbForm.find('.thumb-upload');
@@ -84,47 +90,82 @@
         thumbView: function () {
             var that = this;
             this.$container = this.$el.parent();
-            if(!this.$thumbView){
-                this.$thumbView = $('<div class="cropupload thumb"></div>');
-            }else{
-                this.$thumbView.empty();
+            if(!this.$thumb){
+                this.$thumb = $('<div class="cropupload thumb"><div class="views"></div><div class="btn-add"><img style="height:' + this.options.height + 'px" src="' + this.options.addimg + '" title="' + this.options.title + '" alt="' + this.options.title + '"></div></div>');                
             }
-            var $addImg = $('<div class="btn-add"><img style="height:' + this.options.height + 'px" src="' + this.options.addimg + '" title="' + this.options.title + '" alt="' + this.options.title + '"></div>');
+            this.$thumbViews = $('.views', this.$thumb);
+            this.$thumbViews.empty();            
+            var $addImg = $('.btn-add', this.$thumb);
             $addImg.on('click', $.proxy(this.click, this));
-            var $viewImg = $('<div class="view"><div class="tools"><i class="fa fa-trash"></i></div><img style="height:' + this.options.height + 'px" src="" title="" alt=""></div>');
+            
+            
+            var $viewImg = $('<div class="view"><div class="tools"><i class="fa fa-chevron-left"></i> <i class="fa fa-chevron-right"></i> <i class="fa fa-trash"></i></div><img style="height:' + this.options.height + 'px" src="" title="" alt=""></div>');
             var url = this.$el.val();
-            if (url == '') {
-                $addImg.appendTo(this.$thumbView);
-            } else if (this.options.multiple) {
+            if (this.options.multiple) {
                 //多图上传
-                var urls = url.split(',');                
-                $.each(urls, function (i, url) {
-                    var $newView = $viewImg.clone();
-                    $newView.find('img').attr('src', url);
-                    $newView.find('.fa-trash').on('click', function () {
-                        that.removeThumb($newView)
+                this.$thumb.addClass('multiple');
+                if(url != ''){
+                    var urls = url.split(',');    
+                    $.each(urls, function (i, url) {
+                        var $newView = $viewImg.clone();
+                        $newView.find('img').attr('src', url);
+                        $newView.find('.fa-trash').on('click', function () {
+                            that.removeThumb($newView);
+                        });
+                        $newView.find('.fa-chevron-left').on('click', function () {
+                            that.moveThumb($newView,-1);
+                        });
+                        $newView.find('.fa-chevron-right').on('click', function () {
+                            that.moveThumb($newView,1);
+                        });
+                        $newView.appendTo(that.$thumbViews);
                     });
-                    $newView.appendTo(that.$thumbView);
-                });
-                $addImg.appendTo(that.$thumbView);
+                }            
             } else {
                 //单图上传
-                var $newView = $viewImg.clone();
-                $newView.find('img').attr('src', url).attr('alt', this.lang.change_image).attr('title', this.lang.change_image).on('click', $.proxy(this.click, this));
-                $newView.find('.fa-trash').on('click', function () {
-                    that.removeThumb($newView)
-                });
-                $newView.appendTo(this.$thumbView);
+                this.$thumb.addClass('single');
+                if(url===''){
+                    $addImg.removeClass('hidden');
+                }else{
+                    $addImg.addClass('hidden');
+                    var $newView = $viewImg.clone();
+                    $newView.find('img').attr('src', url).attr('alt', this.lang.change_image).attr('title', this.lang.change_image).on('click', $.proxy(this.click, this));
+                    $newView.find('.fa-trash').on('click', function () {
+                        that.removeThumb($newView);
+                    });
+                    $newView.appendTo(that.$thumbViews);  
+                }           
             }
-            this.$thumbView.appendTo(this.$container);
+            this.$thumb.appendTo(this.$container);
         },
         removeThumb: function ($el) {
             $el.remove();
-            var srcs = [],$imgs = this.$thumbView.find('img');
-            $('.view img',this.$thumbView).each(function(i,el){
+            var srcs = [],$imgs = this.$thumbViews.find('img');
+            $imgs.each(function(i,el){
                 srcs.push($(el).attr('src'));
             });
             this.$el.val(srcs.join(',')).trigger('change');
+        },
+        moveThumb: function ($el,direct) {
+            var $obj;
+            if(direct<0){
+                $obj = $el.prev();
+            }else{
+                $obj = $el.next();
+            }
+            if($obj.length){
+               if(direct<0){
+                   $el.insertBefore($obj);
+               }else{
+                   $el.insertAfter($obj);
+               }
+               var srcs = [],$imgs = this.$thumbViews.find('img');
+                $imgs.each(function(i,el){
+                    srcs.push($(el).attr('src'));
+                });
+                this.$el.val(srcs.join(',')).trigger('change'); 
+            }
+            
         },
         initIframe: function () {
             var target = 'upload-iframe-' + (new Date()).getTime();
@@ -205,28 +246,33 @@
             this.$thumbPreview.html('<img src="' + src + '">');
             this.$thumbModal.modal('show');
         },
-        change: function () {
+        change: function (e) {
             var files;
-            var file;
-            file = this.$thumbInput.val();
-            this.$thumbName.text(file);
-            if (this.support.datauri) {
+            var file; 
+            if (this.support.datauri) {                
                 files = this.$thumbInput.prop('files');
-
                 if (files.length > 0) {
-                    file = files[0];
-
-                    if (this.isImageFile(file)) {
-                        if (this.url) {
-                            URL.revokeObjectURL(this.url);
-                        }
-
-                        this.url = URL.createObjectURL(file);
-                        this.startCropper();
+                    if(files.length > 1){
+                       //多文件
+                       this.$thumbName.text(files[0].name + this.lang.many_files);                       
+                       this.ajaxUpload();
+                    }else{
+                       //单文件
+                       file = files[0];
+                       this.$thumbName.text(file.name);
+                        if (this.isImageFile(file)) {
+                            if (this.url) {
+                                URL.revokeObjectURL(this.url);
+                            }
+                            this.url = URL.createObjectURL(file);
+                            this.startCropper();
+                        } 
                     }
                 }
-            } else {
-                if (this.isImageFile(file)) {
+            } else {      
+                file = this.$thumbInput.val();
+                if (this.isImageFile(file)) {                    
+                    this.$thumbName.text(file);
                     this.syncUpload();
                 }
             }
@@ -236,7 +282,7 @@
             if (!this.$thumbInput.val()) {
                 return false;
             }
-            if (this.support.formData) {
+            if (this.support.formData) {                
                 this.ajaxUpload();
             }
             return false;
@@ -294,7 +340,9 @@
             var url = this.$thumbForm.attr('action');
             var data = new FormData(this.$thumbForm[0]);
             var that = this;
-
+            this.$thumbSave.button('loading');
+            this.$thumbUpload.button('loading');            
+            this.$thumbInputBtn.button('loading');
             $.ajax(url, {
                 type: 'post',
                 data: data,
@@ -341,10 +389,10 @@
             return false;
         },
         syncUpload: function () {
-            this.$thumbSave.click();
+            this.$thumbUpload.click();
         },
         submitStart: function () {
-            this.$thumbSave.button('loading');
+            
         },
         submitDone: function (rs) {
             if ($.isPlainObject(rs)) {
@@ -383,6 +431,8 @@
             alert(msg);
         },
         submitEnd: function () {
+            this.$thumbUpload.button('reset');
+            this.$thumbInputBtn.button('reset');
             this.$thumbSave.button('reset');
         },
         cropDone: function () {
@@ -444,7 +494,8 @@
             direct_upload: '上传原图',
             save: '上传裁剪结果',
             upload_error: '图片上传失败',
-            upload_forbidden: '无权上传图片'
+            upload_forbidden: '无权上传图片',
+            many_files:'等文件'
         }
     }
 
