@@ -6232,7 +6232,7 @@ $(function(){
     
     var Date = function (options) {
         this.init('date', options, Date.defaults);
-        this.initPicker(options, Date.defaults);
+        //this.initPicker(options, Date.defaults);
     };
 
     $.fn.editableutils.inherit(Date, $.fn.editabletypes.abstractinput);    
@@ -6406,10 +6406,8 @@ $(function(){
         }
         **/
         datepicker:{
-            weekStart: 0,
-            startView: 0,
-            minViewMode: 0,
-            autoclose: false
+            language: 'zh-CN',
+            timepicker: true
         },
         /**
         Text shown as clear date button. 
@@ -6497,10 +6495,8 @@ Automatically shown in inline mode.
         
         /* datepicker config */
         datepicker: {
-            weekStart: 0,
-            startView: 0,
-            minViewMode: 0,
-            autoclose: true
+            language: 'zh-CN',
+            timepicker: true
         }
     });
     
@@ -6508,14 +6504,14 @@ Automatically shown in inline mode.
 
 }(window.jQuery));
 /**
-Bootstrap-datetimepicker.  
-Based on [smalot bootstrap-datetimepicker plugin](https://github.com/smalot/bootstrap-datetimepicker). 
+Bootstrap-datepicker.  
+Based on [smalot bootstrap-datepicker plugin](https://github.com/smalot/bootstrap-datepicker). 
 Before usage you should manually include dependent js and css:
 
-    <link href="css/datetimepicker.css" rel="stylesheet" type="text/css"></link> 
-    <script src="js/bootstrap-datetimepicker.js"></script>
+    <link href="css/datepicker.css" rel="stylesheet" type="text/css"></link> 
+    <script src="js/bootstrap-datepicker.js"></script>
 
-For **i18n** you should include js file from here: https://github.com/smalot/bootstrap-datetimepicker/tree/master/js/locales
+For **i18n** you should include js file from here: https://github.com/smalot/bootstrap-datepicker/tree/master/js/locales
 and set `language` option.  
 
 @class datetime
@@ -6529,7 +6525,7 @@ $(function(){
     $('#last_seen').editable({
         format: 'yyyy-mm-dd hh:ii',    
         viewformat: 'dd/mm/yyyy hh:ii',    
-        datetimepicker: {
+        datepicker: {
                 weekStart: 1
            }
         }
@@ -6542,7 +6538,7 @@ $(function(){
 
     var DateTime = function (options) {
         this.init('datetime', options, DateTime.defaults);
-        this.initPicker(options, DateTime.defaults);
+        //this.initPicker(options, DateTime.defaults);
     };
 
     $.fn.editableutils.inherit(DateTime, $.fn.editabletypes.abstractinput);
@@ -6556,20 +6552,20 @@ $(function(){
                 this.options.viewformat = this.options.format;
             }
             
-            //try parse datetimepicker config defined as json string in data-datetimepicker
-            options.datetimepicker = $.fn.editableutils.tryParseJson(options.datetimepicker, true);
+            //try parse datepicker config defined as json string in data-datepicker
+            options.datepicker = $.fn.editableutils.tryParseJson(options.datepicker, true);
 
-            //overriding datetimepicker config (as by default jQuery extend() is not recursive)
-            //since 1.4 datetimepicker internally uses viewformat instead of format. Format is for submit only
-            this.options.datetimepicker = $.extend({}, defaults.datetimepicker, options.datetimepicker, {
+            //overriding datepicker config (as by default jQuery extend() is not recursive)
+            //since 1.4 datepicker internally uses viewformat instead of format. Format is for submit only
+            this.options.datepicker = $.extend({}, defaults.datepicker, options.datepicker, {
                 format: this.options.viewformat
             });
 
             //language
-            this.options.datetimepicker.language = this.options.datetimepicker.language || 'en'; 
+            this.options.datepicker.language = this.options.datepicker.language || 'en'; 
 
             //store DPglobal
-            this.dpg = $.fn.datetimepicker.DPGlobal; 
+            this.dpg = $.fn.datepicker.DPGlobal; 
 
             //store parsed formats
             this.parsedFormat = this.dpg.parseFormat(this.options.format, this.options.formatType);
@@ -6577,10 +6573,10 @@ $(function(){
         },
 
         render: function () {
-            this.$input.datetimepicker(this.options.datetimepicker);
+            this.$input.datepicker(this.options.datepicker);
 
             //adjust container position when viewMode changes
-            //see https://github.com/smalot/bootstrap-datetimepicker/pull/80
+            //see https://github.com/smalot/bootstrap-datepicker/pull/80
             this.$input.on('changeMode', function(e) {
                 var f = $(this).closest('form').parent();
                 //timeout here, otherwise container changes position before form has new size
@@ -6603,7 +6599,7 @@ $(function(){
 
         value2html: function(value, element) {
             //formatDate works with UTCDate!
-            var text = value ? this.dpg.formatDate(this.toUTC(value), this.parsedViewFormat, this.options.datetimepicker.language, this.options.formatType) : '';
+            var text = value ? this.dpg.formatDate(this.toUTC(value), this.parsedViewFormat, this.options.datepicker.language, this.options.formatType) : '';
             if(element) {
                 DateTime.superclass.value2html.call(this, text, element);
             } else {
@@ -6619,7 +6615,7 @@ $(function(){
 
         value2str: function(value) {
             //formatDate works with UTCDate!
-            return value ? this.dpg.formatDate(this.toUTC(value), this.parsedFormat, this.options.datetimepicker.language, this.options.formatType) : '';
+            return value ? this.dpg.formatDate(this.toUTC(value), this.parsedFormat, this.options.datepicker.language, this.options.formatType) : '';
        },
 
        str2value: function(str) {
@@ -6634,13 +6630,13 @@ $(function(){
 
        value2input: function(value) {
            if(value) {
-             this.$input.data('datetimepicker').setDate(value);
+             this.$input.data('datepicker').setDate(value);
            }
        },
 
        input2value: function() { 
            //date may be cleared, in that case getDate() triggers error
-           var dt = this.$input.data('datetimepicker');
+           var dt = this.$input.data('datepicker');
            return dt.date ? dt.getDate() : null;
        },
 
@@ -6648,7 +6644,7 @@ $(function(){
        },
 
        clear: function() {
-          this.$input.data('datetimepicker').date = null;
+          this.$input.data('datepicker').date = null;
           this.$input.find('.active').removeClass('active');
           if(!this.options.showbuttons) {
              this.$input.closest('form').submit(); 
@@ -6675,16 +6671,16 @@ $(function(){
        },
 
        /*
-        For incorrect date bootstrap-datetimepicker returns current date that is not suitable
+        For incorrect date bootstrap-datepicker returns current date that is not suitable
         for datetimefield.
         This function returns null for incorrect date.  
        */
        parseDate: function(str, format) {
            var date = null, formattedBack;
            if(str) {
-               date = this.dpg.parseDate(str, format, this.options.datetimepicker.language, this.options.formatType);
+               date = this.dpg.parseDate(str, format, this.options.datepicker.language, this.options.formatType);
                if(typeof str === 'string') {
-                   formattedBack = this.dpg.formatDate(date, format, this.options.datetimepicker.language, this.options.formatType);
+                   formattedBack = this.dpg.formatDate(date, format, this.options.datepicker.language, this.options.formatType);
                    if(str !== formattedBack) {
                        date = null;
                    } 
@@ -6726,16 +6722,16 @@ $(function(){
         **/
         viewformat: null,
         /**
-        Configuration of datetimepicker.
-        Full list of options: https://github.com/smalot/bootstrap-datetimepicker
+        Configuration of datepicker.
+        Full list of options: https://github.com/smalot/bootstrap-datepicker
 
-        @property datetimepicker 
+        @property datepicker 
         @type object
         @default { }
         **/
-        datetimepicker:{
-            todayHighlight: false,
-            autoclose: false
+        datepicker:{
+            language: 'zh-CN',
+            timepicker: true
         },
         /**
         Text shown as clear date button. 
@@ -6753,7 +6749,7 @@ $(function(){
 }(window.jQuery));
 /**
 Bootstrap datetimefield input - datetime input for inline mode.
-Shows normal <input type="text"> and binds popup datetimepicker.  
+Shows normal <input type="text"> and binds popup datepicker.  
 Automatically shown in inline mode.
 
 @class datetimefield
@@ -6772,26 +6768,26 @@ Automatically shown in inline mode.
     
     $.extend(DateTimeField.prototype, {
         render: function () {
-            this.$input = this.$tpl.find('input');
+            this.$input = this.$tpl.find('input');            
             this.setClass();
             this.setAttr('placeholder');
             
-            this.$tpl.datetimepicker(this.options.datetimepicker);
+            this.$tpl.datepicker(this.options.datepicker);
             
             //need to disable original event handlers
-            this.$input.off('focus keydown');
-            
-            //update value of datepicker
-            this.$input.keyup($.proxy(function(){
-               this.$tpl.removeData('date');
-               this.$tpl.datetimepicker('update');
-            }, this));
+//            this.$input.off('focus keydown');
+//            
+//            //update value of datepicker
+//            this.$input.keyup($.proxy(function(){
+//               this.$tpl.removeData('date');
+//               this.$tpl.datepicker('update');
+//            }, this));
             
         },   
       
        value2input: function(value) {
            this.$input.val(this.value2html(value));
-           this.$tpl.datetimepicker('update');
+           this.$tpl.datepicker('update');
        },
         
        input2value: function() { 
@@ -6811,17 +6807,17 @@ Automatically shown in inline mode.
         /**
         @property tpl 
         **/         
-        tpl:'<div class="input-append date"><input type="text"/><span class="add-on"><i class="icon-th"></i></span></div>',
+        tpl:'<div class="form-group"><input type="text"/></div>',
         /**
         @property inputclass 
         @default 'input-medium'
         **/         
-        inputclass: 'input-medium',
+        inputclass: 'form-control medium',
         
-        /* datetimepicker config */
-        datetimepicker:{
-            todayHighlight: false,
-            autoclose: true
+        /* datepicker config */
+        datepicker:{
+            language: 'zh-CN',
+            timepicker: true
         }
     });
     

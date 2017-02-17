@@ -47,8 +47,7 @@ define(function () {
                     url: '/create',
                     title: '添加新用户',
                     params: {
-                        subtitle: '',
-                        user: {}
+                        subtitle: ''
                     },
                     views: {
                         "content": {

@@ -39,6 +39,7 @@ gulp.task('jsbuild', function () {
                     "moment" : "../../node_modules/moment/min/moment-with-locales",
                     "cropper" : "../../node_modules/cropper/dist/cropper",
                     "jquery.cookie" : "../../node_modules/jquery.cookie/jquery.cookie",
+                    "cxselect" : "../../node_modules/cxselect/js/jquery.cxselect"
                 },
                 shim: {
                     'affix': {

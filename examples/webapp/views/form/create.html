@@ -86,7 +86,7 @@
                     <div class="col-sm-9">
                         <input id="thumb" name="thumb" type="text" ng-input ng-model="form.user.thumb" data-toggle="cropupload" data-multiple="1" data-height="80"   data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="">
                         <!--<input type="text" ng-input ng-model="form.user.thumb" data-toggle="cropupload" data-height="80" data-title="点击上传头像" data-field="file" data-url="/api/ueditor" autocomplete="off" value="" name="thumb">-->
-                        
+
                     </div>
                 </div>
                 <div class="col-md-6 form-group form-inline">
@@ -101,6 +101,14 @@
                     <label for="icon" class="col-sm-3 control-label"><i class="required"></i> 图标：</label>
                     <div class="col-sm-9">
                         <input id="icon" name="icon"  type="text" ng-input ng-model="form.user.icon" value="" >                       
+                    </div>
+                </div>
+                <div class="col-md-6 form-group form-inline">
+                    <label for="video" class="col-sm-3 control-label"><i class="required"></i> 地址：</label>
+                    <div class="col-sm-9" id="cxSelect">
+                        <select class="form-control province" ng-model="form.user.province" data-value="{{form.user.province}}" data-first-title="选择省" ></select>
+                        <select class="form-control city" ng-model="form.user.city" data-value="{{form.user.city}}" data-first-title="选择市" ></select>
+                        <select class="form-control district" ng-model="form.user.district" data-value="{{form.user.district}}" data-first-title="选择区" ></select>
                     </div>
                 </div>
             </div>            
