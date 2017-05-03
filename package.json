@@ -53,6 +53,7 @@
     "moment": "^2.14.1",
     "cropper": "^2.3.3",
     "jquery.cookie": "^1.4.1",
-    "cxselect": "^1.4.0"
+    "cxselect": "^1.4.0",
+    "zoomify":"^0.2.4"
   }
 }

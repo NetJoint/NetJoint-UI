@@ -28,7 +28,8 @@ define(['jquery',
     'cropupload',
     'videoupload',
     'fontIconPicker',
-    'cxselect'
+    'cxselect',
+    'zoomify'
 ], function () {
     $(function () {
         $('[data-spy="scroll"]').scrollspy();

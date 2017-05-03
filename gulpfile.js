@@ -133,6 +133,10 @@ gulp.task('jsbuild', function () {
                     'fontIconPicker':{
                         deps: ['jquery'],
                         exports: '$.fn.fontIconPicker'
+                    },
+                    'zoomify':{
+                        deps: ['jquery'],
+                        exports: '$.fn.zoomify'
                     }
                 }
             }))

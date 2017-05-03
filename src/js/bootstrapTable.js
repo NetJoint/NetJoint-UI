@@ -376,7 +376,7 @@
         onColumnSwitch: function (field, checked) {
             return false;
         },
-        onPageChange: function (number, size) {
+        onPageChange: function (number, size, filters) {
             return false;
         },
         onSearch: function (text) {
@@ -1403,7 +1403,7 @@
             this.initBody();
         }
 
-        this.trigger('page-change', this.options.pageNumber, this.options.pageSize);
+        this.trigger('page-change', this.options.pageNumber, this.options.pageSize, this.filters);
     };
 
     BootstrapTable.prototype.onPageListChange = function (event) {
