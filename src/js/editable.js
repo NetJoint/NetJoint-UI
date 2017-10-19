@@ -4431,7 +4431,7 @@ $(function(){
             }
         });
     };  
-    
+    var d = new Date();
     $.fn.combodate.defaults = {
          //in this format value stored in original input
         format: 'YYYY-MM-DD HH:mm',      
@@ -4440,7 +4440,7 @@ $(function(){
         //initial value, can be `new Date()`    
         value: null,                       
         minYear: 1970,
-        maxYear: 2015,
+        maxYear: 2 + d.getFullYear(),
         yearDescending: true,
         minuteStep: 5,
         secondStep: 1,

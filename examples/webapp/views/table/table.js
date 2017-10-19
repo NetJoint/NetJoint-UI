@@ -33,7 +33,7 @@ define(['app'], function (app) {
                         field: 'birthday',
                         title: '出生日期',
                         valign: 'middle',
-                        editableType: 'date',
+                        editableType: 'combodate',
                         sortable: true,
                         editable: true
                     }, {
