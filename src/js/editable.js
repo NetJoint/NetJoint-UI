@@ -3988,7 +3988,7 @@ $(function(){
 * Copyright (c) 2012 Vitaliy Potapov. Released under MIT License.
 **/
 (function ($) {
-
+    var moment = require('moment');
     var Combodate = function (element, options) {
         this.$element = $(element);
         if(!this.$element.is('input')) {
@@ -4155,8 +4155,7 @@ $(function(){
             var items = this.fillCommon('M'), name, i, 
                 longNames = this.options.template.indexOf('MMMM') !== -1,
                 shortNames = this.options.template.indexOf('MMM') !== -1,
-                twoDigit = this.options.template.indexOf('MM') !== -1;
-                
+                twoDigit = this.options.template.indexOf('MM') !== -1;            
             for(i=0; i<=11; i++) {
                 if(longNames) {
                     //see https://github.com/timrwood/momentjs.com/pull/36
@@ -4169,7 +4168,7 @@ $(function(){
                     name = i+1;
                 }
                 items.push([i, name]);
-            } 
+            }            
             return items;
         },  
         
@@ -4435,9 +4434,9 @@ $(function(){
     
     $.fn.combodate.defaults = {
          //in this format value stored in original input
-        format: 'DD-MM-YYYY HH:mm',      
+        format: 'YYYY-MM-DD HH:mm',      
         //in this format items in dropdowns are displayed
-        template: 'D / MMM / YYYY   H : mm',
+        template: 'YYYY / M / D  H : mm',
         //initial value, can be `new Date()`    
         value: null,                       
         minYear: 1970,
@@ -4494,7 +4493,7 @@ $(function(){
 
 (function ($) {
     "use strict";
-    
+    var moment = require('moment');
     var Constructor = function (options) {
         this.init('combodate', options, Constructor.defaults);
         
@@ -4621,9 +4620,9 @@ $(function(){
         
         @property template 
         @type string
-        @default D / MMM / YYYY
+        @default YYYY / MM / D
         **/          
-        template: 'D / MMM / YYYY',  
+        template: 'YYYY / M / D',  
         /**
         Configuration of combodate.
         Full list of options: http://vitalets.github.com/combodate/#docs
@@ -5973,6 +5972,16 @@ Editableform based on Twitter Bootstrap 3
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear"
+		},
+		"zh-CN": {
+			days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+			daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+			daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+			months: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+			monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+			today: "今日",
+			weekStart: 0,
+			clear: "清除"
 		}
 	};
 
@@ -6767,7 +6776,7 @@ Automatically shown in inline mode.
     $.fn.editableutils.inherit(DateTimeField, $.fn.editabletypes.datetime);
     
     $.extend(DateTimeField.prototype, {
-        render: function () {
+        render: function () {            
             this.$input = this.$tpl.find('input');            
             this.setClass();
             this.setAttr('placeholder');

@@ -107,7 +107,7 @@ gulp.task('jsbuild', function () {
                         exports: '$.fn.timepicker'
                     },
                     'editable': {
-                        deps: ['jquery','popover'],
+                        deps: ['jquery','popover','moment','datepicker','timepicker'],
                         exports: '$.fn.editable'
                     },
                     'validate': {

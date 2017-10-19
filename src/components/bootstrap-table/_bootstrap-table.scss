@@ -35,8 +35,19 @@
     .table-no-bordered {
         border: 1px solid transparent;
     }
-    table {
+    .fixed-table-body > table {
         width: 100%;
+        .datepicker{
+            background-color: #fff;
+            border:1px solid #dddddd;
+            table{
+                border-top:1px solid #dddddd;
+                border-left:1px solid #dddddd;                
+                tbody{
+                    border-bottom:1px solid #dddddd;
+                }
+            }
+        }
     }
 
     thead th {
